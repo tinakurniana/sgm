@@ -160,11 +160,6 @@
                         <div class="overflow-hidden">
                             <img class="img-fluid" src="assets-pengunjung/img/team-1.jpg" alt="">
                         </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -19px;">
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
-                        </div>
                         <div class="text-center p-4">
                             <h5 class="mb-0">Full Name</h5>
                             <small>Designation</small>
@@ -175,11 +170,6 @@
                     <div class="team-item">
                         <div class="overflow-hidden">
                             <img class="img-fluid" src="assets-pengunjung/img/team-2.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -19px;">
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
                         <div class="text-center p-4">
                             <h5 class="mb-0">Full Name</h5>
@@ -192,11 +182,6 @@
                         <div class="overflow-hidden">
                             <img class="img-fluid" src="assets-pengunjung/img/team-3.jpg" alt="">
                         </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -19px;">
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
-                        </div>
                         <div class="text-center p-4">
                             <h5 class="mb-0">Full Name</h5>
                             <small>Designation</small>
@@ -207,11 +192,6 @@
                     <div class="team-item">
                         <div class="overflow-hidden">
                             <img class="img-fluid" src="assets-pengunjung/img/team-4.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -19px;">
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
                         <div class="text-center p-4">
                             <h5 class="mb-0">Full Name</h5>

@@ -248,15 +248,6 @@
                         </li>
 
                         <li class="hover">
-                            <a href="indexAdmin.php?p=struktur-organisasi">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Kelola Struktur Organisasi
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="hover">
                             <a href="indexAdmin.php?p=galeri">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Galeri
