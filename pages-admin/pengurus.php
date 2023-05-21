@@ -190,7 +190,7 @@ if (isset($_POST['btn-hapus'])) {
 								</div>
 								<div class="col-sm-12">
 									<label class="control-label" for="foto">Foto</label>
-									<input type="file" id="id-input-file-2" name="foto" class="col-xs-12 col-sm-12" required />
+									<input type="file" id="id-input-file-2" name="foto" value="<?= $row['foto']; ?>" class="col-xs-12 col-sm-12" required />
 								</div>
 							</div>
 						</div>

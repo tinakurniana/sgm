@@ -1,3 +1,14 @@
+<?php
+include 'functions/functions-admin.php';
+
+$query_tampil = "SELECT * FROM 
+					simpanan_pokok 
+				INNER JOIN anggota ON 
+					simpanan_pokok.id_anggota = anggota.id_anggota";
+$data = tampilData($query_tampil);
+
+?>
+
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
@@ -27,21 +38,28 @@
 									<th>No.Kartu</th>
 									<th>No.Registrasi</th>
 									<th>Nama</th>
-									<th>Tanggal</th>
+									<th>Mulai Bergabung</th>
 									<th>Simpanan Pokok</th>
 								</tr>
 							</thead>
 
 							<tbody>
-							
-                            	<tr>
-									<td class="center">1.</td>
-									<td>001</td>
-									<td>T.II/WH/0001</td>
-									<td>Anton</td>
-									<td>01 Januari 2023</td>
-									<td>Rp 50.000,00</td>
-								</tr>
+								<?php
+								$i = 1;
+								foreach ($data as $value) {
+								?>
+									<tr>
+										<td class="center"><?= $i; ?></td>
+										<td><?= $value['no_kartu'] ?></td>
+										<td><?= $value['no_registrasi'] ?></td>
+										<td><?= $value['nama'] ?></td>
+										<td><?= $value['mulai_bergabung'] ?></td>
+										<td><?= $value['simpanan'] ?></td>
+									</tr>
+								<?php
+									$i++;
+								}
+								?>
 							</tbody>
 						</table>
 					</div>
