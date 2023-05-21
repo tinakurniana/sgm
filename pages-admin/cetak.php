@@ -1,126 +1,133 @@
 <?php
-error_reporting(0);
+include('../functions/functions-admin.php');
+require '../vendor/autoload.php';
 
-$tahun = $_GET['tahun'];
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-header("Content-type: application/vnd-ms-excel");
-header("Content-Disposition: attachment; filename=Data Simpanan Wajib Tahun " . $tahun . ".xls");
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
 
-include '../functions/functions-admin.php';
+$sheet->mergeCells('A1:A2');
+$sheet->setCellValue('A1', 'No Kartu');
 
-$data = tampilData("SELECT
-                        tahun.tahun,
-                        anggota.*,
-                        GROUP_CONCAT(bulan.bulan SEPARATOR ', ') AS bulan
-                    FROM
-                        tahun
-                    INNER JOIN bulan ON tahun.id = bulan.id_tahun
-                    INNER JOIN simpanan_wajib ON bulan.id = simpanan_wajib.id_bulan
-                    INNER JOIN anggota ON simpanan_wajib.id_anggota = anggota.id_anggota
-                    WHERE
-                        tahun.tahun = 1900
-                    GROUP BY
-                        anggota.id_anggota
-                    ORDER BY
-                        tahun.tahun");
+$sheet->mergeCells('B1:B2');
+$sheet->setCellValue('B1', 'No Registrasi');
+
+$sheet->mergeCells('C1:C2');
+$sheet->setCellValue('C1', 'Nama Anggota');
+
+$sheet->mergeCells('D1:D2');
+$sheet->setCellValue('D1', 'Alamat');
+
+$sheet->mergeCells('E1:E2');
+$sheet->setCellValue('E1', 'Simpanan Pokok');
+
+$sheet->mergeCells('F1:Q1');
+$sheet->setCellValue('F1', 'Simpanan Wajib (Bulan)');
+
+$sheet->setCellValue('F2', 'Januari');
+$sheet->setCellValue('G2', 'Februari');
+$sheet->setCellValue('H2', 'Maret');
+$sheet->setCellValue('I2', 'April');
+$sheet->setCellValue('J2', 'Mei');
+$sheet->setCellValue('K2', 'Juni');
+$sheet->setCellValue('L2', 'Juli');
+$sheet->setCellValue('M2', 'Agustus');
+$sheet->setCellValue('N2', 'September');
+$sheet->setCellValue('O2', 'Oktober');
+$sheet->setCellValue('P2', 'November');
+$sheet->setCellValue('Q2', 'Desember');
+
+$sheet->mergeCells('R1:R2');
+$sheet->setCellValue('R1', 'Total');
+
+$data = mysqli_query($conn, "SELECT
+                                tahun.tahun,
+                                anggota.*,
+                                GROUP_CONCAT(bulan.bulan SEPARATOR ', ') AS bulan
+                            FROM
+                                tahun
+                            INNER JOIN bulan ON tahun.id = bulan.id_tahun
+                            INNER JOIN simpanan_wajib ON bulan.id = simpanan_wajib.id_bulan
+                            INNER JOIN anggota ON simpanan_wajib.id_anggota = anggota.id_anggota
+                            WHERE
+                                tahun.tahun = 1900
+                            GROUP BY
+                                anggota.id_anggota
+                            ORDER BY
+                                tahun.tahun");
 
 $bulan = [
-    'Januari',
-    'Februari',
-    'Maret',
-    'April',
-    'Mei',
-    'Juni',
-    'Juli',
-    'Agustus',
-    'September',
-    'Oktober',
-    'November',
-    'Desember'
-]
-?>
+    array(
+        "bulan" => "Januari",
+        "cell" => "F3"
+    ),
+    array(
+        "bulan" => "Februari",
+        "cell" => "G3"
+    ),
+    array(
+        "bulan" => "Maret",
+        "cell" => "H3"
+    ),
+    array(
+        "bulan" => "April",
+        "cell" => "I3"
+    ),
+    array(
+        "bulan" => "Mei",
+        "cell" => "J3"
+    ),
+    array(
+        "bulan" => "Juni",
+        "cell" => "K3"
+    ),
+    array(
+        "bulan" => "Juli",
+        "cell" => "L3"
+    ),
+    array(
+        "bulan" => "Agustus",
+        "cell" => "M3"
+    ),
+    array(
+        "bulan" => "September",
+        "cell" => "N3"
+    ),
+    array(
+        "bulan" => "Oktober",
+        "cell" => "O3"
+    ),
+    array(
+        "bulan" => "November",
+        "cell" => "P3"
+    ),
+    array(
+        "bulan" => "Desember",
+        "cell" => "Q3"
+    ),
+];
 
-<!DOCTYPE html>
-<html lang="en">
+$i = 3;
+while ($d = mysqli_fetch_array($data)) {
+    $sheet->setCellValue('A' . $i, $d['no_kartu']);
+    $sheet->setCellValue('B' . $i, $d['no_registrasi']);
+    $sheet->setCellValue('C' . $i, $d['nama']);
+    $sheet->setCellValue('D' . $i, $d['alamat']);
+    $sheet->setCellValue('E' . $i, 50000);
+    for ($j = 0; $j < count($bulan); $j++) {
+        $cek = strpos($d['bulan'], $bulan[$j]['bulan']);
+        if ($cek !== false) {
+            $sheet->setCellValue($bulan[$j]['cell'], 5000);
+        } else {
+            $sheet->setCellValue($bulan[$j]['cell'], 0);
+        }
+    }
+    $sheet->setCellValue('R' . $i, count(explode(", ", $d['bulan'])) * 5000);
+    $i++;
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" type="text/css" href="../assets-admin/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../assets-admin/plugins/font-awesome-4.6.3/css/font-awesome.min.css" />
-
-    <!--fonts-->
-    <link rel="stylesheet" type="text/css" href="../assets-admin/fonts/fonts.googleapis.com.css" />
-
-    <!--ace styles-->
-    <link rel="stylesheet" type="text/css" href="../assets-admin/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" type="text/css" href="../assets-admin/js/ace-extra.min.js" />
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="page-content">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th rowspan="2">No Kartu</th>
-                    <th rowspan="2">No Registrasi</th>
-                    <th rowspan="2">Nama Anggota</th>
-                    <th rowspan="2">Alamat</th>
-                    <th rowspan="2">Simpanan Pokok</th>
-                    <th colspan="12">Simpanan Wajib (Bulan)</th>
-                    <th rowspan="2">Total</th>
-                </tr>
-                <tr>
-                    <?php
-                    foreach ($bulan as $bln) {
-                    ?>
-                        <th>
-                            <?= $bln; ?>
-                        </th>
-                    <?php
-                    }
-                    ?>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($data as $d) {
-                ?>
-                    <tr>
-                        <td><?= $d['no_kartu'] ?></td>
-                        <td><?= $d['no_registrasi'] ?></td>
-                        <td><?= $d['nama'] ?></td>
-                        <td><?= $d['alamat'] ?></td>
-                        <td>Rp. 50000</td>
-                        <?php
-                        for ($i = 0; $i < count($bulan); $i++) {
-                            $cek = strpos($d['bulan'], $bulan[$i]);
-                            if ($cek !== false) {
-                        ?>
-                                <td>
-                                    Rp. 5.000;
-                                </td>
-                            <?php
-                            } else {
-                            ?>
-                                <td>
-                                    Rp. 0;
-                                </td>
-                        <?php
-                            }
-                        }
-                        ?>
-                        <td><?= count(explode(", ", $d['bulan'])) * 5000 ?></td>
-                    </tr>
-                <?php
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</body>
-
-</html>
+$writer = new Xlsx($spreadsheet);
+$writer->save('Data Simpanan.xlsx');
+echo "<script>window.location = 'Data karyawan.xlsx'</script>";
