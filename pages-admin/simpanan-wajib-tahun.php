@@ -105,7 +105,7 @@ if (isset($_POST['btn-hapus'])) {
 												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" oclass="red tooltip-infp" href="indexAdmin.php?p=simpanan-wajib-bulan&id=<?= $value['id'] ?>">
 													<i class="ace-icon fa fa-info-circle bigger-130"></i>
 												</a>
-												<a data-rel="tooltip" data-placement="top" title="Cetak" href="pages-admin/cetak.php?tahun=<?=$value['tahun'] ?>">
+												<a data-rel="tooltip" data-placement="top" title="Cetak" target="_blank" href="pages-admin/cetak.php?tahun=<?=$value['tahun'] ?>">
 													<i class="ace-icon glyphicon glyphicon-print"></i>
 												</a>
 											</div>

@@ -124,7 +124,7 @@ while ($d = mysqli_fetch_array($data)) {
             $sheet->setCellValue($bulan[$j]['cell'], 0);
         }
     }
-    $sheet->setCellValue('R' . $i, count(explode(", ", $d['bulan'])) * 5000);
+    $sheet->setCellValue('R' . $i,(count(explode(", ", $d['bulan'])) * 5000) + 50000);
     $i++;
 }
 
