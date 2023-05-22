@@ -1,3 +1,11 @@
+<?php
+include 'functions/functions-admin.php';
+
+$query_tampil = "SELECT * FROM profil";
+$profil = tampilData($query_tampil);
+
+?>
+
 <div class="page-content">
     <div class="page-header">
         <h1 style="color:#585858">
@@ -17,7 +25,7 @@
                     </script>
                     <div class="clearfix form-actions">
                         <div class="col-md-3 col-md-9">
-                            <button class="btn btn-info" type="button">
+                            <button class="btn btn-info" type="submit" name="btn-tambah">
                                 <i class="ace-icon fa fa-check bigger-110"></i>
                                 Submit
                             </button>

@@ -72,13 +72,6 @@ if (isset($_POST['btn-hapus'])) {
 								<br>
 							</div>
 							<div class="col-sm-12">
-								<label class="control-label" for="tanggal">Tanggal</label>
-								<input type="date" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
-							</div>
-							<div class="col-sm-12">
-								<br>
-							</div>
-							<div class="col-sm-12">
 								<label class="control-label" for="simpanan_wajib">Simpanan Wajib</label>
 								<input type="number" min="0" id="simpanan_wajib" name="simpanan_wajib" placeholder="Simpanan Wajib" class="col-xs-12 col-sm-12" required />
 							</div>
@@ -114,7 +107,6 @@ if (isset($_POST['btn-hapus'])) {
 									<th>No.Kartu</th>
 									<th>No.Registrasi</th>
 									<th>Nama</th>
-									<th>Tanggal</th>
 									<th>Simpanan Wajib</th>
 									<th>Aksi</th>
 								</tr>
@@ -130,8 +122,7 @@ if (isset($_POST['btn-hapus'])) {
 										<td><?= $sw['no_kartu'] ?></td>
 										<td><?= $sw['no_registrasi'] ?></td>
 										<td><?= $sw['nama'] ?></td>
-										<td><?= $sw['tanggal'] ?></td>
-										<td><?= $sw['simpanan_wajib'] ?></td>
+										<td>Rp. <?= number_format($sw['simpanan_wajib'], 2, ",", "."); ?></td>
 										<td class="center">
 											<div class="action-buttons">
 												<a data-rel="tooltip" data-placement="top" title="Ubah" style="margin-right:5px" class="blue tooltip-info" data-toggle="modal" href="#edit-simpanan-wajib-<?= $sw['id']; ?>">
@@ -180,13 +171,6 @@ if (isset($_POST['btn-hapus'])) {
 										}
 										?>
 									</select>
-								</div>
-								<div class="col-sm-12">
-									<br>
-								</div>
-								<div class="col-sm-12">
-									<label class="control-label" for="tanggal">Tanggal</label>
-									<input type="date" id="tanggal" value="<?= $row['tanggal'] ?>" name="tanggal" class="col-xs-12 col-sm-12" required />
 								</div>
 								<div class="col-sm-12">
 									<br>

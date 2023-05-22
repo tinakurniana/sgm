@@ -43,15 +43,7 @@ if (isset($_POST['btn-hapus'])) {
 						<div class="form-group">
 							<div class="col-sm-12">
 								<label class="control-label" for="tahun">Tahun</label>
-								<select name="tahun" id="tahun" class="col-xs-12 col-sm-12" required>
-									<?php
-									for ($i = 1900; $i < 2999; $i++) {
-									?>
-										<option value="<?= $i ?>"><?= $i ?></option>
-									<?php
-									}
-									?>
-								</select>
+								<input type="text" name="tahun" id="tahun" class="col-xs-12 col-sm-12" required>
 							</div>
 						</div>
 					</div>

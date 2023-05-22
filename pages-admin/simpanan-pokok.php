@@ -54,7 +54,7 @@ $data = tampilData($query_tampil);
 										<td><?= $value['no_registrasi'] ?></td>
 										<td><?= $value['nama'] ?></td>
 										<td><?= $value['mulai_bergabung'] ?></td>
-										<td><?= $value['simpanan'] ?></td>
+										<td>Rp. <?= number_format($value['simpanan'], 2, ",", "."); ?></td>
 									</tr>
 								<?php
 									$i++;
