@@ -1,8 +1,12 @@
 <?php
-include 'functions/functions-admin.php';
+// include 'functions/functions-admin.php';
 
 $query_tampil = "SELECT * FROM profil";
 $profil = tampilData($query_tampil);
+
+if (isset($_POST['btn-tambah'])) {
+    simpanProfil($_POST);
+}
 
 ?>
 
@@ -17,21 +21,25 @@ $profil = tampilData($query_tampil);
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
             <div class="row">
-                <div class="col-xs-12">
-                    <div id="editor"></div>
-                    <textarea name="editor1"></textarea>
-                    <script>
-                        CKEDITOR.replace('editor1');
-                    </script>
-                    <div class="clearfix form-actions">
-                        <div class="col-md-3 col-md-9">
-                            <button class="btn btn-info" type="submit" name="btn-tambah">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                Submit
-                            </button>
+                <form class="form-horizontal" role="form" action="" method="POST">
+                    <div class="col-xs-12">
+                        <div id="editor"></div>
+                        <textarea name="editor1">
+                            <?= $profil == null ? null : $profil[0]['keterangan'] ?>
+                        </textarea>
+                        <script>
+                            CKEDITOR.replace('editor1');
+                        </script>
+                        <div class="clearfix form-actions">
+                            <div class="col-md-3 col-md-9">
+                                <button class="btn btn-info" type="submit" name="btn-tambah" value="<?= $profil == null ? null : $profil[0]['id'] ?>">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Submit
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </div><!-- PAGE CONTENT ENDS -->
+                    </div><!-- PAGE CONTENT ENDS -->
+                </form>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.page-content -->

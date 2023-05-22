@@ -1,5 +1,5 @@
 <?php
-include 'functions/functions-admin.php';
+// include 'functions/functions-admin.php';
 
 $query_tampil = "SELECT * FROM kontak";
 $kontak = tampilData($query_tampil);
@@ -45,7 +45,7 @@ if (isset($_POST['btn-simpan'])) {
                             </div>
                             <div class="clearfix form-actions">
                                 <div class="col-md-offset-2 col-md-10">
-                                <button type="submit" class="btn btn-primary" name="btn-simpan" value="<?= $row['id_kontak'] ?>">Simpan</button>
+                                <button type="submit" class="btn btn-primary" name="btn-simpan" value="<?= $row['id'] ?>">Simpan</button>
                                 </div>
                             </div>
                         </form>

@@ -1,3 +1,19 @@
+<?php
+// include 'functions/functions-admin.php';
+
+$id = $_SESSION['id'];
+
+$query_tampil = "SELECT
+                    transaksi.*
+                FROM
+                    transaksi
+                INNER JOIN anggota ON anggota.id_anggota = transaksi.id_anggota
+                WHERE anggota.id_anggota = $id";
+$transaksi = tampilData($query_tampil);
+
+?>
+
+
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
@@ -34,19 +50,27 @@
 							</thead>
 
 							<tbody>
-							
-                            	<tr>
-									<td class="center">1.</td>
-									<td>01 Januari 2023</td>
-									<td>031000571</td>
-									<td>Inhouse Transfer</td>
-									<td>PT.Bank Mandiri Tbk</td>
-									<td>031001052</td>
-									<td>Anton</td>
-									<td>IDR</td>
-									<td>Rp 192.000.000,00</td>
-									<td>Rp 210.000.000,00</td>
-								</tr>
+
+								<?php
+								$i = 1;
+								foreach ($transaksi as $value) {
+								?>
+									<tr>
+										<td class="center"><?= $i;?></td>
+										<td><?= $value['tanggal']?></td>
+										<td><?= $value['sumber_dana']?></td>
+										<td><?= $value['nama_produk']?></td>
+										<td><?= $value['bank_penerima']?></td>
+										<td><?= $value['no_rek']?></td>
+										<td><?= $value['nama_rek']?></td>
+										<td><?= $value['mata_uang']?></td>
+										<td>Rp <?= $value['jumlah']?></td>
+										<td>Rp <?= $value['reference_number']?></td>
+									</tr>
+								<?php
+								$i++;
+								}
+								?>
 							</tbody>
 						</table>
 					</div>

@@ -1,3 +1,21 @@
+<?php
+// include 'functions/functions-admin.php';
+
+$id = $_SESSION['id'];
+
+$query_tampil = "SELECT
+                    simpanan_wajib.*,
+                    anggota.no_kartu,
+                    anggota.no_registrasi,
+                    anggota.nama
+                FROM
+                    simpanan_wajib
+                INNER JOIN anggota ON anggota.id_anggota = simpanan_wajib.id_anggota
+                WHERE anggota.id_anggota = $id";
+$anggota = tampilData($query_tampil);
+
+?>
+
 <div class="page-content">
     <div class="page-header">
         <h1 style="color:#585858">
@@ -32,7 +50,6 @@
                                     <th>No.</th>
                                     <th>No.Kartu</th>
                                     <th>No.Registrasi</th>
-                                    <th>Tanggal</th>
                                     <th>Nama</th>
                                     <th>Simpanan Wajib</th>
                                 </tr>
@@ -40,14 +57,21 @@
 
                             <tbody>
 
-                                <tr>
-                                    <td class="center">1.</td>
-                                    <td>001</td>
-                                    <td>T.II/WH/0001</td>
-                                    <td>01 Januari 2023</td>
-                                    <td>Anton</td>
-                                    <td>Rp 260.000,00</td>
-                                </tr>
+                                <?php
+                                $i = 1;
+                                foreach ($anggota as $value) {
+                                ?>
+                                    <tr>
+                                        <td class="center"><?= $i;?></td>
+                                        <td><?= $value['no_kartu']?></td>
+                                        <td><?= $value['no_registrasi']?></td>
+                                        <td><?= $value['nama']?></td>
+                                        <td><?= $value['simpanan_wajib']?></td>
+                                    </tr>
+                                <?php
+                                $i++;
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>

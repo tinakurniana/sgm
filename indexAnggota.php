@@ -1,3 +1,20 @@
+<?php
+error_reporting(0);
+session_start();
+include 'functions/functions-admin.php';
+
+if (!isset($_SESSION['loginAnggota'])) {
+    header("Location: login.php");
+}else{
+    $id = $_SESSION['id'];
+    
+    $dataAnggota = tampilData("SELECT * FROM anggota WHERE id_anggota = $id");
+    
+    if (isset($_POST['reset'])) {
+        resetPassword($_POST);
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,7 +144,7 @@
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <i class="ace-icon fa fa-user"></i>
                             <span class="user-info">
-                                (Nama Anggota)
+                                <?= $_SESSION['name'] ?>
                             </span>
 
                             <i class="ace-icon fa fa-caret-down"></i>
@@ -135,7 +152,7 @@
 
                         <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                             <li>
-                                <a href="?module=password">
+                                <a data-toggle="modal" href="#ubah-password">
                                     <i class="ace-icon fa fa-lock"></i>
                                     Ubah Password
                                 </a>
@@ -144,7 +161,7 @@
                             <li class="divider"></li>
 
                             <li>
-                                <a data-toggle="modal" href="#logout">
+                                <a href="logout.php">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     Logout
                                 </a>
@@ -216,6 +233,58 @@
                     include($pages_dir . '/beranda.php');
                 }
                 ?>
+
+                <div class="modal fade" id="ubah-password">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Form Ubah Password</i></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="login-box" class="login-box visible widget-box no-border">
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                                <div class="space-6"></div>
+                                                <form action="" method="POST">
+                                                    <fieldset>
+                                                        <label class="block clearfix">
+                                                            <span class="block input-icon input-icon-right">
+                                                                <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $dataAnggota[0]['username'] ?>" autocomplete="off" required />
+                                                                <i class="ace-icon fa fa-user"></i>
+                                                            </span>
+                                                        </label>
+
+                                                        <label class="block clearfix">
+                                                            <span class="block input-icon input-icon-right">
+                                                                <input type="password" class="form-control" name="password" placeholder="New Password" autocomplete="off" required />
+                                                                <i class="ace-icon fa fa-lock"></i>
+                                                            </span>
+                                                        </label>
+
+                                                        <div class="space"></div>
+
+                                                        <div class="clearfix">
+                                                            <input type="hidden" name="role" value="anggota">
+                                                            <button style="font-size:15px" name="reset" value="<?= $id ?>" type="submit" class="btn btn-primary btn-block">
+                                                                <i class="ace-icon fa fa-key"></i>
+                                                                <span class="bigger-110">Reset Password</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="space-4"></div>
+                                                    </fieldset>
+                                                </form>
+                                            </div><!-- /.widget-main -->
+                                        </div><!-- /.widget-body -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+                <!-- End Modal Tambah Anggota -->
 
             </div>
         </div><!-- /.main-content -->

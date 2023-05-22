@@ -1,3 +1,11 @@
+<?php
+// include 'functions/functions-admin.php';
+$id = $_SESSION['id'];
+$query_tampil = "SELECT * FROM anggota WHERE id_anggota = $id";
+$anggota = tampilData($query_tampil);
+
+?>
+
 <div class="page-content">
     <div class="page-header">
         <h1 style="color:#585858">
@@ -68,7 +76,7 @@
                     <div class="col-xs-12 col-sm-3 center">
                         <div>
                             <span class="profile-picture">
-                                <img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets-admin/img/profil.png" />
+                                <img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets-admin/images/<?= $anggota[0]['foto'] ?>" />
                             </span>
 
                             <div class="space-4"></div>
@@ -78,7 +86,7 @@
                                     <a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
                                         <i class="ace-icon fa fa-circle light-green"></i>
                                         &nbsp;
-                                        <span class="white">Alex M. Doe</span>
+                                        <span class="white"><?= $anggota[0]['nama'] ?></span>
                                     </a>
                                 </div>
                             </div>
@@ -93,28 +101,28 @@
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Username :</div>
                                 <div class="profile-info-value">
-                                    <span class="editable" id="username">alex123</span>
+                                    <span class="editable" id="username"><?= $anggota[0]['username'] ?></span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> No.Kartu :</div>
                                 <div class="profile-info-value">
-                                    <span class="editable" id="no_kartu">001</span>
+                                    <span class="editable" id="no_kartu"><?= $anggota[0]['no_kartu'] ?></span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> No.Registrasi :</div>
                                 <div class="profile-info-value">
-                                    <span class="editable" id="no_registrasi">T.II/WH/0001</span>
+                                    <span class="editable" id="no_registrasi"><?= $anggota[0]['no_registrasi'] ?></span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Bergabung :</div>
                                 <div class="profile-info-value">
-                                    <span class="editable" id="no_registrasi">01 Januari 2019</span>
+                                    <span class="editable" id="no_registrasi"><?= $anggota[0]['mulai_bergabung'] ?></span>
                                 </div>
                             </div>
 
@@ -123,7 +131,7 @@
 
                                 <div class="profile-info-value">
                                     <i class="fa fa-map-marker light-orange bigger-110"></i>
-                                    <span class="editable" id="alamat">Jalan Badak</span>
+                                    <span class="editable" id="alamat"><?= $anggota[0]['alamat'] ?></span>
                                 </div>
                             </div>
 
@@ -131,7 +139,7 @@
                                 <div class="profile-info-name"> KTP :</div>
 
                                 <div class="profile-info-value">
-                                    <span class="editable" id="ktp">12345</span>
+                                    <span class="editable" id="ktp"><?= $anggota[0]['ktp'] ?></span>
                                 </div>
                             </div>
 
@@ -139,7 +147,7 @@
                                 <div class="profile-info-name"> Luas Plasma :</div>
 
                                 <div class="profile-info-value">
-                                    <span class="editable" id="luas_plasma">0.66 Ha</span>
+                                    <span class="editable" id="luas_plasma"><?= $anggota[0]['luas_plasma'] ?> Ha</span>
                                 </div>
                             </div>
 
@@ -147,7 +155,7 @@
                                 <div class="profile-info-name"> Foto Bukti :</div>
 
                                 <div class="profile-info-value">
-                                    <img src="assets-admin/img/kertas.jpg" alt="foto-user" width="300px">
+                                    <img src="assets-admin/images/<?= $anggota[0]['foto_bukti'] ?>" alt="foto-user" width="300px">
                                 </div>
                             </div>
                         </div>

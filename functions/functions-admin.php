@@ -86,7 +86,7 @@ function tambahDataAnggota($data)
     $mulai_bergabung = htmlspecialchars($data['mulai_bergabung']);
     $nama = htmlspecialchars($data['nama']);
     $username = htmlspecialchars($data['username']);
-    $password = htmlspecialchars($data['password']);
+    $password = htmlspecialchars(md5($data['password']));
     $alamat = htmlspecialchars($data['alamat']);
     $ktp = htmlspecialchars($data['ktp']);
     $luas_plasma = htmlspecialchars($data['luas_plasma']);
@@ -138,7 +138,7 @@ function editDataAnggota($data)
     $mulai_bergabung = htmlspecialchars($data['mulai_bergabung']);
     $nama = htmlspecialchars($data['nama']);
     $username = htmlspecialchars($data['username']);
-    $password = htmlspecialchars($data['password']);
+    $password = htmlspecialchars(md5($data['password']));
     $alamat = htmlspecialchars($data['alamat']);
     $ktp = htmlspecialchars($data['ktp']);
     $luas_plasma = htmlspecialchars($data['luas_plasma']);
@@ -526,7 +526,7 @@ function simpanKontak($data)
     $telp = htmlspecialchars($data['telp']);
     $email = htmlspecialchars($data['email']);
 
-    $query = "UPDATE kontak SET alamat = '$alamat', telp = '$telp', email = '$email' WHERE id_kontak = '$id_kontak'";
+    $query = "UPDATE kontak SET alamat = '$alamat', telp = '$telp', email = '$email' WHERE id = '$id_kontak'";
 
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Disimpan"); location.href = "indexAdmin.php?p=kontak";</script>';
@@ -534,6 +534,31 @@ function simpanKontak($data)
         echo '<script>alert("Data Gagal Disimpan"); location.href = "indexAdmin.php?p=kontak";</script>';
     }
     mysqli_close($conn);
+}
+
+function simpanProfil($data)
+{
+    global $conn;
+    $keterangan = ($data['editor1']);
+    $cek = tampilData("SELECT * FROM profil");
+    if (count($cek) == 0) {
+        $query = "INSERT INTO profil VALUES ('','$keterangan')";
+        if (mysqli_query($conn, $query)) {
+            echo '<script>alert("Data Berhasil Ditambahkan"); location.href = "indexAdmin.php?p=profil";</script>';
+        } else {
+            echo '<script>alert("Data Gagal Ditambahkan"); location.href = "indexAdmin.php?p=profil";</script>';
+        }
+        mysqli_close($conn);
+    } else {
+        $id = $cek[0]['id'];
+        $query = "UPDATE profil SET keterangan = '$keterangan' WHERE id = $id";
+        if (mysqli_query($conn, $query)) {
+            echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=profil";</script>';
+        } else {
+            echo '<script>alert("Data Gagal Diedit"); location.href = "indexAdmin.php?p=profil";</script>';
+        }
+        mysqli_close($conn);
+    }
 }
 
 function uploadFoto()
@@ -628,4 +653,29 @@ function uploadFotoBukti()
     $namaFileBaru .= $ekstensiGambar;
     move_uploaded_file($tmpName, 'assets-admin/images/' . $namaFileBaru);
     return $namaFileBaru;
+}
+
+function resetPassword($data)
+{
+    global $conn;
+    $id = htmlspecialchars($data['reset']);
+    $username = htmlspecialchars($data['username']);
+    $password = htmlspecialchars(md5($data['password']));
+    $role = htmlspecialchars($data['role']);
+
+    if ($role == 'admin') {
+        $query = "UPDATE admin SET username = '$username', password = '$password' WHERE id_admin = $id";
+        if (mysqli_query($conn, $query)) {
+            echo '<script>alert("Reset Password Berhasil"); location.href = "indexAdmin.php";</script>';
+        } else {
+            echo '<script>alert("Reset Password Gagal"); location.href = "indexAdmin.php";</script>';
+        }
+    } else {
+        $query = "UPDATE anggota SET username = '$username', password = '$password' WHERE id_anggota = $id";
+        if (mysqli_query($conn, $query)) {
+            echo '<script>alert("Reset Password Berhasil"); location.href = "indexAnggota.php";</script>';
+        } else {
+            echo '<script>alert("Reset Password Gagal"); location.href = "indexAnggota.php";</script>';
+        }
+    }
 }

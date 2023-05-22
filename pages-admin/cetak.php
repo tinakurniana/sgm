@@ -61,51 +61,51 @@ $data = mysqli_query($conn, "SELECT
 $bulan = [
     array(
         "bulan" => "Januari",
-        "cell" => "F3"
+        "cell" => "F"
     ),
     array(
         "bulan" => "Februari",
-        "cell" => "G3"
+        "cell" => "G"
     ),
     array(
         "bulan" => "Maret",
-        "cell" => "H3"
+        "cell" => "H"
     ),
     array(
         "bulan" => "April",
-        "cell" => "I3"
+        "cell" => "I"
     ),
     array(
         "bulan" => "Mei",
-        "cell" => "J3"
+        "cell" => "J"
     ),
     array(
         "bulan" => "Juni",
-        "cell" => "K3"
+        "cell" => "K"
     ),
     array(
         "bulan" => "Juli",
-        "cell" => "L3"
+        "cell" => "L"
     ),
     array(
         "bulan" => "Agustus",
-        "cell" => "M3"
+        "cell" => "M"
     ),
     array(
         "bulan" => "September",
-        "cell" => "N3"
+        "cell" => "N"
     ),
     array(
         "bulan" => "Oktober",
-        "cell" => "O3"
+        "cell" => "O"
     ),
     array(
         "bulan" => "November",
-        "cell" => "P3"
+        "cell" => "P"
     ),
     array(
         "bulan" => "Desember",
-        "cell" => "Q3"
+        "cell" => "Q"
     ),
 ];
 
@@ -119,12 +119,12 @@ while ($d = mysqli_fetch_array($data)) {
     for ($j = 0; $j < count($bulan); $j++) {
         $cek = strpos($d['bulan'], $bulan[$j]['bulan']);
         if ($cek !== false) {
-            $sheet->setCellValue($bulan[$j]['cell'], 5000);
+            $sheet->setCellValue($bulan[$j]['cell'] . $i, 5000);
         } else {
-            $sheet->setCellValue($bulan[$j]['cell'], 0);
+            $sheet->setCellValue($bulan[$j]['cell'] . $i, 0);
         }
     }
-    $sheet->setCellValue('R' . $i,(count(explode(", ", $d['bulan'])) * 5000) + 50000);
+    $sheet->setCellValue('R' . $i, (count(explode(", ", $d['bulan'])) * 5000) + 50000);
     $i++;
 }
 
