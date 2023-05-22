@@ -1,77 +1,45 @@
+
+
 <?php
-error_reporting(0);
+include('../functions/functions-admin.php');
+require '../vendor/autoload.php';
 
-header("Content-type: application/vnd-ms-excel");
-header("Content-Disposition: attachment; filename=Data Transaksi.xls");
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-include '../functions/functions-admin.php';
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
 
-$query_tampil = "SELECT * FROM transaksi";
-$transaksi = tampilData($query_tampil);
-?>
+$sheet->setCellValue('A1', 'No');
+$sheet->setCellValue('B1', 'Tanggal');
+$sheet->setCellValue('C1', 'Sumber Dana');
+$sheet->setCellValue('D1', 'Nama Produk');
+$sheet->setCellValue('E1', 'Bank Penerima');
+$sheet->setCellValue('F1', 'No.Rek Kredit');
+$sheet->setCellValue('G1', 'Nama Rek Kredit');
+$sheet->setCellValue('H1', 'Mata Uang');
+$sheet->setCellValue('I1', 'Jumlah');
+$sheet->setCellValue('J1', 'Reference Number');
 
-<!DOCTYPE html>
-<html lang="en">
+$data = mysqli_query($conn, "SELECT * FROM transaksi");
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+$i = 2;
+$no = 1;
+while ($d = mysqli_fetch_array($data)) {
+    $sheet->setCellValue('A' . $i, $no);
+    $sheet->setCellValue('B' . $i, $d['tanggal']);
+    $sheet->setCellValue('C' . $i, $d['sumber_dana']);
+    $sheet->setCellValue('D' . $i, $d['nama_produk']);
+    $sheet->setCellValue('E' . $i, $d['bank_penerima']);
+    $sheet->setCellValue('F' . $i, $d['no_rek']);
+    $sheet->setCellValue('G' . $i, $d['nama_rek']);
+    $sheet->setCellValue('H' . $i, $d['mata_uang']);
+    $sheet->setCellValue('I' . $i, $d['jumlah']);
+    $sheet->setCellValue('J' . $i, $d['reference_number']);
+    $i++;
+    $no++;
+}
 
-    <link rel="stylesheet" type="text/css" href="../assets-admin/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../assets-admin/plugins/font-awesome-4.6.3/css/font-awesome.min.css" />
-
-    <!--fonts-->
-    <link rel="stylesheet" type="text/css" href="../assets-admin/fonts/fonts.googleapis.com.css" />
-
-    <!--ace styles-->
-    <link rel="stylesheet" type="text/css" href="../assets-admin/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" type="text/css" href="../assets-admin/js/ace-extra.min.js" />
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="page-content">
-        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Tanggal</th>
-                    <th>Sumber Dana</th>
-                    <th>Nama Produk</th>
-                    <th>Bank Penerima</th>
-                    <th>No.Rek Kredit</th>
-                    <th>Nama Rek Kredit</th>
-                    <th>Mata Uang</th>
-                    <th>Jumlah</th>
-                    <th>Reference Number</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <?php
-                $i = 1;
-                foreach ($transaksi as $value) {
-                ?>
-                    <tr>
-                        <td class="center"><?= $i ?></td>
-                        <td><?= $value['tanggal'] ?></td>
-                        <td><?= $value['sumber_dana'] ?></td>
-                        <td><?= $value['nama_produk'] ?></td>
-                        <td><?= $value['bank_penerima'] ?></td>
-                        <td><?= $value['no_rek'] ?></td>
-                        <td><?= $value['nama_rek'] ?></td>
-                        <td><?= $value['mata_uang'] ?></td>
-                        <td><?= $value['jumlah'] ?></td>
-                        <td><?= $value['reference_number'] ?></td>
-                    </tr>
-                <?php
-                    $i++;
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</body>
-
-</html>
+$writer = new Xlsx($spreadsheet);
+$writer->save('../excel/Data Transaksi.xlsx');
+echo "<script>window.location = '../excel/Data Transaksi.xlsx'</script>";

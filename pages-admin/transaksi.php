@@ -22,7 +22,7 @@ if (isset($_POST['btn-hapus'])) {
 	<div class="page-header">
 		<h1 style="color:#585858">
 			<i class="ace-icon fa fa-list"></i> Data Transaksi
-			<a href="pages-admin/cetak-transaksi.php">
+			<a href="pages-admin/cetak-transaksi.php" target="_blank">
 				<button class="btn btn-success pull-right">
 					<i class="ace-icon fa fa-print"></i> Cetak
 				</button>

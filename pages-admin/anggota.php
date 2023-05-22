@@ -20,9 +20,11 @@ if (isset($_POST['btn-hapus'])) {
 	<div class="page-header">
 		<h1 style="color:#585858">
 			<i class="ace-icon fa fa-users"></i> Data Anggota
+			<a href="pages-admin/cetak-anggota.php" target="_blank">
 			<button class="btn btn-success pull-right">
 				<i class="ace-icon fa fa-print"></i> Cetak
 			</button>
+			</a>
 			<a data-toggle="modal" href="#tambah-anggota">
 				<button class="btn btn-primary pull-right">
 					<i class="ace-icon fa fa-plus"></i> Tambah
