@@ -1,3 +1,16 @@
+<?php
+include 'functions/functions-admin.php';
+
+$query_pengurus = "SELECT * FROM pengurus";
+$query_galeri = "SELECT * FROM galeri";
+$query_kontak = "SELECT * FROM kontak";
+
+$pengurus = tampilData($query_pengurus);
+$galeri = tampilData($query_galeri);
+$kontak = tampilData($query_kontak);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,18 +60,19 @@
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
-                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
+                    <!-- <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small> -->
                 </div>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
+                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i><?= $kontak[0]['telp']; ?></small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i><?= $kontak[0]['email']; ?></small>
+                    <!-- <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
                     <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
                     <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
                     <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a> -->
                 </div>
             </div>
         </div>
@@ -155,50 +169,19 @@
                 <h1 class="mb-5">Struktur Organisasi Koperasi</h1>
             </div>
             <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="assets-pengunjung/img/team-1.jpg" alt="">
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="team-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="assets-pengunjung/img/team-2.jpg" alt="">
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
+                <?php foreach ($pengurus as $pg) : ?>
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item">
+                            <div class="overflow-hidden">
+                                <img class="img-fluid" src="assets-admin/images/<?= $pg["foto"]; ?>" alt="">
+                            </div>
+                            <div class="text-center p-4">
+                                <h5 class="mb-0"><?= $pg['nama']; ?></h5>
+                                <small><?= $pg['jabatan']; ?></small>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="assets-pengunjung/img/team-3.jpg" alt="">
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="team-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="assets-pengunjung/img/team-4.jpg" alt="">
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -344,39 +327,19 @@
                 <h1 class="mb-5">Dokumentasi</h1>
             </div>
             <div class="row g-4 justify-content-center">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="package-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="assets-pengunjung/img/img-1.jpg" alt="">
-                        </div>
-                        <div class="text-center p-4">
-                            <h3 class="mb-3">Rapat Tahunan</h3>
-                            <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam eos</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="package-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="assets-pengunjung/img/img-1.jpg" alt="">
-                        </div>
-                        <div class="text-center p-4">
-                            <h3 class="mb-3">Rapat Tahunan</h3>
-                            <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam eos</p>
+                <?php foreach ($galeri as $gr) : ?>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="package-item">
+                            <div class="overflow-hidden">
+                                <img class="img-fluid" src="assets-admin/images/<?= $gr["foto"]; ?>" alt="">
+                            </div>
+                            <div class="text-center p-4">
+                                <h3 class="mb-3"><?= $gr['judul']; ?></h3>
+                                <p><?= $gr['keterangan']; ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="package-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="assets-pengunjung/img/img-1.jpg" alt="">
-                        </div>
-                        <div class="text-center p-4">
-                            <h3 class="mb-3">Rapat Tahunan</h3>
-                            <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam eos</p>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -393,14 +356,14 @@
             <div class="row g-4">
                 <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <h5>PT Sawit Graha Manunggal</h5>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos</p>
+                    <p class="mb-4">Berikut alamat kantor kami dan kontak yang bisa dihubungi :</p>
                     <div class="d-flex align-items-center mb-4">
                         <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
                             <i class="fa fa-map-marker-alt text-white"></i>
                         </div>
                         <div class="ms-3">
-                            <h5 class="text-primary">Office</h5>
-                            <p class="mb-0">123 Street, New York, USA</p>
+                            <h5 class="text-primary">Alamat</h5>
+                            <p class="mb-0"><?= $kontak[0]['alamat']; ?></p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-4">
@@ -408,8 +371,8 @@
                             <i class="fa fa-phone-alt text-white"></i>
                         </div>
                         <div class="ms-3">
-                            <h5 class="text-primary">Mobile</h5>
-                            <p class="mb-0">+012 345 67890</p>
+                            <h5 class="text-primary">Telp</h5>
+                            <p class="mb-0"><?= $kontak[0]['telp']; ?></p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
@@ -418,7 +381,7 @@
                         </div>
                         <div class="ms-3">
                             <h5 class="text-primary">Email</h5>
-                            <p class="mb-0">info@example.com</p>
+                            <p class="mb-0"><?= $kontak[0]['email']; ?></p>
                         </div>
                     </div>
                 </div>
