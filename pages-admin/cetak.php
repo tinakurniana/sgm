@@ -42,6 +42,8 @@ $sheet->setCellValue('Q2', 'Desember');
 $sheet->mergeCells('R1:R2');
 $sheet->setCellValue('R1', 'Total');
 
+$tahun = $_GET['tahun'];
+
 $data = mysqli_query($conn, "SELECT
                                 tahun.tahun,
                                 anggota.*,
@@ -52,7 +54,7 @@ $data = mysqli_query($conn, "SELECT
                             INNER JOIN simpanan_wajib ON bulan.id = simpanan_wajib.id_bulan
                             INNER JOIN anggota ON simpanan_wajib.id_anggota = anggota.id_anggota
                             WHERE
-                                tahun.tahun = 1900
+                                tahun.tahun = '$tahun'
                             GROUP BY
                                 anggota.id_anggota
                             ORDER BY
