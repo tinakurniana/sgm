@@ -6,11 +6,51 @@ include 'functions/functions-admin.php';
 
 if (!isset($_SESSION['loginAdmin'])) {
     header("Location: login.php");
-}else{
+} else {
     $id = $_SESSION['idAdmin'];
-    
+
     $dataAdmin = tampilData("SELECT * FROM admin WHERE id_admin = $id");
-    
+
+    $data_tahun = tampilData("SELECT
+                                SUBSTRING(anggota.mulai_bergabung, 1, 4) AS tahun
+                            FROM
+                                anggota
+                            GROUP BY
+                                SUBSTR(anggota.mulai_bergabung, 1, 4)
+                            ORDER BY
+                                SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+
+    foreach ($data_tahun as $dt) {
+        $data_arr_tahun[] = $dt['tahun'];
+    }
+
+    $data_anggota = tampilData("SELECT
+                                    COUNT(anggota.id_anggota) AS jumlah
+                                FROM
+                                    anggota
+                                GROUP BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4)
+                                ORDER BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+
+    foreach ($data_anggota as $da) {
+        $data_arr_anggota[] = $da['jumlah'];
+    }
+
+    $data_hektar = tampilData("SELECT
+                                    SUM(anggota.luas_plasma) AS jumlah
+                                FROM
+                                    anggota
+                                GROUP BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4)
+                                ORDER BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+
+    foreach ($data_hektar as $dh) {
+        $data_arr_hektar[] = $dh['jumlah'];
+    }
+
+
     if (isset($_POST['reset'])) {
         resetPassword($_POST);
     }
@@ -315,6 +355,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                 }
                 ?>
 
+
                 <div class="modal fade" id="ubah-password">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -582,6 +623,61 @@ if (!isset($_SESSION['loginAdmin'])) {
             $(window).on('resize.ace.top_menu', function() {
                 $(document).triggerHandler('settings.ace.top_menu', ['sidebar_fixed', $sidebar.hasClass('sidebar-fixed')]);
             });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo (json_encode($data_arr_tahun)); ?>,
+                datasets: [{
+                    label: 'Jumlah Anggota',
+                    data: <?php echo (json_encode($data_arr_anggota)); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                // options: {
+                //     // responsive: false,
+                //     // maintainAspectRatio: false
+                // }
+            }
+        });
+    </script>
+    <script>
+        const ctx2 = document.getElementById('myChart2');
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: <?php echo (json_encode($data_arr_tahun)); ?>,
+                datasets: [{
+                    label: 'Jumlah Hektar',
+                    data: <?php echo (json_encode($data_arr_hektar)); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                // options: {
+                //     responsive: false,
+                //     // maintainAspectRatio: false
+                // }
+            }
         });
     </script>
 </body>
