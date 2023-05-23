@@ -1,5 +1,5 @@
 <?php
-include 'functions/functions-admin.php';
+// include 'functions/functions-admin.php';
 
 $id = $_GET['id'];
 $query_tampil = "SELECT * FROM bulan WHERE id_tahun = $id";

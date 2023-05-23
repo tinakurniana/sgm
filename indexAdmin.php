@@ -1,8 +1,67 @@
 <?php
+error_reporting(0);
+session_start();
+
+include 'functions/functions-admin.php';
+
 $pages_dir = 'pages-admin';
 $pages = scandir($pages_dir, 0);
 unset($pages[0], $pages[1]);
 $p = $_GET['p'];
+
+if (!isset($_SESSION['loginAdmin'])) {
+    header("Location: login.php");
+} else {
+    $id = $_SESSION['idAdmin'];
+
+    $dataAdmin = tampilData("SELECT * FROM admin WHERE id_admin = $id");
+
+    $data_tahun = tampilData("SELECT
+                                SUBSTRING(anggota.mulai_bergabung, 1, 4) AS tahun
+                            FROM
+                                anggota
+                            GROUP BY
+                                SUBSTR(anggota.mulai_bergabung, 1, 4)
+                            ORDER BY
+                                SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+
+    foreach ($data_tahun as $dt) {
+        $data_arr_tahun[] = $dt['tahun'];
+    }
+
+    $data_anggota = tampilData("SELECT
+                                    COUNT(anggota.id_anggota) AS jumlah
+                                FROM
+                                    anggota
+                                GROUP BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4)
+                                ORDER BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+
+    foreach ($data_anggota as $da) {
+        $data_arr_anggota[] = $da['jumlah'];
+    }
+
+    $data_hektar = tampilData("SELECT
+                                    SUM(anggota.luas_plasma) AS jumlah
+                                FROM
+                                    anggota
+                                GROUP BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4)
+                                ORDER BY
+                                    SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+
+    foreach ($data_hektar as $dh) {
+        $data_arr_hektar[] = $dh['jumlah'];
+    }
+
+
+    if (isset($_POST['reset'])) {
+        resetPassword($_POST);
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +201,7 @@ $p = $_GET['p'];
 
                         <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                             <li>
-                                <a href="?module=password">
+                                <a data-toggle="modal" href="#ubah-password">
                                     <i class="ace-icon fa fa-lock"></i>
                                     Ubah Password
                                 </a>
@@ -151,7 +210,7 @@ $p = $_GET['p'];
                             <li class="divider"></li>
 
                             <li>
-                                <a data-toggle="modal" href="#logout">
+                                <a href="logout.php">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     Logout
                                 </a>
@@ -162,6 +221,8 @@ $p = $_GET['p'];
             </div>
         </div><!-- /.navbar-container -->
     </div>
+
+
 
     <div class="main-container" id="main-container">
         <div id="sidebar" class="sidebar h-sidebar navbar-collapse collapse sidebar-fixed">
@@ -298,6 +359,61 @@ $p = $_GET['p'];
                     include($pages_dir . '/beranda.php');
                 }
                 ?>
+
+
+                <div class="modal fade" id="ubah-password">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Form Ubah Password</i></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="login-box" class="login-box visible widget-box no-border">
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                                <div class="space-6"></div>
+                                                <form action="" method="POST">
+                                                    <fieldset>
+                                                        <label class="block clearfix">
+                                                            <span class="block input-icon input-icon-right">
+                                                                <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $dataAdmin[0]['username'] ?>" autocomplete="off" required />
+                                                                <i class="ace-icon fa fa-user"></i>
+                                                            </span>
+                                                        </label>
+
+                                                        <label class="block clearfix">
+                                                            <span class="block input-icon input-icon-right">
+                                                                <input type="password" class="form-control" name="password" placeholder="New Password" autocomplete="off" required />
+                                                                <i class="ace-icon fa fa-lock"></i>
+                                                            </span>
+                                                        </label>
+
+                                                        <div class="space"></div>
+
+                                                        <div class="clearfix">
+                                                            <input type="hidden" name="role" value="admin">
+                                                            <button style="font-size:15px" name="reset" value="<?= $id ?>" type="submit" class="btn btn-primary btn-block">
+                                                                <i class="ace-icon fa fa-key"></i>
+                                                                <span class="bigger-110">Reset Password</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="space-4"></div>
+                                                    </fieldset>
+                                                </form>
+                                            </div><!-- /.widget-main -->
+                                        </div><!-- /.widget-body -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+                <!-- End Modal Tambah Anggota -->
+
+
 
             </div>
         </div><!-- /.main-content -->
@@ -512,6 +628,61 @@ $p = $_GET['p'];
             $(window).on('resize.ace.top_menu', function() {
                 $(document).triggerHandler('settings.ace.top_menu', ['sidebar_fixed', $sidebar.hasClass('sidebar-fixed')]);
             });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo (json_encode($data_arr_tahun)); ?>,
+                datasets: [{
+                    label: 'Jumlah Anggota',
+                    data: <?php echo (json_encode($data_arr_anggota)); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                // options: {
+                //     // responsive: false,
+                //     // maintainAspectRatio: false
+                // }
+            }
+        });
+    </script>
+    <script>
+        const ctx2 = document.getElementById('myChart2');
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: <?php echo (json_encode($data_arr_tahun)); ?>,
+                datasets: [{
+                    label: 'Jumlah Hektar',
+                    data: <?php echo (json_encode($data_arr_hektar)); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                // options: {
+                //     responsive: false,
+                //     // maintainAspectRatio: false
+                // }
+            }
         });
     </script>
 </body>

@@ -4,10 +4,12 @@ include 'functions/functions-admin.php';
 $query_pengurus = "SELECT * FROM pengurus";
 $query_galeri = "SELECT * FROM galeri";
 $query_kontak = "SELECT * FROM kontak";
+$query_profil = "SELECT * FROM profil";
 
 $pengurus = tampilData($query_pengurus);
 $galeri = tampilData($query_galeri);
 $kontak = tampilData($query_kontak);
+$profil = tampilData($query_profil);
 
 ?>
 
@@ -100,7 +102,7 @@ $kontak = tampilData($query_kontak);
                     <a href="#galeri" class="nav-item nav-link">Galeri</a>
                     <a href="#kontak" class="nav-item nav-link">Kontak</a>
                 </div>
-                <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Login Anggota</a>
+                <a href="login.php" class="btn btn-primary rounded-pill py-2 px-4">Login Anggota</a>
             </div>
         </nav>
 
@@ -134,27 +136,7 @@ $kontak = tampilData($query_kontak);
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                     <h6 class="section-title bg-white text-start text-primary pe-3">Profil</h6>
-                    <h1 class="mb-4">Koperasi Plasma <span class="text-primary">PT Sawit Graha Manunggal</span></h1>
-                    <p class="mb-4">PT. Sawit Graha Manunggal adalah sebuah perusahaan perkebunan
-                        sawit swasta yang merupakan bagian dari Anglo Eastern Plantation (AEP)
-                        Group yaitu perusahaan PMA yang berdiri sejak tahun 1985, berkedudukan di
-                        Inggris dan terdaftar di London Stock Exchange. Sejak awal berdiri sampai
-                        dengan tahun 2006 AEP Group telah membangun beberapa kebun yaitu : PT.
-                        United Kingdom Indonesia Plantation, PT. Musam Utjing, PT. Simpang
-                        Ampat, PT. Tasik Raja, PT. Anak Tasik, Labuhan Batu (Sumatera Utara),
-                        PT.Mitra Puding Mas, PT. Alno Agro Utama, muko-muko selatan (Bengkulu),
-                        PT. Anglo Eastern Plantation Malaysia, Cenderung (Malaysia), PT. Bina Pitri
-                        Jaya, PT. Hijau Pryan Perdana, PT. Cahaya Pelita Andika, PT. Bangka Malindo
-                        Lestari. </p>
-                    <p class="mb-4">Pada tanggal 10 Desember 2007, AEP Indonesia berekspansi ke
-                        Kalimantan Tengah, tepatnya di daerah Tamiang Layang dan membangun
-                        kebun yang bernama PT. Sawit Graha Manunggal. Wilayah kerja PT. Sawit
-                        Graha Manunggal berada di Kabupaten Barito Timur dengan lokasi meliputi 6
-                        wilayah kecamatan yaitu : Kecamatan Dusun Timur, Kecamatan Karusen
-                        Janang, Kecamatan Paku, Kecamatan Dusun Tengah, Kecamatan Paju Epat,
-                        dan Kecamatan Pematang Karau. Pembangunan usaha perkebunan dilakukan
-                        melalui pola Kebun Inti & Kebun Kemitraan (Kebun Plasma dan Kebun Kas
-                        Desa).</p>
+                    <?= $profil[0]['keterangan'] ?>
                 </div>
             </div>
         </div>
@@ -173,7 +155,7 @@ $kontak = tampilData($query_kontak);
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item">
                             <div class="overflow-hidden">
-                                <img class="img-fluid" src="assets-admin/images/<?= $pg["foto"]; ?>" alt="">
+                                <img class="img-fluid" src="assets-admin/images/<?= $pg["foto"]; ?>" style="width: 100%; height:300px; object-fit:cover;" alt="">
                             </div>
                             <div class="text-center p-4">
                                 <h5 class="mb-0"><?= $pg['nama']; ?></h5>
@@ -408,15 +390,9 @@ $kontak = tampilData($query_kontak);
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <h4 class="text-white mb-3">Kontak</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><?= $kontak[0]['alamat']; ?></p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><?= $kontak[0]['telp']; ?></p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><?= $kontak[0]['email']; ?></p>
                 </div>
             </div>
         </div>

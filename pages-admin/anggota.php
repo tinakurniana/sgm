@@ -1,5 +1,5 @@
 <?php
-include 'functions/functions-admin.php';
+// include 'functions/functions-admin.php';
 
 $query_tampil = "SELECT * FROM anggota";
 $anggota = tampilData($query_tampil);

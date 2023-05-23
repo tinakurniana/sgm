@@ -14,7 +14,7 @@
                 </button>
                 <i class="ace-icon fa fa-user blue"></i>
                 Selamat datang
-                <strong class="blue">(Nama Anggota)</strong>.
+                <strong class="blue"><?= $_SESSION['name'] ?></strong>.
             </div>
             <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
