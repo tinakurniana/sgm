@@ -1,3 +1,10 @@
+<?php
+$pages_dir = 'pages-admin';
+$pages = scandir($pages_dir, 0);
+unset($pages[0], $pages[1]);
+$p = $_GET['p'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -160,7 +167,7 @@
         <div id="sidebar" class="sidebar h-sidebar navbar-collapse collapse sidebar-fixed">
 
             <ul class="nav nav-list">
-                <li class="hover">
+                <li class="hover <?= $p === 'beranda' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=beranda">
                         <i class="menu-icon fa fa-home"></i>
                         <span class="menu-text"> Beranda </span>
@@ -169,7 +176,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'pengurus' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=pengurus">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text"> Data Pengurus </span>
@@ -178,7 +185,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'anggota' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=anggota">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text"> Data Anggota </span>
@@ -187,7 +194,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'simpanan-pokok' || $p == 'simpanan-wajib-tahun' || $p == 'simpanan-wajib-bulan' || $p == 'simpanan-wajib' ? 'active' : '' ?>">
                     <a class="dropdown-toggle" href="#">
                         <i class="menu-icon fa fa-file-o"></i>
                         <span class="menu-text"> Data Simpanan </span>
@@ -198,7 +205,7 @@
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="hover">
+                        <li class="hover <?= $p === 'simpanan-pokok' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=simpanan-pokok">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Simpanan Pokok
@@ -207,7 +214,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
+                        <li class="hover <?= $p === 'simpanan-wajib-tahun' || $p == 'simpanan-wajib-bulan' || $p == 'simpanan-wajib' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=simpanan-wajib-tahun">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Simpanan Wajib
@@ -218,7 +225,7 @@
                     </ul>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'transaksi' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=transaksi">
                         <i class="menu-icon fa fa-list"></i>
                         <span class="menu-text"> Data Transaksi </span>
@@ -227,7 +234,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'profil' || $p === 'galeri' || $p === 'kontak' ? 'active' : '' ?>">
                     <a class="dropdown-toggle" href="#">
                         <i class="menu-icon fa fa-desktop"></i>
                         <span class="menu-text"> Halaman Pengunjung </span>
@@ -238,7 +245,7 @@
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="hover">
+                        <li class="hover <?= $p === 'profil' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=profil">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Profil
@@ -247,7 +254,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
+                        <li class="hover <?= $p === 'galeri' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=galeri">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Galeri
@@ -256,7 +263,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
+                        <li class="hover <?= $p === 'kontak' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=kontak">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Kontak
