@@ -47,7 +47,15 @@ $tahun = $_GET['tahun'];
 $data = mysqli_query($conn, "SELECT
                                 tahun.tahun,
                                 anggota.*,
-                                GROUP_CONCAT(bulan.bulan SEPARATOR ', ') AS bulan
+                                GROUP_CONCAT(
+                                    CONCAT(
+                                        bulan.bulan,
+                                        '(',
+                                        simpanan_wajib.simpanan_wajib,
+                                        ')'
+                                    )
+                                    SEPARATOR ', '
+                                ) AS bulan
                             FROM
                                 tahun
                             INNER JOIN bulan ON tahun.id = bulan.id_tahun
@@ -113,6 +121,7 @@ $bulan = [
 
 $i = 3;
 while ($d = mysqli_fetch_array($data)) {
+    $total = 0;
     $sheet->setCellValue('A' . $i, $d['no_kartu']);
     $sheet->setCellValue('B' . $i, $d['no_registrasi']);
     $sheet->setCellValue('C' . $i, $d['nama']);
@@ -121,12 +130,24 @@ while ($d = mysqli_fetch_array($data)) {
     for ($j = 0; $j < count($bulan); $j++) {
         $cek = strpos($d['bulan'], $bulan[$j]['bulan']);
         if ($cek !== false) {
-            $sheet->setCellValue($bulan[$j]['cell'] . $i, 5000);
+            $simpanan_wajib = 0;
+            $arr_bulan = explode(", ", $d['bulan']);
+            foreach ($arr_bulan as $ab) {
+                $pos = strpos($ab, "(");
+                $sub_bulan = substr($ab, 0, $pos);
+                if ($bulan[$j]['bulan'] === $sub_bulan) {
+                    $simpanan_wajib = substr($ab, $pos + 1, -1);
+                } else {
+                    continue;
+                }
+            }
+            $sheet->setCellValue($bulan[$j]['cell'] . $i, $simpanan_wajib);
+            $total += $simpanan_wajib;
         } else {
             $sheet->setCellValue($bulan[$j]['cell'] . $i, 0);
         }
     }
-    $sheet->setCellValue('R' . $i, (count(explode(", ", $d['bulan'])) * 5000) + 50000);
+    $sheet->setCellValue('R' . $i, $total + 50000);
     $i++;
 }
 

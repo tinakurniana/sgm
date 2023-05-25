@@ -13,9 +13,11 @@ $data = tampilData($query_tampil);
 	<div class="page-header">
 		<h1 style="color:#585858">
 			<i class="ace-icon fa fa-file-o"></i> Data Simpanan Pokok
+			<a target="_blank" href="pages-admin/cetak-pokok.php">
 			<button class="btn btn-success pull-right">
 				<i class="ace-icon fa fa-print"></i> Cetak
 			</button>
+			</a>
 		</h1>
 	</div><!-- /.page-header -->
 
