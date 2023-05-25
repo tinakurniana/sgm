@@ -1,12 +1,12 @@
 <?php
+// mengkoneksikan ke database
 $host = 'localhost';
 $username = 'root';
 $password = '';
 $dbname = 'skripsi-pirda';
-
 $conn = mysqli_connect($host, $username, $password, $dbname);
 
-function tampilData($query)
+function tampilData($query) // Function untuk menampilkan data
 {
     global $conn;
     $result = mysqli_query($conn, $query);
@@ -17,70 +17,99 @@ function tampilData($query)
     return $rows;
 }
 
-function tambahDataPengurus($data)
+function tambahDataPengurus($data) // Function untuk menambahkan data pengurus
 {
     global $conn;
+
+    // mengambil data berdasarkan name yang dikirim dari form
     $nama = htmlspecialchars($data['nama']);
     $jabatan = htmlspecialchars($data['jabatan']);
     $no_hp = htmlspecialchars($data['no_hp']);
     $ktp = htmlspecialchars($data['ktp']);
 
+    // memanggil function uploadFoto
     $foto = uploadFoto();
     if (!$foto) {
         return false;
     }
 
+    // query untuk insert data ke db
     $query = "INSERT INTO pengurus VALUES ('', '$nama', '$jabatan', '$no_hp', '$ktp', '$foto')";
+
+    // jika query berhasil dieksekusi maka menampilkan alert data berhasil dan reload ke halaman pengurus
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Ditambahkan"); location.href = "indexAdmin.php?p=pengurus";</script>';
-    } else {
+    } 
+    // jika query tidak berhasil dieksekusi maka menampilkan alert data gagal dan reload ke halaman pengurus
+    else {
         echo '<script>alert("Data Gagal Ditambahkan"); location.href = "indexAdmin.php?p=pengurus";</script>';
     }
+
+    // menghentikan koneksi php ke server mysql
     mysqli_close($conn);
 }
 
-function hapusDataPengurus($data)
+function hapusDataPengurus($data) // Function untuk menghapus data pengurus
 {
     global $conn;
+
+    // mengambil id pengurus dari name button hapus
     $id_pengurus = htmlspecialchars($data['btn-hapus']);
 
+    // query untuk hapus data dari db
     $query = "DELETE FROM pengurus WHERE pengurus.id_pengurus = '$id_pengurus'";
 
+    // jika query berhasil dieksekusi maka menampilkan alert data berhasil dan reload ke halaman pengurus
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=pengurus";</script>';
-    } else {
+    } 
+    // jika query tidak berhasil dieksekusi maka menampilkan alert data gagal dan reload ke halaman pengurus
+    else {
         echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=pengurus";</script>';
     }
+
+    // menghentikan koneksi php ke server mysql
     mysqli_close($conn);
 }
 
-function editDataPengurus($data)
+function editDataPengurus($data) // Function untuk mengedit data pengurus
 {
     global $conn;
+
+    // mengambil data berdasarkan name yang dikirim dari form
     $id_pengurus = htmlspecialchars($data['btn-edit']);
     $nama = htmlspecialchars($data['nama']);
     $jabatan = htmlspecialchars($data['jabatan']);
     $no_hp = htmlspecialchars($data['no_hp']);
     $ktp = htmlspecialchars($data['ktp']);
 
+     // memanggil function uploadFoto
     $foto = uploadFoto();
     if (!$foto) {
         return false;
     }
 
+    // query untuk edit data
     $query = "UPDATE pengurus SET nama = '$nama', jabatan = '$jabatan', no_hp = '$no_hp', ktp = '$ktp', foto = '$foto' WHERE id_pengurus = '$id_pengurus'";
 
+    // jika query berhasil dieksekusi maka menampilkan alert data berhasil dan reload ke halaman pengurus
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=pengurus";</script>';
-    } else {
+    } 
+    // jika query gagal dieksekusi maka menampilkan alert data gagasl dan reload ke halaman pengurus
+    else {
         echo '<script>alert("Data Gagal Diedit"); location.href = "indexAdmin.php?p=pengurus";</script>';
     }
+
+    // menghentikan koneksi php ke server mysql
     mysqli_close($conn);
 }
 
-function tambahDataAnggota($data)
+function tambahDataAnggota($data) // Function untuk menambah data anggota
 {
     global $conn;
+
+    // mengambil data berdasarkan name yang dikirim dari form
     $no_kartu = htmlspecialchars($data['no_kartu']);
     $no_registrasi = htmlspecialchars($data['no_registrasi']);
     $mulai_bergabung = htmlspecialchars($data['mulai_bergabung']);
@@ -90,18 +119,26 @@ function tambahDataAnggota($data)
     $alamat = htmlspecialchars($data['alamat']);
     $ktp = htmlspecialchars($data['ktp']);
     $luas_plasma = htmlspecialchars($data['luas_plasma']);
+
+     // memanggil function uploadFoto
     $foto = uploadFoto();
     if (!$foto) {
         return false;
     }
+
+     // memanggil function uploadFotoBukti
     $foto_bukti = uploadFotoBukti();
     if (!$foto_bukti) {
         return false;
     }
 
+    // query untuk insert data anggota
     $query = "INSERT INTO anggota VALUES ('', '$username', '$password', '$nama', '$no_kartu', '$no_registrasi', '$alamat', '$ktp', '$luas_plasma', '$foto', '$foto_bukti', '$mulai_bergabung')";
+    // jika query berhasil dieksekusi maka akan menambahkan data lagi ke tabel simpanan pokok
     if (mysqli_query($conn, $query)) {
+        // mengembalikan id dari query terakhir
         $id = mysqli_insert_id($conn);
+        // query tambah data ke simpanan pokok
         $query2 = "INSERT INTO simpanan_pokok VALUES ('', '$id', 50000)";
         if (mysqli_query($conn, $query2)) {
             echo '<script>alert("Data Berhasil Ditambahkan"); location.href = "indexAdmin.php?p=anggota";</script>';

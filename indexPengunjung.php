@@ -1,16 +1,18 @@
 <?php
+// mengkonekkan ke file functions-admin.php
 include 'functions/functions-admin.php';
 
+// select data dari tabel
 $query_pengurus = "SELECT * FROM pengurus";
 $query_galeri = "SELECT * FROM galeri";
 $query_kontak = "SELECT * FROM kontak";
 $query_profil = "SELECT * FROM profil";
 
+// menampilkan data dengan memanggil function tampilData dan parameternya diisi dengan select diatas
 $pengurus = tampilData($query_pengurus);
 $galeri = tampilData($query_galeri);
 $kontak = tampilData($query_kontak);
 $profil = tampilData($query_profil);
-
 ?>
 
 <!DOCTYPE html>
@@ -70,11 +72,6 @@ $profil = tampilData($query_profil);
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
                     <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i><?= $kontak[0]['telp']; ?></small>
                     <small class="text-light"><i class="fa fa-envelope-open me-2"></i><?= $kontak[0]['email']; ?></small>
-                    <!-- <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a> -->
                 </div>
             </div>
         </div>
@@ -94,11 +91,9 @@ $profil = tampilData($query_profil);
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="#" class="nav-item nav-link active">Home</a>
+                    <a href="#" class="nav-item nav-link">Home</a>
                     <a href="#profil" class="nav-item nav-link">Profil</a>
                     <a href="#struktur" class="nav-item nav-link">Struktur Organisasi</a>
-                    <!-- <a href="#keuntungan" class="nav-item nav-link">Keuntungan Bergabung</a>
-                    <a href="#cara-bergabung" class="nav-item nav-link">Cara Bergabung</a> -->
                     <a href="#galeri" class="nav-item nav-link">Galeri</a>
                     <a href="#kontak" class="nav-item nav-link">Kontak</a>
                 </div>
@@ -136,6 +131,7 @@ $profil = tampilData($query_profil);
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                     <h6 class="section-title bg-white text-start text-primary pe-3">Profil</h6>
+                    <!-- Menampilkan data profil di index 0 (karena datanya cuman 1) -->
                     <?= $profil[0]['keterangan'] ?>
                 </div>
             </div>
@@ -151,6 +147,7 @@ $profil = tampilData($query_profil);
                 <h1 class="mb-5">Struktur Organisasi Koperasi</h1>
             </div>
             <div class="row g-4">
+                <!-- looping untuk menampilkan data pengurus -->
                 <?php foreach ($pengurus as $pg) : ?>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item">
@@ -169,139 +166,7 @@ $profil = tampilData($query_profil);
     </div>
     <!-- Struktur Organisasi End -->
 
-    <!-- Keuntungan Bergabung Start -->
-    <!-- <div class="container-xxl py-5" id="keuntungan">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Keuntungan Bergabung</h6>
-                <h1 class="mb-5">Keuntungan Menjadi Anggota Koperasi</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-globe text-primary mb-4"></i>
-                            <h5>WorldWide Tours</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-hotel text-primary mb-4"></i>
-                            <h5>Hotel Reservation</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-user text-primary mb-4"></i>
-                            <h5>Travel Guides</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-cog text-primary mb-4"></i>
-                            <h5>Event Management</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-globe text-primary mb-4"></i>
-                            <h5>WorldWide Tours</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-hotel text-primary mb-4"></i>
-                            <h5>Hotel Reservation</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-user text-primary mb-4"></i>
-                            <h5>Travel Guides</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="service-item rounded pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-cog text-primary mb-4"></i>
-                            <h5>Event Management</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Keuntungan Bergabung End -->
-
-    <!-- Cara Bergabung Start -->
-    <!-- <div class="container-xxl py-5" id="cara-bergabung">
-        <div class="container">
-            <div class="text-center pb-4 wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Cara Bergabung</h6>
-                <h1 class="mb-5">Alur Bergabung Menjadi Anggota</h1>
-            </div>
-            <div class="row gy-5 gx-4 justify-content-center">
-                <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="position-relative border border-primary pt-5 pb-4 px-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
-                            <i class="fa fa-globe fa-3x text-white"></i>
-                        </div>
-                        <h5 class="mt-4">Choose A Destination</h5>
-                        <hr class="w-25 mx-auto bg-primary mb-1">
-                        <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="position-relative border border-primary pt-5 pb-4 px-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
-                            <i class="fa fa-dollar-sign fa-3x text-white"></i>
-                        </div>
-                        <h5 class="mt-4">Pay Online</h5>
-                        <hr class="w-25 mx-auto bg-primary mb-1">
-                        <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="position-relative border border-primary pt-5 pb-4 px-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
-                            <i class="fa fa-plane fa-3x text-white"></i>
-                        </div>
-                        <h5 class="mt-4">Fly Today</h5>
-                        <hr class="w-25 mx-auto bg-primary mb-1">
-                        <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Cara Bergabung End -->
-
     <!-- Galeri Start -->
-    <!-- Package Start -->
     <div class="container-xxl py-5" id="galeri">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -309,11 +174,12 @@ $profil = tampilData($query_profil);
                 <h1 class="mb-5">Dokumentasi</h1>
             </div>
             <div class="row g-4 justify-content-center">
+                <!-- Looping untuk menampilkan data galeri -->
                 <?php foreach ($galeri as $gr) : ?>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="package-item">
                             <div class="overflow-hidden">
-                                <img class="img-fluid" src="assets-admin/images/<?= $gr["foto"]; ?>" alt="">
+                                <img style="width: 100%; height:300px; object-fit:cover;" class="img-fluid" src="assets-admin/images/<?= $gr["foto"]; ?>" alt="">
                             </div>
                             <div class="text-center p-4">
                                 <h3 class="mb-3"><?= $gr['judul']; ?></h3>
@@ -325,7 +191,6 @@ $profil = tampilData($query_profil);
             </div>
         </div>
     </div>
-    <!-- Package End -->
     <!-- Galeri End -->
 
     <!-- Kontak Start -->
@@ -368,7 +233,6 @@ $profil = tampilData($query_profil);
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <!-- <iframe class="position-relative rounded w-100 h-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd" frameborder="0" style="min-height: 300px; border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> -->
                     <iframe class="position-relative rounded w-100 h-100" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15948.801474745153!2d115.0831671!3d-2.075705!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dfadab013c5048f%3A0xc77540d8f57a50f5!2sPT.%20Sawit%20Graha%20Manunggal!5e0!3m2!1sid!2sid!4v1684563585256!5m2!1sid!2sid" frameborder="0" style="min-height: 300px; border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                 </div>
             </div>

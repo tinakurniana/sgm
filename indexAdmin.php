@@ -1,17 +1,25 @@
 <?php
+// mematikan semua error reporting
 error_reporting(0);
+
+// memulai eksekusi session (mengaktifkan session)
 session_start();
 
+// mengkonekkan ke file functions-admin.php
 include 'functions/functions-admin.php';
 
+// untuk mengambil sekarang ada di page mana
 $pages_dir = 'pages-admin';
 $pages = scandir($pages_dir, 0);
 unset($pages[0], $pages[1]);
-$p = $_GET['p'];
+$p = isset($_GET['p']) ? $_GET['p'] : 'beranda';
 
+// jika tidak ada session login admin maka diarahkan ke halaman login
 if (!isset($_SESSION['loginAdmin'])) {
     header("Location: login.php");
-} else {
+} 
+// jika ada session login maka 
+else {
     $id = $_SESSION['idAdmin'];
 
     $dataAdmin = tampilData("SELECT * FROM admin WHERE id_admin = $id");
@@ -159,6 +167,7 @@ if (!isset($_SESSION['loginAdmin'])) {
         }
     </script>
 
+    <!-- CKEditor -->
     <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
 </head>
 
@@ -221,8 +230,6 @@ if (!isset($_SESSION['loginAdmin'])) {
             </div>
         </div><!-- /.navbar-container -->
     </div>
-
-
 
     <div class="main-container" id="main-container">
         <div id="sidebar" class="sidebar h-sidebar navbar-collapse collapse sidebar-fixed">
@@ -360,9 +367,9 @@ if (!isset($_SESSION['loginAdmin'])) {
                 }
                 ?>
 
-
+                <!-- Modal Ubah Passsword -->
                 <div class="modal fade" id="ubah-password">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
                                 <div class="modal-header">
@@ -411,13 +418,12 @@ if (!isset($_SESSION['loginAdmin'])) {
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <!-- End Modal Tambah Anggota -->
-
-
+                <!-- End Modal Ubah assword -->
 
             </div>
         </div><!-- /.main-content -->
 
+        <!-- Footer -->
         <div class="footer">
             <div class="footer-inner">
                 <div class="footer-content">
@@ -427,6 +433,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                 </div>
             </div>
         </div>
+        <!-- End Footer -->
 
         <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
             <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>

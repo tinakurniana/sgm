@@ -1,9 +1,12 @@
 <?php
+// mematikan semua error reporting
 error_reporting(0);
 
-include 'functions/functions-admin.php';
-
+// memulai eksekusi session (mengaktifkan session)
 session_start();
+
+// mengkonekkan ke file functions-admin.php
+include 'functions/functions-admin.php';
 
 $username = mysqli_real_escape_string($conn, htmlspecialchars($_POST['username']));
 $password = mysqli_real_escape_string($conn, htmlspecialchars(md5($_POST['password'])));
