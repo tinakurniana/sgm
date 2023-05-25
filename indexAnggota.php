@@ -1,20 +1,32 @@
 <?php
+// mematikan semua error reporting
 error_reporting(0);
+
+// memulai eksekusi session (mengaktifkan session)
 session_start();
+
+// mengkonekkan ke file functions-admin.php
 include 'functions/functions-admin.php';
 
+// untuk mengambil sekarang ada di page mana
+$pages_dir = 'pages-admin';
+$pages = scandir($pages_dir, 0);
+unset($pages[0], $pages[1]);
+$p = isset($_GET['p']) ? $_GET['p'] : 'beranda';
+
+// 
 if (!isset($_SESSION['loginAnggota'])) {
     header("Location: login.php");
-}else{
+} else {
     $id = $_SESSION['id'];
-    
     $dataAnggota = tampilData("SELECT * FROM anggota WHERE id_anggota = $id");
-    
+
     if (isset($_POST['reset'])) {
         resetPassword($_POST);
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -177,15 +189,15 @@ if (!isset($_SESSION['loginAnggota'])) {
         <div id="sidebar" class="sidebar h-sidebar navbar-collapse collapse sidebar-fixed">
 
             <ul class="nav nav-list">
-                <li class="hover">
-                    <a href="indexAnggota.php?p=beranda">
+                <li class="hover <?= $p === 'beranda' ? 'active' : '' ?>">
+                    <a href="indexAnggota.php">
                         <i class="menu-icon fa fa-home"></i>
                         <span class="menu-text"> Beranda </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'profil-saya' ? 'active' : '' ?>">
                     <a href="indexAnggota.php?p=profil-saya">
                         <i class="menu-icon fa fa-user"></i>
                         <span class="menu-text"> Profil Saya </span>
@@ -193,7 +205,7 @@ if (!isset($_SESSION['loginAnggota'])) {
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'simpanan' ? 'active' : '' ?>">
                     <a href="indexAnggota.php?p=simpanan">
                         <i class="menu-icon fa fa-file-o"></i>
                         <span class="menu-text"> Data Simpanan </span>
@@ -201,7 +213,7 @@ if (!isset($_SESSION['loginAnggota'])) {
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'transaksi' ? 'active' : '' ?>">
                     <a href="indexAnggota.php?p=transaksi">
                         <i class="menu-icon fa fa-list"></i>
                         <span class="menu-text"> Data Transaksi </span>
@@ -234,6 +246,7 @@ if (!isset($_SESSION['loginAnggota'])) {
                 }
                 ?>
 
+                <!-- Modal Ubah Password -->
                 <div class="modal fade" id="ubah-password">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -284,11 +297,12 @@ if (!isset($_SESSION['loginAnggota'])) {
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <!-- End Modal Tambah Anggota -->
+                <!-- End Modal Ubah Password -->
 
             </div>
         </div><!-- /.main-content -->
 
+        <!-- Footer -->
         <div class="footer">
             <div class="footer-inner">
                 <div class="footer-content">
@@ -298,6 +312,7 @@ if (!isset($_SESSION['loginAnggota'])) {
                 </div>
             </div>
         </div>
+        <!-- End Footer -->
 
         <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
             <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>

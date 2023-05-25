@@ -1,12 +1,25 @@
 <?php
+// mematikan semua error reporting
 error_reporting(0);
+
+// memulai eksekusi session (mengaktifkan session)
 session_start();
 
+// mengkonekkan ke file functions-admin.php
 include 'functions/functions-admin.php';
 
+// untuk mengambil sekarang ada di page mana
+$pages_dir = 'pages-admin';
+$pages = scandir($pages_dir, 0);
+unset($pages[0], $pages[1]);
+$p = isset($_GET['p']) ? $_GET['p'] : 'beranda';
+
+// jika tidak ada session login admin maka diarahkan ke halaman login
 if (!isset($_SESSION['loginAdmin'])) {
     header("Location: login.php");
-} else {
+} 
+// jika ada session login maka 
+else {
     $id = $_SESSION['idAdmin'];
 
     $dataAdmin = tampilData("SELECT * FROM admin WHERE id_admin = $id");
@@ -154,6 +167,7 @@ if (!isset($_SESSION['loginAdmin'])) {
         }
     </script>
 
+    <!-- CKEditor -->
     <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
 </head>
 
@@ -217,13 +231,11 @@ if (!isset($_SESSION['loginAdmin'])) {
         </div><!-- /.navbar-container -->
     </div>
 
-
-
     <div class="main-container" id="main-container">
         <div id="sidebar" class="sidebar h-sidebar navbar-collapse collapse sidebar-fixed">
 
             <ul class="nav nav-list">
-                <li class="hover">
+                <li class="hover <?= $p === 'beranda' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=beranda">
                         <i class="menu-icon fa fa-home"></i>
                         <span class="menu-text"> Beranda </span>
@@ -232,7 +244,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'pengurus' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=pengurus">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text"> Data Pengurus </span>
@@ -241,7 +253,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'anggota' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=anggota">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text"> Data Anggota </span>
@@ -250,7 +262,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'simpanan-pokok' || $p == 'simpanan-wajib-tahun' || $p == 'simpanan-wajib-bulan' || $p == 'simpanan-wajib' ? 'active' : '' ?>">
                     <a class="dropdown-toggle" href="#">
                         <i class="menu-icon fa fa-file-o"></i>
                         <span class="menu-text"> Data Simpanan </span>
@@ -261,7 +273,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="hover">
+                        <li class="hover <?= $p === 'simpanan-pokok' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=simpanan-pokok">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Simpanan Pokok
@@ -270,7 +282,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
+                        <li class="hover <?= $p === 'simpanan-wajib-tahun' || $p == 'simpanan-wajib-bulan' || $p == 'simpanan-wajib' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=simpanan-wajib-tahun">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Simpanan Wajib
@@ -281,7 +293,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                     </ul>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'transaksi' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=transaksi">
                         <i class="menu-icon fa fa-list"></i>
                         <span class="menu-text"> Data Transaksi </span>
@@ -290,7 +302,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover">
+                <li class="hover <?= $p === 'profil' || $p === 'galeri' || $p === 'kontak' ? 'active' : '' ?>">
                     <a class="dropdown-toggle" href="#">
                         <i class="menu-icon fa fa-desktop"></i>
                         <span class="menu-text"> Halaman Pengunjung </span>
@@ -301,7 +313,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="hover">
+                        <li class="hover <?= $p === 'profil' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=profil">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Profil
@@ -310,7 +322,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
+                        <li class="hover <?= $p === 'galeri' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=galeri">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Galeri
@@ -319,7 +331,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="hover">
+                        <li class="hover <?= $p === 'kontak' ? 'active' : '' ?>">
                             <a href="indexAdmin.php?p=kontak">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Kontak
@@ -355,9 +367,9 @@ if (!isset($_SESSION['loginAdmin'])) {
                 }
                 ?>
 
-
+                <!-- Modal Ubah Passsword -->
                 <div class="modal fade" id="ubah-password">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
                                 <div class="modal-header">
@@ -406,13 +418,12 @@ if (!isset($_SESSION['loginAdmin'])) {
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <!-- End Modal Tambah Anggota -->
-
-
+                <!-- End Modal Ubah assword -->
 
             </div>
         </div><!-- /.main-content -->
 
+        <!-- Footer -->
         <div class="footer">
             <div class="footer-inner">
                 <div class="footer-content">
@@ -422,6 +433,7 @@ if (!isset($_SESSION['loginAdmin'])) {
                 </div>
             </div>
         </div>
+        <!-- End Footer -->
 
         <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
             <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
