@@ -313,7 +313,7 @@ $profil = tampilData($query_profil);
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="package-item">
                             <div class="overflow-hidden">
-                                <img class="img-fluid" src="assets-admin/images/<?= $gr["foto"]; ?>" alt="">
+                                <img class="img-fluid" src="assets-admin/images/<?= $gr["foto"]; ?>" style="width: 100%; height:300px; object-fit:cover;" alt="">
                             </div>
                             <div class="text-center p-4">
                                 <h3 class="mb-3"><?= $gr['judul']; ?></h3>
