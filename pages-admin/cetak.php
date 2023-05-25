@@ -8,6 +8,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
+
+//setting header tabel excel
 $sheet->mergeCells('A1:A2');
 $sheet->setCellValue('A1', 'No Kartu');
 
@@ -42,8 +44,14 @@ $sheet->setCellValue('Q2', 'Desember');
 $sheet->mergeCells('R1:R2');
 $sheet->setCellValue('R1', 'Total');
 
-$tahun = $_GET['tahun'];
 
+//menangkap data tahun yang ingin dicetak
+$tahun = $_GET['tahun'];
+//query mengambil data sesuai tahun
+//group concat = untuk menggabungkan beberapa string jadi 1 contoh = Januari, Februari
+//concat menggabungkan string dari beberapa field contoh = Januari(5000)
+
+// contoh hasil dari AS bulan = Januari(5000), Februari(10000)
 $data = mysqli_query($conn, "SELECT
                                 tahun.tahun,
                                 anggota.*,

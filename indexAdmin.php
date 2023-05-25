@@ -17,14 +17,16 @@ $p = isset($_GET['p']) ? $_GET['p'] : 'beranda';
 // jika tidak ada session login admin maka diarahkan ke halaman login
 if (!isset($_SESSION['loginAdmin'])) {
     header("Location: login.php");
-} 
-// jika ada session login maka 
-else {
-    $id = $_SESSION['idAdmin'];
+}
 
-    $dataAdmin = tampilData("SELECT * FROM admin WHERE id_admin = $id");
+//menangkap id admin yang sedang login
+$id = $_SESSION['idAdmin'];
 
-    $data_tahun = tampilData("SELECT
+//query mengambil data admin dari database
+$dataAdmin = tampilData("SELECT * FROM admin WHERE id_admin = $id");
+
+//query megnambil data tahun dari database
+$data_tahun = tampilData("SELECT
                                 SUBSTRING(anggota.mulai_bergabung, 1, 4) AS tahun
                             FROM
                                 anggota
@@ -33,11 +35,13 @@ else {
                             ORDER BY
                                 SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
 
-    foreach ($data_tahun as $dt) {
-        $data_arr_tahun[] = $dt['tahun'];
-    }
+//lalu data tahun yang ada dimasukkan kedalam array
+foreach ($data_tahun as $dt) {
+    $data_arr_tahun[] = $dt['tahun'];
+}
 
-    $data_anggota = tampilData("SELECT
+//query megnambil data anggota dari database
+$data_anggota = tampilData("SELECT
                                     COUNT(anggota.id_anggota) AS jumlah
                                 FROM
                                     anggota
@@ -46,11 +50,13 @@ else {
                                 ORDER BY
                                     SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
 
-    foreach ($data_anggota as $da) {
-        $data_arr_anggota[] = $da['jumlah'];
-    }
+//lalu data anggota yang ada dimasukkan kedalam array
+foreach ($data_anggota as $da) {
+    $data_arr_anggota[] = $da['jumlah'];
+}
 
-    $data_hektar = tampilData("SELECT
+//query megnambil data hektar dari database
+$data_hektar = tampilData("SELECT
                                     SUM(anggota.luas_plasma) AS jumlah
                                 FROM
                                     anggota
@@ -59,16 +65,15 @@ else {
                                 ORDER BY
                                     SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
 
-    foreach ($data_hektar as $dh) {
-        $data_arr_hektar[] = $dh['jumlah'];
-    }
-
-
-    if (isset($_POST['reset'])) {
-        resetPassword($_POST);
-    }
+//lalu data hektar yang ada dimasukkan kedalam array
+foreach ($data_hektar as $dh) {
+    $data_arr_hektar[] = $dh['jumlah'];
 }
 
+
+if (isset($_POST['reset'])) {
+    resetPassword($_POST);
+}
 
 ?>
 
@@ -638,8 +643,12 @@ else {
         });
     </script>
 
+
+    <!-- GRAFIKK -->
+    <!-- LIBRARY CHART JS buat GRAFIK -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- //grafik 1 (Data ANggota per tahun) -->
     <script>
         const ctx = document.getElementById('myChart');
 
@@ -659,13 +668,11 @@ else {
                         beginAtZero: true
                     }
                 },
-                // options: {
-                //     // responsive: false,
-                //     // maintainAspectRatio: false
-                // }
             }
         });
     </script>
+
+    <!-- //grafik 2 (Data Hektar per tahun) -->
     <script>
         const ctx2 = document.getElementById('myChart2');
 
@@ -685,10 +692,6 @@ else {
                         beginAtZero: true
                     }
                 },
-                // options: {
-                //     responsive: false,
-                //     // maintainAspectRatio: false
-                // }
             }
         });
     </script>

@@ -1,4 +1,5 @@
 <?php 
+//konek database
 $host = 'localhost';
 $username = 'root';
 $password = '';
@@ -6,6 +7,8 @@ $dbname = 'sgmbartim';
 
 $conn = mysqli_connect($host, $username, $password, $dbname);
 
+
+//function login
 function login($data)
 {
     global $conn;
@@ -29,10 +32,10 @@ function login($data)
     }
 }
 
-function logout(){
-    session_start();
-    session_destroy();
+// function logout(){
+//     session_start();
+//     session_destroy();
 
-    header("Location: login.php");
-}
+//     header("Location: login.php");
+// }
 ?>
