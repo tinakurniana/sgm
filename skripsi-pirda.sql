@@ -92,8 +92,8 @@ CREATE TABLE `galeri` (
 /*Data for the table `galeri` */
 
 insert  into `galeri`(`id_galeri`,`foto`,`judul`,`keterangan`) values 
-(4,'646ccef64df77.jpg','belajar php','yyyhhahahha'),
-(5,'646ccf08bd137.png','belajar php','yajakkakak');
+(4,'646f584fa6385.jpg','Rapat Tahunan 2021','Rapat tahunan pada tahun 2021'),
+(5,'646f5867463ad.jpg','Rapat Tahunan 2022','Rapat tahunan pada 2022');
 
 /*Table structure for table `kontak` */
 
@@ -124,13 +124,15 @@ CREATE TABLE `pengurus` (
   `ktp` varchar(16) NOT NULL,
   `foto` varchar(255) NOT NULL,
   PRIMARY KEY (`id_pengurus`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `pengurus` */
 
 insert  into `pengurus`(`id_pengurus`,`nama`,`jabatan`,`no_hp`,`ktp`,`foto`) values 
 (1,'Jonny','Ketua','0812345678','98737818','646af864e8cf4.jpg'),
-(2,'Sunny','Sekretaris','086556','98737818','646af8c03fc8d.jpg');
+(2,'Sunny','Sekretaris','086556','98737818','646af8c03fc8d.jpg'),
+(3,'Bennie','Bendahara','0812345678','98737818','646f576149801.jpg'),
+(4,'Anne','Humas','086556','1234567','646f5808895ce.jpg');
 
 /*Table structure for table `profil` */
 
@@ -145,7 +147,7 @@ CREATE TABLE `profil` (
 /*Data for the table `profil` */
 
 insert  into `profil`(`id`,`keterangan`) values 
-(1,'<p><strong>tes<em> </em></strong><em>tes</em> tes</p>\r\n');
+(1,'<h3><strong>Koperasi Plasma PT Sawit Graha Manunggal</strong></h3>\r\n\r\n<p>PT. Sawit Graha Manunggal adalah sebuah perusahaan perkebunan sawit swasta yang merupakan bagian dari Anglo Eastern Plantation (AEP) Group yaitu perusahaan PMA yang berdiri sejak tahun 1985, berkedudukan di Inggris dan terdaftar di London Stock Exchange. Sejak awal berdiri sampai dengan tahun 2006 AEP Group telah membangun beberapa kebun yaitu : PT. United Kingdom Indonesia Plantation, PT. Musam Utjing, PT. Simpang Ampat, PT. Tasik Raja, PT. Anak Tasik, Labuhan Batu (Sumatera Utara), PT.Mitra Puding Mas, PT. Alno Agro Utama, muko-muko selatan (Bengkulu), PT. Anglo Eastern Plantation Malaysia, Cenderung (Malaysia), PT. Bina Pitri Jaya, PT. Hijau Pryan Perdana, PT. Cahaya Pelita Andika, PT. Bangka Malindo Lestari.</p>\r\n\r\n<p>Pada tanggal 10 Desember 2007, AEP Indonesia berekspansi ke Kalimantan Tengah, tepatnya di daerah Tamiang Layang dan membangun kebun yang bernama PT. Sawit Graha Manunggal. Wilayah kerja PT. Sawit Graha Manunggal berada di Kabupaten Barito Timur dengan lokasi meliputi 6 wilayah kecamatan yaitu : Kecamatan Dusun Timur, Kecamatan Karusen Janang, Kecamatan Paku, Kecamatan Dusun Tengah, Kecamatan Paju Epat, dan Kecamatan Pematang Karau. Pembangunan usaha perkebunan dilakukan melalui pola Kebun Inti &amp; Kebun Kemitraan (Kebun Plasma dan Kebun Kas Desa).</p>\r\n');
 
 /*Table structure for table `simpanan_pokok` */
 

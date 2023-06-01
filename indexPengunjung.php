@@ -146,7 +146,7 @@ $profil = tampilData($query_profil);
                 <h6 class="section-title bg-white text-center text-primary px-3">Struktur Organisasi</h6>
                 <h1 class="mb-5">Struktur Organisasi Koperasi</h1>
             </div>
-            <div class="row g-4">
+            <div class="row g-4 d-flex justify-content-center">
                 <!-- looping untuk menampilkan data pengurus -->
                 <?php foreach ($pengurus as $pg) : ?>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
