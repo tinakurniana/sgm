@@ -21,7 +21,9 @@ $sheet->setCellValue('H1', 'Mata Uang');
 $sheet->setCellValue('I1', 'Jumlah');
 $sheet->setCellValue('J1', 'Reference Number');
 
-$data = mysqli_query($conn, "SELECT * FROM transaksi");
+$id_tahun = $_GET['id_tahun'];
+$id_bulan = $_GET['id_bulan'];
+$data = mysqli_query($conn, "SELECT * FROM transaksi WHERE id_tahun = '$id_tahun' AND id_bulan = '$id_bulan'");
 
 $i = 2;
 $no = 1;

@@ -1,6 +1,6 @@
 <?php
 // mematikan semua error reporting
-error_reporting(0);
+// error_reporting(0);
 
 // memulai eksekusi session (mengaktifkan session)
 session_start();
@@ -26,14 +26,7 @@ $id = $_SESSION['idAdmin'];
 $dataAdmin = tampilData("SELECT * FROM admin WHERE id_admin = $id");
 
 //query megnambil data tahun dari database
-$data_tahun = tampilData("SELECT
-                                SUBSTRING(anggota.mulai_bergabung, 1, 4) AS tahun
-                            FROM
-                                anggota
-                            GROUP BY
-                                SUBSTR(anggota.mulai_bergabung, 1, 4)
-                            ORDER BY
-                                SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+$data_tahun = tampilData("SELECT tahun.tahun FROM tahun ORDER BY tahun.tahun ASC;");
 
 //lalu data tahun yang ada dimasukkan kedalam array
 foreach ($data_tahun as $dt) {
@@ -42,32 +35,65 @@ foreach ($data_tahun as $dt) {
 
 //query megnambil data anggota dari database
 $data_anggota = tampilData("SELECT
-                                    COUNT(anggota.id_anggota) AS jumlah
-                                FROM
-                                    anggota
-                                GROUP BY
-                                    SUBSTR(anggota.mulai_bergabung, 1, 4)
-                                ORDER BY
-                                    SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+                                COUNT(anggota.id_anggota) AS anggota,
+                                tahun.tahun
+                            FROM
+                                anggota
+                            RIGHT JOIN tahun ON tahun.id = anggota.id_tahun
+                            GROUP BY
+                                tahun.tahun
+                            ORDER BY tahun.tahun ASC;");
 
 //lalu data anggota yang ada dimasukkan kedalam array
 foreach ($data_anggota as $da) {
-    $data_arr_anggota[] = $da['jumlah'];
+    $data_arr_anggota[] = $da['anggota'];
 }
 
 //query megnambil data hektar dari database
 $data_hektar = tampilData("SELECT
-                                    SUM(anggota.luas_plasma) AS jumlah
-                                FROM
-                                    anggota
-                                GROUP BY
-                                    SUBSTR(anggota.mulai_bergabung, 1, 4)
-                                ORDER BY
-                                    SUBSTR(anggota.mulai_bergabung, 1, 4) ASC;");
+                                SUM(anggota.luas_plasma) AS hektar,
+                                tahun.tahun
+                            FROM
+                                anggota
+                            RIGHT JOIN tahun ON tahun.id = anggota.id_tahun
+                            GROUP BY
+                                tahun.tahun
+                            ORDER BY tahun.tahun ASC;");
 
 //lalu data hektar yang ada dimasukkan kedalam array
 foreach ($data_hektar as $dh) {
-    $data_arr_hektar[] = $dh['jumlah'];
+    $data_arr_hektar[] = $dh['hektar'];
+}
+
+$data_sw = tampilData("SELECT
+                                SUM(simpanan_wajib.simpanan_wajib) AS total_wajib,
+                                tahun.tahun
+                            FROM
+                                simpanan_wajib
+                            RIGHT JOIN tahun ON simpanan_wajib.id_tahun = tahun.id
+                            GROUP BY
+                                tahun.tahun
+                            ORDER BY
+                                tahun.tahun ASC;");
+
+foreach ($data_sw as $dsw) {
+    $data_arr_sw[] = $dsw['total_wajib'];
+}
+
+$data_sp = tampilData("SELECT
+                            SUM(simpanan_pokok.simpanan) AS total_pokok,
+                            tahun.tahun
+                        FROM
+                            simpanan_pokok
+                        RIGHT JOIN anggota ON simpanan_pokok.id_anggota = anggota.id_anggota
+                        RIGHT JOIN tahun ON tahun.id = anggota.id_tahun
+                        GROUP BY
+                            tahun.tahun
+                        ORDER BY
+                            tahun.tahun ASC;");
+
+foreach ($data_sp as $dsp) {
+    $data_arr_sp[] = $dsp['total_pokok'];
 }
 
 
@@ -249,6 +275,36 @@ if (isset($_POST['reset'])) {
                     <b class="arrow"></b>
                 </li>
 
+                <li class="hover <?= $p === 'settings' || $p === 'kelola-tahun' || $p === 'kelola-bulan' ? 'active' : '' ?>">
+                    <a class="dropdown-toggle" href="#">
+                        <i class="menu-icon fa fa-grafik"></i>
+                        <span class="menu-text"> Settings </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="hover <?= $p === 'kelola-tahun' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=kelola-tahun">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Kelola Tahun
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover <?= $p === 'kelola-bulan' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=kelola-bulan">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Kelola Bulan
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="hover <?= $p === 'pengurus' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=pengurus">
                         <i class="menu-icon fa fa-users"></i>
@@ -299,7 +355,7 @@ if (isset($_POST['reset'])) {
                 </li>
 
                 <li class="hover <?= $p === 'transaksi' ? 'active' : '' ?>">
-                    <a href="indexAdmin.php?p=transaksi">
+                    <a href="indexAdmin.php?p=transaksi-tahun">
                         <i class="menu-icon fa fa-list"></i>
                         <span class="menu-text"> Data Transaksi </span>
                     </a>
@@ -340,6 +396,44 @@ if (isset($_POST['reset'])) {
                             <a href="indexAdmin.php?p=kontak">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Kelola Kontak
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="hover <?= $p === 'grafik' || $p === 'total-anggota-per-tahun' || $p === 'total-hektar-per-tahun' || $p === 'total-simpanan-per-tahun' ? 'active' : '' ?>">
+                    <a class="dropdown-toggle" href="#">
+                        <i class="menu-icon fa fa-grafik"></i>
+                        <span class="menu-text"> Grafik </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="hover <?= $p === 'total-anggota-per-tahun' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=total-anggota-per-tahun">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Total Anggota Per Tahun
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover <?= $p === 'total-hektar-per-tahun' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=total-hektar-per-tahun">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Total Hektar Per Tahun
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover <?= $p === 'total-simpanan-per-tahun' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=total-simpanan-per-tahun">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Total Simpanan Per Tahun
                             </a>
 
                             <b class="arrow"></b>
@@ -660,7 +754,7 @@ if (isset($_POST['reset'])) {
                     label: 'Jumlah Anggota',
                     data: <?php echo (json_encode($data_arr_anggota)); ?>,
                     borderWidth: 1
-                }]
+                }, ]
             },
             options: {
                 scales: {
@@ -683,6 +777,34 @@ if (isset($_POST['reset'])) {
                 datasets: [{
                     label: 'Jumlah Hektar',
                     data: <?php echo (json_encode($data_arr_hektar)); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+            }
+        });
+    </script>
+
+    <!-- //grafik 2 (Data Hektar per tahun) -->
+    <script>
+        const ctx3 = document.getElementById('myChart3');
+
+        new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: <?php echo (json_encode($data_arr_tahun)); ?>,
+                datasets: [{
+                    label: 'Jumlah Simpanan Wajib',
+                    data: <?php echo (json_encode($data_arr_sw)); ?>,
+                    borderWidth: 1
+                }, {
+                    label: 'Jumlah Simpanan Pokok',
+                    data: <?php echo (json_encode($data_arr_sp)); ?>,
                     borderWidth: 1
                 }]
             },

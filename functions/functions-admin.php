@@ -112,7 +112,8 @@ function tambahDataAnggota($data) // Function untuk menambah data anggota
     // mengambil data berdasarkan name yang dikirim dari form
     $no_kartu = htmlspecialchars($data['no_kartu']);
     $no_registrasi = htmlspecialchars($data['no_registrasi']);
-    $mulai_bergabung = htmlspecialchars($data['mulai_bergabung']);
+    $tahun_bergabung = htmlspecialchars($data['tahun_bergabung']);
+    $bulan_bergabung = htmlspecialchars($data['bulan_bergabung']);
     $nama = htmlspecialchars($data['nama']);
     $username = htmlspecialchars($data['username']);
     $password = htmlspecialchars(md5($data['password']));
@@ -133,7 +134,7 @@ function tambahDataAnggota($data) // Function untuk menambah data anggota
     }
 
     // query untuk insert data anggota
-    $query = "INSERT INTO anggota VALUES ('', '$username', '$password', '$nama', '$no_kartu', '$no_registrasi', '$alamat', '$ktp', '$luas_plasma', '$foto', '$foto_bukti', '$mulai_bergabung')";
+    $query = "INSERT INTO anggota VALUES ('', '$username', '$password', '$nama', '$no_kartu', '$no_registrasi', '$alamat', '$ktp', '$luas_plasma', '$foto', '$foto_bukti', '$tahun_bergabung','$bulan_bergabung')";
     // jika query berhasil dieksekusi maka akan menambahkan data lagi ke tabel simpanan pokok
     if (mysqli_query($conn, $query)) {
         // mengembalikan id dari query terakhir
@@ -172,7 +173,8 @@ function editDataAnggota($data)
     $id_anggota = htmlspecialchars($data['btn-edit']);
     $no_kartu = htmlspecialchars($data['no_kartu']);
     $no_registrasi = htmlspecialchars($data['no_registrasi']);
-    $mulai_bergabung = htmlspecialchars($data['mulai_bergabung']);
+    $tahun_bergabung = htmlspecialchars($data['tahun_bergabung']);
+    $bulan_bergabung = htmlspecialchars($data['bulan_bergabung']);
     $nama = htmlspecialchars($data['nama']);
     $username = htmlspecialchars($data['username']);
     $password = htmlspecialchars(md5($data['password']));
@@ -188,7 +190,7 @@ function editDataAnggota($data)
         return false;
     }
 
-    $query = "UPDATE anggota SET username = '$username', password = '$password', nama = '$nama', no_kartu = '$no_kartu', no_registrasi = '$no_registrasi', alamat = '$alamat', ktp = '$ktp', luas_plasma = '$luas_plasma', foto = '$foto', foto_bukti = '$foto_bukti', mulai_bergabung = '$mulai_bergabung' WHERE id_anggota = '$id_anggota'";
+    $query = "UPDATE anggota SET username = '$username', password = '$password', nama = '$nama', no_kartu = '$no_kartu', no_registrasi = '$no_registrasi', alamat = '$alamat', ktp = '$ktp', luas_plasma = '$luas_plasma', foto = '$foto', foto_bukti = '$foto_bukti', id_tahun = '$tahun_bergabung',id_bulan = '$bulan_bergabung' WHERE id_anggota = '$id_anggota'";
 
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=anggota";</script>';
@@ -205,13 +207,13 @@ function tambahDataTahun($data)
 
     $cek = tampilData("SELECT tahun FROM tahun WHERE tahun = $tahun");
     if (count($cek) > 0) {
-        echo '<script>alert("Data Gagal Ditambahkan, Tahun Sudah Ada"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+        echo '<script>alert("Data Gagal Ditambahkan, Tahun Sudah Ada"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
     } else {
         $query = "INSERT INTO tahun VALUES ('', '$tahun')";
         if (mysqli_query($conn, $query)) {
-            echo '<script>alert("Data Berhasil Ditambahkan"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+            echo '<script>alert("Data Berhasil Ditambahkan"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
         } else {
-            echo '<script>alert("Data Gagal Ditambahkan"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+            echo '<script>alert("Data Gagal Ditambahkan"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
         }
     }
     mysqli_close($conn);
@@ -226,14 +228,14 @@ function editDataTahun($data)
     $cek = tampilData("SELECT tahun FROM tahun WHERE tahun = $tahun");
 
     if (count($cek) > 0) {
-        echo '<script>alert("Data Gagal Diedit, Tahun Sudah Ada"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+        echo '<script>alert("Data Gagal Diedit, Tahun Sudah Ada"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
     } else {
         $query = "UPDATE tahun SET tahun = '$tahun' WHERE id = '$id'";
 
         if (mysqli_query($conn, $query)) {
-            echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+            echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
         } else {
-            echo '<script>alert("Data Gagal Diedit"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+            echo '<script>alert("Data Gagal Diedit"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
         }
     }
     mysqli_close($conn);
@@ -247,9 +249,9 @@ function hapusDataTahun($data)
     $query = "DELETE FROM tahun WHERE id = '$id'";
 
     if (mysqli_query($conn, $query)) {
-        echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+        echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
     } else {
-        echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=simpanan-wajib-tahun";</script>';
+        echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=kelola-tahun";</script>';
     }
     mysqli_close($conn);
 }
@@ -257,27 +259,26 @@ function hapusDataTahun($data)
 function tambahDataBulan($data)
 {
     global $conn;
-    $id_tahun = htmlspecialchars($data['btn-tambah']);
     $bulan = htmlspecialchars($data['bulan']);
 
-    $cek = tampilData("SELECT bulan FROM bulan WHERE bulan = '$bulan' AND id_tahun = $id_tahun");
+    $cek = tampilData("SELECT bulan FROM bulan WHERE bulan = '$bulan';");
 
     if (count($cek) > 0) {
         echo "<script>
                 alert('Data Gagal Ditambahkan, Bulan Sudah Ada'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
     } else {
-        $query = "INSERT INTO bulan VALUES ('', '$id_tahun', '$bulan')";
+        $query = "INSERT INTO bulan VALUES ('', '$bulan')";
         if (mysqli_query($conn, $query)) {
             echo "<script>
                 alert('Data Berhasil Ditambahkan'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
         } else {
             echo "<script>
                 alert('Data Gagal Ditambahkan'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
         }
     }
@@ -288,15 +289,14 @@ function editDataBulan($data)
 {
     global $conn;
     $id = htmlspecialchars($data['btn-edit']);
-    $id_tahun = htmlspecialchars($data['id_tahun']);
     $bulan = htmlspecialchars($data['bulan']);
 
-    $cek = tampilData("SELECT bulan FROM bulan WHERE bulan = '$bulan' AND id_tahun = $id_tahun");
+    $cek = tampilData("SELECT bulan FROM bulan WHERE bulan = '$bulan'");
 
     if (count($cek) > 0) {
         echo "<script>
                 alert('Data Gagal Diedit, Bulan Sudah Ada'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
     } else {
         $query = "UPDATE bulan SET bulan = '$bulan' WHERE id = '$id'";
@@ -304,12 +304,12 @@ function editDataBulan($data)
         if (mysqli_query($conn, $query)) {
             echo "<script>
                 alert('Data Berhasil Diedit'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
         } else {
             echo "<script>
                 alert('Data Gagal Diedit'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
         }
     }
@@ -320,19 +320,18 @@ function hapusDataBulan($data)
 {
     global $conn;
     $id = htmlspecialchars($data['btn-hapus']);
-    $id_tahun = htmlspecialchars($data['id_tahun']);
 
     $query = "DELETE FROM bulan WHERE id = '$id'";
 
     if (mysqli_query($conn, $query)) {
         echo "<script>
                 alert('Data Berhasil Dihapus'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
     } else {
         echo "<script>
                 alert('Data Gagal Dihapus'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib-bulan&id=" . $id_tahun . "';
+                location.href = 'indexAdmin.php?p=kelola-bulan';
             </script>";
     }
     mysqli_close($conn);
@@ -342,19 +341,20 @@ function tambahDataSimpananWajib($data)
 {
     global $conn;
     $id_anggota = htmlspecialchars($data['no_kartu']);
+    $id_tahun = htmlspecialchars($data['id_tahun']);
     $id_bulan = htmlspecialchars($data['id_bulan']);
     $simpanan_wajib = htmlspecialchars($data['simpanan_wajib']);
 
-    $query = "INSERT INTO simpanan_wajib VALUES ('', '$id_anggota','$simpanan_wajib','$id_bulan')";
+    $query = "INSERT INTO simpanan_wajib VALUES ('', '$id_anggota','$simpanan_wajib','$id_bulan', '$id_tahun')";
     if (mysqli_query($conn, $query)) {
         echo "<script>
                 alert('Data Berhasil Ditambahkan'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib&id=" . $id_bulan . "';
+                location.href = 'indexAdmin.php?p=simpanan-wajib&id_tahun=" . $id_tahun . "&id_bulan=" . $id_bulan . "';
             </script>";
     } else {
         echo "<script>
                 alert('Data Gagal Ditambahkan'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib&id=" . $id_bulan . "';
+                location.href = 'indexAdmin.php?p=simpanan-wajib&id_tahun=" . $id_tahun . "&id_bulan=" . $id_bulan . "';
             </script>";
     }
     mysqli_close($conn);
@@ -365,6 +365,7 @@ function editDataSimpananWajib($data)
     global $conn;
     $id = htmlspecialchars($data['btn-edit']);
     $id_anggota = htmlspecialchars($data['no_kartu']);
+    $id_tahun = htmlspecialchars($data['id_tahun']);
     $id_bulan = htmlspecialchars($data['id_bulan']);
     $simpanan_wajib = htmlspecialchars($data['simpanan_wajib']);
 
@@ -373,12 +374,12 @@ function editDataSimpananWajib($data)
     if (mysqli_query($conn, $query)) {
         echo "<script>
             alert('Data Berhasil Diedit'); 
-            location.href = 'indexAdmin.php?p=simpanan-wajib&id=" . $id_bulan . "';
+            location.href = 'indexAdmin.php?p=simpanan-wajib&id_tahun=" . $id_tahun . "&id_bulan=" . $id_bulan . "';
         </script>";
     } else {
         echo "<script>
             alert('Data Gagal Diedit'); 
-            location.href = 'indexAdmin.php?p=simpanan-wajib&id=" . $id_bulan . "';
+            location.href = 'indexAdmin.php?p=simpanan-wajib&id_tahun=" . $id_tahun . "&id_bulan=" . $id_bulan . "';
         </script>";
     }
     mysqli_close($conn);
@@ -388,6 +389,7 @@ function hapusDataSimpananWajib($data)
 {
     global $conn;
     $id = htmlspecialchars($data['btn-hapus']);
+    $id_tahun = htmlspecialchars($data['id_tahun']);
     $id_bulan = htmlspecialchars($data['id_bulan']);
 
     $query = "DELETE FROM simpanan_wajib WHERE id = '$id'";
@@ -395,12 +397,12 @@ function hapusDataSimpananWajib($data)
     if (mysqli_query($conn, $query)) {
         echo "<script>
                 alert('Data Berhasil Dihapus'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib&id=" . $id_bulan . "';
+                location.href = 'indexAdmin.php?p=simpanan-wajib&id_tahun=" . $id_tahun . "&id_bulan=" . $id_bulan . "';
             </script>";
     } else {
         echo "<script>
                 alert('Data Gagal Dihapus'); 
-                location.href = 'indexAdmin.php?p=simpanan-wajib&id=" . $id_bulan . "';
+                location.href = 'indexAdmin.php?p=simpanan-wajib&id_tahun=" . $id_tahun . "&id_bulan=" . $id_bulan . "';
             </script>";
     }
     mysqli_close($conn);
@@ -410,6 +412,8 @@ function tambahDataTransaksi($data)
 {
     global $conn;
     $id_anggota = htmlspecialchars($data['id_anggota']);
+    $id_tahun = htmlspecialchars($data['id_tahun']);
+    $id_bulan = htmlspecialchars($data['id_bulan']);
     $tanggal = htmlspecialchars($data['tanggal']);
     $sumber_dana = htmlspecialchars($data['sumber_dana']);
     $nama_produk = htmlspecialchars($data['nama_produk']);
@@ -420,16 +424,16 @@ function tambahDataTransaksi($data)
     $jumlah = htmlspecialchars($data['jumlah']);
     $reference_number = htmlspecialchars($data['reference_number']);
 
-    $query = "INSERT INTO transaksi VALUES ('', '$id_anggota', '$tanggal','$sumber_dana','$nama_produk','$bank_penerima','$no_rek','$nama_rek','$mata_uang','$jumlah','$reference_number')";
+    $query = "INSERT INTO transaksi VALUES ('', '$id_anggota', '$tanggal','$sumber_dana','$nama_produk','$bank_penerima','$no_rek','$nama_rek','$mata_uang','$jumlah','$reference_number', '$id_tahun', '$id_bulan')";
     if (mysqli_query($conn, $query)) {
         echo "<script>
                 alert('Data Berhasil Ditambahkan'); 
-                location.href = 'indexAdmin.php?p=transaksi';
+                location.href = 'indexAdmin.php?p=transaksi&id_tahun=$id_tahun&id_bulan=$id_bulan';
             </script>";
     } else {
         echo "<script>
                 alert('Data Gagal Ditambahkan'); 
-                location.href = 'indexAdmin.php?p=transaksi';
+                location.href = 'indexAdmin.php?p=transaksi&id_tahun=$id_tahun&id_bulan=$id_bulan';
             </script>";
     }
     mysqli_close($conn);
@@ -440,6 +444,8 @@ function editDataTransaksi($data)
     global $conn;
     $id = htmlspecialchars($data['btn-edit']);
     $id_anggota = htmlspecialchars($data['id_anggota']);
+    $id_tahun = htmlspecialchars($data['id_tahun']);
+    $id_bulan = htmlspecialchars($data['id_bulan']);
     $tanggal = htmlspecialchars($data['tanggal']);
     $sumber_dana = htmlspecialchars($data['sumber_dana']);
     $nama_produk = htmlspecialchars($data['nama_produk']);
@@ -466,12 +472,12 @@ function editDataTransaksi($data)
     if (mysqli_query($conn, $query)) {
         echo "<script>
             alert('Data Berhasil Diedit'); 
-            location.href = 'indexAdmin.php?p=transaksi';
+            location.href = 'indexAdmin.php?p=transaksi&id_tahun=$id_tahun&id_bulan=$id_bulan';
         </script>";
     } else {
         echo "<script>
             alert('Data Gagal Diedit'); 
-            location.href = 'indexAdmin.php?p=transaksi';
+            location.href = 'indexAdmin.php?p=transaksi&id_tahun=$id_tahun&id_bulan=$id_bulan';
         </script>";
     }
     mysqli_close($conn);
@@ -481,18 +487,20 @@ function hapusDataTransaksi($data)
 {
     global $conn;
     $id = htmlspecialchars($data['btn-hapus']);
+    $id_tahun = htmlspecialchars($data['id_tahun']);
+    $id_bulan = htmlspecialchars($data['id_bulan']);
 
     $query = "DELETE FROM transaksi WHERE id = '$id'";
 
     if (mysqli_query($conn, $query)) {
         echo "<script>
                 alert('Data Berhasil Dihapus'); 
-                location.href = 'indexAdmin.php?p=transaksi';
+                location.href = 'indexAdmin.php?p=transaksi&id_tahun=$id_tahun&id_bulan=$id_bulan';
             </script>";
     } else {
         echo "<script>
                 alert('Data Gagal Dihapus'); 
-                location.href = 'indexAdmin.php?p=transaksi';
+                location.href = 'indexAdmin.php?p=transaksi&id_tahun=$id_tahun&id_bulan=$id_bulan';
             </script>";
     }
     mysqli_close($conn);

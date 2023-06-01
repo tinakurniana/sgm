@@ -1,90 +1,76 @@
 <?php
 // include 'functions/functions-admin.php';
 
-$id_tahun = $_GET['id_tahun'];
-$id_bulan = $_GET['id_bulan'];
+$query_tampil = "SELECT * FROM bulan";
+$bulan = tampilData($query_tampil);
 
-$query_anggota = "SELECT * FROM anggota";
-$anggota = tampilData($query_anggota);
-
-$query_tahun = "SELECT * FROM tahun";
-$tahun = tampilData($query_tahun);
-
-$query_bulan = "SELECT * FROM bulan";
-$bulan = tampilData($query_bulan);
-
-$query_simpanan_wajib = "SELECT
-							*
-						FROM
-							simpanan_wajib
-						INNER JOIN anggota ON anggota.id_anggota = simpanan_wajib.id_anggota
-						WHERE
-							simpanan_wajib.id_tahun = '$id_tahun'
-						AND simpanan_wajib.id_bulan = '$id_bulan';";
-
-$simpanan_wajib = tampilData($query_simpanan_wajib);
+$data_bulan = [
+	'Januari',
+	'Februari',
+	'Maret',
+	'April',
+	'Mei',
+	'Juni',
+	'Juli',
+	'Agustus',
+	'September',
+	'Oktober',
+	'November',
+	'Desember'
+];
 
 if (isset($_POST['btn-tambah'])) {
-	tambahDataSimpananWajib($_POST);
+	tambahDataBulan($_POST);
 }
 
 if (isset($_POST['btn-edit'])) {
-	editDataSimpananWajib($_POST);
+	editDataBulan($_POST);
 }
 
 if (isset($_POST['btn-hapus'])) {
-	hapusDataSimpananWajib($_POST);
+	hapusDataBulan($_POST);
 }
-?>
 
+?>
 
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Data Simpanan Wajib
-			<a data-toggle="modal" href="#tambah-simpanan-wajib">
+			<i class="ace-icon fa fa-file-o"></i> Data Bulan
+			<a data-toggle="modal" href="#tambah-bulan">
 				<button class="btn btn-primary pull-right">
-					<i class="ace-icon fa fa-plus"></i> Tambah Simpanan Wajib
+					<i class="ace-icon fa fa-plus"></i> Tambah Bulan
 				</button>
 			</a>
 		</h1>
 	</div><!-- /.page-header -->
 
 	<!-- Modal Tambah -->
-	<div class="modal fade" id="tambah-simpanan-wajib">
+	<div class="modal fade" id="tambah-bulan">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
+				<form class="form-horizontal" method="POST" role="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title"><i class="ace-icon fa fa-plus"> Form Tambah Simpanan Wajib</i></h4>
+						<h4 class="modal-title"><i class="ace-icon fa fa-plus"> Form Tambah Bulan</i></h4>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
 							<div class="col-sm-12">
-								<label class="control-label" for="no_kartu">Nomor Kartu</label>
-								<select name="no_kartu" id="no_kartu" class="col-xs-12 col-sm-12" required>
+								<label class="control-label" for="bulan">Bulan</label>
+								<select name="bulan" id="bulan" class="col-xs-12 col-sm-12" required>
 									<?php
-									foreach ($anggota as $a) {
+									for ($i = 0; $i < count($data_bulan); $i++) {
 									?>
-										<option value="<?= $a['id_anggota'] ?>"><?= $a['no_kartu'] ?></option>
+										<option value="<?= $data_bulan[$i] ?>"><?= $data_bulan[$i] ?></option>
 									<?php
 									}
 									?>
 								</select>
 							</div>
-							<div class="col-sm-12">
-								<br>
-							</div>
-							<div class="col-sm-12">
-								<label class="control-label" for="simpanan_wajib">Simpanan Wajib</label>
-								<input type="number" min="0" id="simpanan_wajib" name="simpanan_wajib" placeholder="Simpanan Wajib" class="col-xs-12 col-sm-12" required />
-							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<input type="hidden" name="id_tahun" value="<?= $id_tahun ?>">
-						<input type="hidden" name="id_bulan" value="<?= $id_bulan ?>">
 						<button type="submit" class="btn btn-primary" name="btn-tambah">Tambah</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 					</div>
@@ -100,7 +86,7 @@ if (isset($_POST['btn-hapus'])) {
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="table-header">
-						Data Simpanan Wajib
+						Data Bulan
 					</div>
 					<!-- div.table-responsive -->
 
@@ -110,10 +96,7 @@ if (isset($_POST['btn-hapus'])) {
 							<thead>
 								<tr>
 									<th>No.</th>
-									<th>No.Kartu</th>
-									<th>No.Registrasi</th>
-									<th>Nama</th>
-									<th>Simpanan Wajib</th>
+									<th>Bulan</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -121,20 +104,17 @@ if (isset($_POST['btn-hapus'])) {
 							<tbody>
 								<?php
 								$i = 1;
-								foreach ($simpanan_wajib as $sw) {
+								foreach ($bulan as $value) {
 								?>
 									<tr>
 										<td class="center"><?= $i ?></td>
-										<td><?= $sw['no_kartu'] ?></td>
-										<td><?= $sw['no_registrasi'] ?></td>
-										<td><?= $sw['nama'] ?></td>
-										<td>Rp. <?= number_format($sw['simpanan_wajib'], 2, ",", "."); ?></td>
+										<td class="center"><?= $value['bulan'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
-												<a data-rel="tooltip" data-placement="top" title="Ubah" style="margin-right:5px" class="blue tooltip-info" data-toggle="modal" href="#edit-simpanan-wajib-<?= $sw['id']; ?>">
+												<a data-rel="tooltip" data-placement="top" title="Ubah" style="margin-right:5px" class="blue tooltip-info" data-toggle="modal" href="#edit-bulan-<?= $value['id']; ?>">
 													<i class="ace-icon fa fa-edit bigger-130"></i>
 												</a>
-												<a data-rel="tooltip" data-placement="top" title="Hapus" style="margin-right:5px" class="red tooltip-error" data-toggle="modal" href="#hapus-simpanan-wajib-<?= $sw['id']; ?>">
+												<a data-rel="tooltip" data-placement="top" title="Hapus" style="margin-right:5px" class="red tooltip-error" data-toggle="modal" href="#hapus-bulan-<?= $value['id']; ?>">
 													<i class="ace-icon fa fa-trash-o bigger-130"></i>
 												</a>
 											</div>
@@ -154,42 +134,33 @@ if (isset($_POST['btn-hapus'])) {
 
 	<!-- Modal Edit -->
 	<?php
-	foreach ($simpanan_wajib as $row) :
+	foreach ($bulan as $row) :
 	?>
-		<div class="modal fade" id="edit-simpanan-wajib-<?= $row['id']; ?>">
+		<div class="modal fade" id="edit-bulan-<?= $row['id']; ?>">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title"><i class="ace-icon fa fa-plus"> Form Edit Simpanan Wajib</i></h4>
+							<h4 class="modal-title"><i class="ace-icon fa fa-edit"> Form Edit Bulan</i></h4>
 						</div>
 						<div class="modal-body">
 							<div class="form-group">
 								<div class="col-sm-12">
-									<label class="control-label" for="no_kartu">Nomor Kartu</label>
-									<select name="no_kartu" id="no_kartu" class="col-xs-12 col-sm-12" required>
+									<label class="control-label" for="bulan">Bulan</label>
+									<select name="bulan" id="bulan" class="col-xs-12 col-sm-12" required>
 										<?php
-										foreach ($anggota as $a) {
+										for ($i = 0; $i < count($data_bulan); $i++) {
 										?>
-											<option value="<?= $a['id_anggota'] ?>" <?= $a['id_anggota'] == $row['id_anggota'] ? 'selected' : '' ?>><?= $a['no_kartu'] ?></option>
+											<option value="<?= $data_bulan[$i] ?>" <?= $row['bulan'] == $data_bulan[$i] ? 'selected' : '' ?>><?= $data_bulan[$i] ?></option>
 										<?php
 										}
 										?>
 									</select>
 								</div>
-								<div class="col-sm-12">
-									<br>
-								</div>
-								<div class="col-sm-12">
-									<label class="control-label" for="simpanan_wajib">Simpanan Wajib</label>
-									<input type="number" min="0" id="simpanan_wajib" value="<?= $row['simpanan_wajib'] ?>" name="simpanan_wajib" placeholder="Simpanan Wajib" class="col-xs-12 col-sm-12" required />
-								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<input type="hidden" name="id_tahun" value="<?= $id_tahun ?>">
-							<input type="hidden" name="id_bulan" value="<?= $id_bulan ?>">
 							<button type="submit" class="btn btn-primary" name="btn-edit" value="<?= $row['id'] ?>">Edit</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 						</div>
@@ -202,15 +173,15 @@ if (isset($_POST['btn-hapus'])) {
 
 	<!-- Modal Hapus -->
 	<?php
-	foreach ($simpanan_wajib as $row) :
+	foreach ($bulan as $row) :
 	?>
-		<div class="modal fade" id="hapus-simpanan-wajib-<?= $row['id']; ?>">
+		<div class="modal fade" id="hapus-bulan-<?= $row['id']; ?>">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title"><i class="ace-icon fa fa-trash-o"> Hapus Data Simpanan Wajib</i></h4>
+							<h4 class="modal-title"><i class="ace-icon fa fa-trash-o"> Hapus Data Bulan</i></h4>
 						</div>
 						<div class="modal-body">
 							<div class="form-group">
@@ -220,7 +191,7 @@ if (isset($_POST['btn-hapus'])) {
 							</div>
 						</div>
 						<div class="modal-footer">
-							<input type="hidden" name="id_bulan" value="<?= $id_bulan ?>">
+							<input type="hidden" name="id_tahun" value="<?=$id?>">
 							<button type="submit" class="btn btn-primary" name="btn-hapus" value="<?= $row['id'] ?>">Ya</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 						</div>

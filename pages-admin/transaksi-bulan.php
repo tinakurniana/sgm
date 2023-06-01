@@ -45,7 +45,7 @@ $bulan = tampilData($query_tampil);
 										<td class="center"><?= $value['bulan'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
-												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" oclass="red tooltip-infp" href="indexAdmin.php?p=simpanan-wajib&id_tahun=<?= $id_tahun ?>&id_bulan=<?= $value['id'] ?>">
+												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" oclass="red tooltip-infp" href="indexAdmin.php?p=transaksi&id_tahun=<?= $id_tahun ?>&id_bulan=<?= $value['id'] ?>">
 													<i class="ace-icon fa fa-info-circle bigger-130"></i>
 												</a>
 											</div>
