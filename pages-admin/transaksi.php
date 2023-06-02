@@ -1,7 +1,10 @@
 <?php
 // include 'functions/functions-admin.php';
 
-$query_tampil = "SELECT * FROM transaksi";
+$id_tahun = $_GET['id_tahun'];
+$id_bulan = $_GET['id_bulan'];
+
+$query_tampil = "SELECT * FROM transaksi WHERE id_tahun = '$id_tahun' AND id_bulan = '$id_bulan'";
 $transaksi = tampilData($query_tampil);
 
 $query_tampil2 = "SELECT * FROM anggota";
@@ -22,7 +25,7 @@ if (isset($_POST['btn-hapus'])) {
 	<div class="page-header">
 		<h1 style="color:#585858">
 			<i class="ace-icon fa fa-list"></i> Data Transaksi
-			<a href="pages-admin/cetak-transaksi.php" target="_blank">
+			<a href="pages-admin/cetak-transaksi.php?id_tahun=<?= $id_tahun ?>&id_bulan=<?= $id_bulan ?>" target="_blank">
 				<button class="btn btn-success pull-right">
 					<i class="ace-icon fa fa-print"></i> Cetak
 				</button>
@@ -169,6 +172,8 @@ if (isset($_POST['btn-hapus'])) {
 						</div>
 					</div>
 					<div class="modal-footer">
+						<input type="hidden" name="id_tahun" value="<?= $id_tahun ?>">
+						<input type="hidden" name="id_bulan" value="<?= $id_bulan ?>">
 						<button type="submit" class="btn btn-primary" name="btn-tambah">Tambah</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 					</div>
@@ -248,6 +253,8 @@ if (isset($_POST['btn-hapus'])) {
 							</div>
 						</div>
 						<div class="modal-footer">
+							<input type="hidden" name="id_tahun" value="<?= $id_tahun ?>">
+							<input type="hidden" name="id_bulan" value="<?= $id_bulan ?>">
 							<button type="submit" class="btn btn-primary" name="btn-edit" value="<?= $row['id'] ?>">Edit</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 						</div>
@@ -278,6 +285,8 @@ if (isset($_POST['btn-hapus'])) {
 							</div>
 						</div>
 						<div class="modal-footer">
+							<input type="hidden" name="id_tahun" value="<?= $id_tahun ?>">
+							<input type="hidden" name="id_bulan" value="<?= $id_bulan ?>">
 							<button type="submit" class="btn btn-primary" name="btn-hapus" value="<?= $row['id'] ?>">Ya</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 						</div>

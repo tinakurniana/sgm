@@ -17,10 +17,13 @@ $sheet->setCellValue('D1', 'Nama');
 $sheet->setCellValue('E1', 'Mulai Bergabung');
 $sheet->setCellValue('F1', 'Simpanan Pokok');
 
-$data = mysqli_query($conn, "SELECT * FROM 
-                                simpanan_pokok 
-                            INNER JOIN anggota ON 
-                                simpanan_pokok.id_anggota = anggota.id_anggota");
+$data = mysqli_query($conn, "SELECT
+                                *
+                            FROM
+                                simpanan_pokok
+                            INNER JOIN anggota ON simpanan_pokok.id_anggota = anggota.id_anggota
+                            INNER JOIN tahun ON tahun.id = anggota.id_tahun
+                            INNER JOIN bulan ON bulan.id = anggota.id_bulan");
 
 $i = 2;
 $no = 1;
@@ -29,7 +32,7 @@ while ($d = mysqli_fetch_array($data)) {
     $sheet->setCellValue('B' . $i, $d['no_kartu']);
     $sheet->setCellValue('C' . $i, $d['no_registrasi']);
     $sheet->setCellValue('D' . $i, $d['nama']);
-    $sheet->setCellValue('E' . $i, $d['mulai_bergabung']);
+    $sheet->setCellValue('E' . $i, $d['bulan'] . "(" . $d['tahun'] . ")");
     $sheet->setCellValue('F' . $i, $d['simpanan']);
     $i++;
     $no++;

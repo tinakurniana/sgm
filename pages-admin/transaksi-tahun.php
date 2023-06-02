@@ -1,16 +1,15 @@
 <?php
 // include 'functions/functions-admin.php';
 
-$id_tahun = $_GET['id_tahun'];
-$query_tampil = "SELECT * FROM bulan";
-$bulan = tampilData($query_tampil);
+$query_tampil = "SELECT * FROM tahun";
+$tahun = tampilData($query_tampil);
 
 ?>
 
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Data Bulan
+			<i class="ace-icon fa fa-file-o"></i> Data Tahun
 		</h1>
 	</div><!-- /.page-header -->
 
@@ -20,7 +19,7 @@ $bulan = tampilData($query_tampil);
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="table-header">
-						Data Bulan
+						Data Tahun
 					</div>
 					<!-- div.table-responsive -->
 
@@ -30,7 +29,7 @@ $bulan = tampilData($query_tampil);
 							<thead>
 								<tr>
 									<th>No.</th>
-									<th>Bulan</th>
+									<th>Tahun</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -38,14 +37,14 @@ $bulan = tampilData($query_tampil);
 							<tbody>
 								<?php
 								$i = 1;
-								foreach ($bulan as $value) {
+								foreach ($tahun as $value) {
 								?>
 									<tr>
 										<td class="center"><?= $i ?></td>
-										<td class="center"><?= $value['bulan'] ?></td>
+										<td class="center"><?= $value['tahun'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
-												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" oclass="red tooltip-infp" href="indexAdmin.php?p=simpanan-wajib&id_tahun=<?= $id_tahun ?>&id_bulan=<?= $value['id'] ?>">
+												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" href="indexAdmin.php?p=transaksi-bulan&id_tahun=<?=$value['id']?>">
 													<i class="ace-icon fa fa-info-circle bigger-130"></i>
 												</a>
 											</div>

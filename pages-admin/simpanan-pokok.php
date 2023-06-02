@@ -1,10 +1,13 @@
 <?php
 // include 'functions/functions-admin.php';
 
-$query_tampil = "SELECT * FROM 
-					simpanan_pokok 
-				INNER JOIN anggota ON 
-					simpanan_pokok.id_anggota = anggota.id_anggota";
+$query_tampil = "SELECT
+					*
+				FROM
+					simpanan_pokok
+				INNER JOIN anggota ON simpanan_pokok.id_anggota = anggota.id_anggota
+				INNER JOIN tahun ON tahun.id = anggota.id_tahun
+				INNER JOIN bulan ON bulan.id = anggota.id_bulan";
 $data = tampilData($query_tampil);
 
 ?>
@@ -14,9 +17,9 @@ $data = tampilData($query_tampil);
 		<h1 style="color:#585858">
 			<i class="ace-icon fa fa-file-o"></i> Data Simpanan Pokok
 			<a target="_blank" href="pages-admin/cetak-pokok.php">
-			<button class="btn btn-success pull-right">
-				<i class="ace-icon fa fa-print"></i> Cetak
-			</button>
+				<button class="btn btn-success pull-right">
+					<i class="ace-icon fa fa-print"></i> Cetak
+				</button>
 			</a>
 		</h1>
 	</div><!-- /.page-header -->
@@ -55,7 +58,7 @@ $data = tampilData($query_tampil);
 										<td><?= $value['no_kartu'] ?></td>
 										<td><?= $value['no_registrasi'] ?></td>
 										<td><?= $value['nama'] ?></td>
-										<td><?= $value['mulai_bergabung'] ?></td>
+										<td><?= $value['bulan'] ?>(<?= $value['tahun'] ?>)</td>
 										<td>Rp. <?= number_format($value['simpanan'], 2, ",", "."); ?></td>
 									</tr>
 								<?php

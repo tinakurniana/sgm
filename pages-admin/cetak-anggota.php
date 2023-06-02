@@ -3,7 +3,14 @@ error_reporting(0);
 
 include '../functions/functions-admin.php';
 
-$query_tampil = "SELECT * FROM anggota";
+$query_tampil = "select
+                    *,
+                    tahun.tahun,
+                    bulan.bulan
+                from
+                    anggota
+                inner join tahun on tahun.id = anggota.id_tahun
+                INNER JOIN bulan ON bulan.id = anggota.id_bulan;";
 $anggota = tampilData($query_tampil);
 ?>
 
@@ -36,7 +43,8 @@ $anggota = tampilData($query_tampil);
                     <th>No.</th>
                     <th>No.Kartu</th>
                     <th>No.Registrasi</th>
-                    <th>Mulai Bergabung</th>
+                    <th>Tahun Bergabung</th>
+                    <th>Bulan Bergabung</th>
                     <th>Nama</th>
                     <th>Username</th>
                     <th>Alamat</th>
@@ -56,17 +64,18 @@ $anggota = tampilData($query_tampil);
                         <td class="center"><?= $i++; ?></td>
                         <td><?= $row['no_kartu']; ?></td>
                         <td><?= $row['no_registrasi']; ?></td>
-                        <td><?= $row['mulai_bergabung']; ?></td>
+                        <td><?= $row['tahun']; ?></td>
+                        <td><?= $row['bulan']; ?></td>
                         <td><?= $row['nama']; ?></td>
                         <td><?= $row['username']; ?></td>
                         <td><?= $row['alamat']; ?></td>
                         <td><?= $row['ktp']; ?></td>
                         <td><?= $row['luas_plasma']; ?> Ha</td>
                         <td class="center">
-                            <img src="../assets-admin/images/<?= $row["foto"]; ?>" alt="foto-user" width="100px">
+                            <img src="../assets-admin/images/<?= $row["foto"]; ?>" class="img-fluid" width="100px">
                         </td>
                         <td class="center">
-                            <img src="../assets-admin/images/<?= $row["foto_bukti"]; ?>" width="100px">
+                            <img src="../assets-admin/images/<?= $row["foto_bukti"]; ?>" class="img-fluid" width="100px">
                         </td>
                     </tr>
                 <?php endforeach; ?>

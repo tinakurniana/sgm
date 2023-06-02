@@ -4,58 +4,14 @@
 $query_tampil = "SELECT * FROM tahun";
 $tahun = tampilData($query_tampil);
 
-if (isset($_POST['btn-tambah'])) {
-	tambahDataTahun($_POST);
-}
-
-if (isset($_POST['btn-edit'])) {
-	editDataTahun($_POST);
-}
-
-if (isset($_POST['btn-hapus'])) {
-	hapusDataTahun($_POST);
-}
-
 ?>
 
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
 			<i class="ace-icon fa fa-file-o"></i> Data Tahun
-			<a data-toggle="modal" href="#tambah-tahun">
-				<button class="btn btn-primary pull-right">
-					<i class="ace-icon fa fa-plus"></i> Tambah Tahun
-				</button>
-			</a>
 		</h1>
 	</div><!-- /.page-header -->
-
-	<!-- Modal Tambah -->
-	<div class="modal fade" id="tambah-tahun">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<form class="form-horizontal" method="POST" role="form">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title"><i class="ace-icon fa fa-plus"> Form Tambah Tahun</i></h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label" for="tahun">Tahun</label>
-								<input type="text" name="tahun" id="tahun" class="col-xs-12 col-sm-12" required>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary" name="btn-tambah">Tambah</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-					</div>
-				</form>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div>
-	<!-- End Modal Tambah -->
 
 	<div class="row">
 		<div class="col-xs-12">
@@ -88,13 +44,7 @@ if (isset($_POST['btn-hapus'])) {
 										<td class="center"><?= $value['tahun'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
-												<a data-rel="tooltip" data-placement="top" title="Ubah" style="margin-right:5px" class="blue tooltip-info" data-toggle="modal" href="#edit-tahun-<?= $value['id']; ?>">
-													<i class="ace-icon fa fa-edit bigger-130"></i>
-												</a>
-												<a data-rel="tooltip" data-placement="top" title="Hapus" style="margin-right:5px" class="red tooltip-error" data-toggle="modal" href="#hapus-tahun-<?= $value['id']; ?>">
-													<i class="ace-icon fa fa-trash-o bigger-130"></i>
-												</a>
-												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" oclass="red tooltip-infp" href="indexAdmin.php?p=simpanan-wajib-bulan&id=<?= $value['id'] ?>">
+												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" href="indexAdmin.php?p=simpanan-wajib-bulan&id_tahun=<?=$value['id']?>">
 													<i class="ace-icon fa fa-info-circle bigger-130"></i>
 												</a>
 												<a data-rel="tooltip" data-placement="top" title="Cetak" target="_blank" href="pages-admin/cetak.php?tahun=<?=$value['tahun'] ?>">
@@ -114,73 +64,4 @@ if (isset($_POST['btn-hapus'])) {
 			</div><!-- PAGE CONTENT ENDS -->
 		</div><!-- /.col -->
 	</div><!-- /.row -->
-
-	<!-- Modal Edit -->
-	<?php
-	foreach ($tahun as $row) :
-	?>
-		<div class="modal fade" id="edit-tahun-<?= $row['id']; ?>">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title"><i class="ace-icon fa fa-edit"> Form Edit Tahun</i></h4>
-						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								<div class="col-sm-12">
-									<label class="control-label" for="tahun">Tahun</label>
-									<select name="tahun" id="tahun" class="col-xs-12 col-sm-12" required>
-										<?php
-										for ($i = 1900; $i < 2999; $i++) {
-										?>
-											<option value="<?= $i ?>" <?= $row['tahun'] == $i ? 'selected' : '' ?>><?= $i ?></option>
-										<?php
-										}
-										?>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary" name="btn-edit" value="<?= $row['id'] ?>">Edit</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-						</div>
-					</form>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div>
-	<?php endforeach; ?>
-	<!-- End Modal Edit -->
-
-	<!-- Modal Hapus -->
-	<?php
-	foreach ($tahun as $row) :
-	?>
-		<div class="modal fade" id="hapus-tahun-<?= $row['id']; ?>">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title"><i class="ace-icon fa fa-trash-o"> Hapus Data Tahun</i></h4>
-						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								<div class="col-sm-12">
-									<p>Yakin hapus data?</p>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary" name="btn-hapus" value="<?= $row['id'] ?>">Ya</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-						</div>
-					</form>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div>
-	<?php endforeach; ?>
-	<!-- End Modal Hapus -->
 </div><!-- /.page-content -->

@@ -53,22 +53,21 @@ $tahun = $_GET['tahun'];
 
 // contoh hasil dari AS bulan = Januari(5000), Februari(10000)
 $data = mysqli_query($conn, "SELECT
-                                tahun.tahun,
                                 anggota.*,
+                                tahun.tahun,
                                 GROUP_CONCAT(
                                     CONCAT(
                                         bulan.bulan,
                                         '(',
                                         simpanan_wajib.simpanan_wajib,
                                         ')'
-                                    )
-                                    SEPARATOR ', '
+                                    ) SEPARATOR ', '
                                 ) AS bulan
                             FROM
-                                tahun
-                            INNER JOIN bulan ON tahun.id = bulan.id_tahun
-                            INNER JOIN simpanan_wajib ON bulan.id = simpanan_wajib.id_bulan
-                            INNER JOIN anggota ON simpanan_wajib.id_anggota = anggota.id_anggota
+                                simpanan_wajib
+                            INNER JOIN anggota ON anggota.id_anggota = simpanan_wajib.id_anggota
+                            INNER JOIN tahun ON tahun.id = simpanan_wajib.id_tahun
+                            INNER JOIN bulan ON bulan.id = simpanan_wajib.id_bulan
                             WHERE
                                 tahun.tahun = '$tahun'
                             GROUP BY

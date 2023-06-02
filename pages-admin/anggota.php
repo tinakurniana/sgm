@@ -1,8 +1,21 @@
 <?php
 // include 'functions/functions-admin.php';
 
-$query_tampil = "SELECT * FROM anggota";
+$query_tampil = "select
+					*,
+					tahun.tahun,
+					bulan.bulan
+				from
+					anggota
+				inner join tahun on tahun.id = anggota.id_tahun
+				INNER JOIN bulan ON bulan.id = anggota.id_bulan;";
 $anggota = tampilData($query_tampil);
+
+$query_tahun = "SELECT * FROM tahun";
+$tahun = tampilData($query_tahun);
+
+$query_bulan = "SELECT * FROM bulan";
+$bulan = tampilData($query_bulan);
 
 if (isset($_POST['btn-tambah'])) {
 	tambahDataAnggota($_POST);
@@ -21,9 +34,9 @@ if (isset($_POST['btn-hapus'])) {
 		<h1 style="color:#585858">
 			<i class="ace-icon fa fa-users"></i> Data Anggota
 			<a href="pages-admin/cetak-anggota.php" target="_blank">
-			<button class="btn btn-success pull-right">
-				<i class="ace-icon fa fa-print"></i> Cetak
-			</button>
+				<button class="btn btn-success pull-right">
+					<i class="ace-icon fa fa-print"></i> Cetak
+				</button>
 			</a>
 			<a data-toggle="modal" href="#tambah-anggota">
 				<button class="btn btn-primary pull-right">
@@ -52,7 +65,8 @@ if (isset($_POST['btn-hapus'])) {
 										<th>No.</th>
 										<th>No.Kartu</th>
 										<th>No.Registrasi</th>
-										<th>Mulai Bergabung</th>
+										<th>Tahun Bergabung</th>
+										<th>Bulan Bergabung</th>
 										<th>Nama</th>
 										<th>Username</th>
 										<th>Alamat</th>
@@ -73,7 +87,8 @@ if (isset($_POST['btn-hapus'])) {
 											<td class="center"><?= $i++; ?></td>
 											<td><?= $row['no_kartu']; ?></td>
 											<td><?= $row['no_registrasi']; ?></td>
-											<td><?= $row['mulai_bergabung']; ?></td>
+											<td><?= $row['tahun']; ?></td>
+											<td><?= $row['bulan']; ?></td>
 											<td><?= $row['nama']; ?></td>
 											<td><?= $row['username']; ?></td>
 											<td><?= $row['alamat']; ?></td>
@@ -127,8 +142,28 @@ if (isset($_POST['btn-hapus'])) {
 									<input type="text" id="no_registrasi" name="no_registrasi" placeholder="No.Registrasi" class="col-xs-12 col-sm-12" required />
 								</div>
 								<div class="row-sm-4">
-									<label class="control-label" for="mulai_bergabung">Mulai Bergabung</label>
-									<input type="month" id="mulai_bergabung" name="mulai_bergabung" class="col-xs-12 col-sm-12" required />
+									<label class="control-label" for="tahun_bergabung">Tahun Bergabung</label>
+									<select name="tahun_bergabung" id="tahun_bergabung" class="col-xs-12 col-sm-12">
+										<?php
+										foreach ($tahun as $t) {
+										?>
+											<option value="<?= $t['id'] ?>"><?= $t['tahun'] ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="bulan_bergabung">Bulan Bergabung</label>
+									<select name="bulan_bergabung" id="bulan_bergabung" class="col-xs-12 col-sm-12">
+										<?php
+										foreach ($bulan as $b) {
+										?>
+											<option value="<?= $b['id'] ?>"><?= $b['bulan'] ?></option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
 								<div class="row-sm-4">
 									<label class="control-label" for="nama">Nama Lengkap</label>
@@ -181,74 +216,94 @@ if (isset($_POST['btn-hapus'])) {
 	<?php
 	foreach ($anggota as $row) :
 	?>
-	<div class="modal fade" id="edit-anggota-<?= $row['id_anggota']; ?>">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title"><i class="ace-icon fa fa-edit"> Form Edit Anggota</i></h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<div class="col-sm-6">
-								<div class="row-sm-4">
-									<label class="control-label" for="no_kartu">No.Kartu</label>
-									<input type="text" id="no_kartu" name="no_kartu" value="<?= $row['no_kartu']; ?>" class="col-xs-12 col-sm-12" required />
+		<div class="modal fade" id="edit-anggota-<?= $row['id_anggota']; ?>">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><i class="ace-icon fa fa-edit"> Form Edit Anggota</i></h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<div class="col-sm-6">
+									<div class="row-sm-4">
+										<label class="control-label" for="no_kartu">No.Kartu</label>
+										<input type="text" id="no_kartu" name="no_kartu" value="<?= $row['no_kartu']; ?>" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="no_registrasi">No.Registrasi</label>
+										<input type="text" id="no_registrasi" name="no_registrasi" value="<?= $row['no_registrasi']; ?>" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="tahun_bergabung">Tahun Bergabung</label>
+										<select name="tahun_bergabung" id="tahun_bergabung" class="col-xs-12 col-sm-12">
+											<?php
+											foreach ($tahun as $t) {
+											?>
+												<option value="<?= $t['id'] ?>" <?= $t['tahun'] == $row['tahun'] ? 'selected' : '' ?>><?= $t['tahun'] ?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="bulan_bergabung">Bulan Bergabung</label>
+										<select name="bulan_bergabung" id="bulan_bergabung" class="col-xs-12 col-sm-12">
+											<?php
+											foreach ($bulan as $b) {
+											?>
+												<option value="<?= $b['id'] ?>" <?= $b['bulan'] == $row['bulan'] ? 'selected' : '' ?>><?= $b['bulan'] ?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="nama">Nama Lengkap</label>
+										<input type="text" id="nama" name="nama" value="<?= $row['nama']; ?>" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="username">Username Akun</label>
+										<input type="text" id="username" name="username" value="<?= $row['username']; ?>" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="password">Password Akun</label>
+										<input type="text" id="password" name="password" value="<?= $row['password']; ?>" class="col-xs-12 col-sm-12" required />
+									</div>
 								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="no_registrasi">No.Registrasi</label>
-									<input type="text" id="no_registrasi" name="no_registrasi" value="<?= $row['no_registrasi']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="mulai_bergabung">Mulai Bergabung</label>
-									<input type="month" id="mulai_bergabung" name="mulai_bergabung" value="<?= $row['mulai_bergabung']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="nama">Nama Lengkap</label>
-									<input type="text" id="nama" name="nama" value="<?= $row['nama']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="username">Username Akun</label>
-									<input type="text" id="username" name="username" value="<?= $row['username']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="password">Password Akun</label>
-									<input type="text" id="password" name="password" value="<?= $row['password']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="row-sm-4">
-									<label class="control-label" for="alamat">Alamat</label>
-									<textarea name="alamat" id="alamat" cols="10" row-sm-4s="5" class="col-xs-12 col-sm-12" required><?= $row['alamat']; ?></textarea>
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="ktp">KTP</label>
-									<input type="text" id="ktp" name="ktp" value="<?= $row['ktp']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="luas_plasma">Luas Plasma (Ha)</label>
-									<input type="text" id="luas_plasma" name="luas_plasma"value="<?= $row['luas_plasma']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="foto">Pas Foto</label>
-									<input type="file" id="id-input-file-2" name="foto" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="foto_bukti">Foto Bukti</label>
-									<input type="file" id="id-input-file-2" name="foto_bukti" class="col-xs-12 col-sm-12" required />
+								<div class="col-sm-6">
+									<div class="row-sm-4">
+										<label class="control-label" for="alamat">Alamat</label>
+										<textarea name="alamat" id="alamat" cols="10" row-sm-4s="5" class="col-xs-12 col-sm-12" required><?= $row['alamat']; ?></textarea>
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="ktp">KTP</label>
+										<input type="text" id="ktp" name="ktp" value="<?= $row['ktp']; ?>" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="luas_plasma">Luas Plasma (Ha)</label>
+										<input type="text" id="luas_plasma" name="luas_plasma" value="<?= $row['luas_plasma']; ?>" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="foto">Pas Foto</label>
+										<input type="file" id="id-input-file-2" name="foto" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="foto_bukti">Foto Bukti</label>
+										<input type="file" id="id-input-file-2" name="foto_bukti" class="col-xs-12 col-sm-12" required />
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary" name="btn-edit"  value="<?= $row['id_anggota'] ?>">Edit</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-					</div>
-				</form>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary" name="btn-edit" value="<?= $row['id_anggota'] ?>">Edit</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+						</div>
+					</form>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
 	<?php endforeach; ?>
 	<!-- End Edit Anggota -->
 
