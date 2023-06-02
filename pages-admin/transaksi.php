@@ -10,6 +10,11 @@ $transaksi = tampilData($query_tampil);
 $query_tampil2 = "SELECT * FROM anggota";
 $anggota = tampilData($query_tampil2);
 
+$query_tahun_now = "SELECT * FROM tahun WHERE id = '$id_tahun'";
+$tahun_now = tampilData($query_tahun_now);
+$query_bulan_now = "SELECT * FROM bulan WHERE id = '$id_bulan'";
+$bulan_now = tampilData($query_bulan_now);
+
 if (isset($_POST['btn-tambah'])) {
 	tambahDataTransaksi($_POST);
 }
@@ -24,7 +29,7 @@ if (isset($_POST['btn-hapus'])) {
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-list"></i> Data Transaksi
+			<i class="ace-icon fa fa-list"></i> Transaksi Bulan <?= $bulan_now[0]['bulan']; ?> Tahun <?= $tahun_now[0]['tahun']; ?>  
 			<a href="pages-admin/cetak-transaksi.php?id_tahun=<?= $id_tahun ?>&id_bulan=<?= $id_bulan ?>" target="_blank">
 				<button class="btn btn-success pull-right">
 					<i class="ace-icon fa fa-print"></i> Cetak
@@ -54,7 +59,6 @@ if (isset($_POST['btn-hapus'])) {
 							<thead>
 								<tr>
 									<th>No.</th>
-									<th>Tanggal</th>
 									<th>Sumber Dana</th>
 									<th>Nama Produk</th>
 									<th>Bank Penerima</th>
@@ -74,7 +78,6 @@ if (isset($_POST['btn-hapus'])) {
 								?>
 									<tr>
 										<td class="center"><?= $i ?></td>
-										<td><?= $value['tanggal'] ?></td>
 										<td><?= $value['sumber_dana'] ?></td>
 										<td><?= $value['nama_produk'] ?></td>
 										<td><?= $value['bank_penerima'] ?></td>
@@ -131,10 +134,6 @@ if (isset($_POST['btn-hapus'])) {
 									</select>
 								</div>
 								<div class="row-sm-4">
-									<label class="control-label" for="tanggal">Tanggal</label>
-									<input type="date" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
 									<label class="control-label" for="sumber_dana">Sumber Dana</label>
 									<input type="number" id="sumber_dana" name="sumber_dana" placeholder="Sumber Dana" class="col-xs-12 col-sm-12" required />
 								</div>
@@ -146,12 +145,12 @@ if (isset($_POST['btn-hapus'])) {
 									<label class="control-label" for="bank_penerima">Bank Penerima</label>
 									<input type="text" id="bank_penerima" name="bank_penerima" placeholder="Bank Penerima" class="col-xs-12 col-sm-12" required />
 								</div>
-							</div>
-							<div class="col-sm-6">
 								<div class="row-sm-4">
 									<label class="control-label" for="no_rek">No.Rek Kredit</label>
 									<input type="number" id="no_rek" name="no_rek" placeholder="No.Rek Kredit" class="col-xs-12 col-sm-12" required />
 								</div>
+							</div>
+							<div class="col-sm-6">
 								<div class="row-sm-4">
 									<label class="control-label" for="nama_rek">Nama Rek Kredit</label>
 									<input type="text" id="nama_rek" name="nama_rek" placeholder="Nama Rek Kredit" class="col-xs-12 col-sm-12" required />
@@ -211,10 +210,6 @@ if (isset($_POST['btn-hapus'])) {
 										</select>
 									</div>
 									<div class="row-sm-4">
-										<label class="control-label" for="tanggal">Tanggal</label>
-										<input type="date" id="tanggal" value="<?= $row['tanggal'] ?>" name="tanggal" placeholder="Tanggal" class="col-xs-12 col-sm-12" required />
-									</div>
-									<div class="row-sm-4">
 										<label class="control-label" for="sumber_dana">Sumber Dana</label>
 										<input type="number" id="sumber_dana" value="<?= $row['sumber_dana'] ?>" name="sumber_dana" placeholder="Sumber Dana" class="col-xs-12 col-sm-12" required />
 									</div>
@@ -226,13 +221,13 @@ if (isset($_POST['btn-hapus'])) {
 										<label class="control-label" for="bank_penerima">Bank Penerima</label>
 										<input type="text" id="bank_penerima" value="<?= $row['bank_penerima'] ?>" name="bank_penerima" placeholder="Bank Penerima" class="col-xs-12 col-sm-12" required />
 									</div>
-								</div>
-
-								<div class="col-sm-6">
 									<div class="row-sm-4">
 										<label class="control-label" for="no_rek">No.Rek Kredit</label>
 										<input type="number" id="no_rek" value="<?= $row['no_rek'] ?>" name="no_rek" placeholder="No.Rek Kredit" class="col-xs-12 col-sm-12" required />
 									</div>
+								</div>
+
+								<div class="col-sm-6">
 									<div class="row-sm-4">
 										<label class="control-label" for="nama_rek">Nama Rek Kredit</label>
 										<input type="text" id="nama_rek" value="<?= $row['nama_rek'] ?>" name="nama_rek" placeholder="Nama Rek Kredit" class="col-xs-12 col-sm-12" required />

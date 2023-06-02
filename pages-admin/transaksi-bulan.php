@@ -2,15 +2,17 @@
 // include 'functions/functions-admin.php';
 
 $id_tahun = $_GET['id_tahun'];
-$query_tampil = "SELECT * FROM bulan";
-$bulan = tampilData($query_tampil);
+$query_tahun = "SELECT * FROM tahun WHERE id = '$id_tahun'";
+$tahun = tampilData($query_tahun);
+$query_bulan = "SELECT * FROM bulan";
+$bulan = tampilData($query_bulan);
 
 ?>
 
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Data Bulan
+			<i class="ace-icon fa fa-list"></i> Transaksi Tahun <?= $tahun[0]['tahun']; ?>
 		</h1>
 	</div><!-- /.page-header -->
 
@@ -45,7 +47,7 @@ $bulan = tampilData($query_tampil);
 										<td class="center"><?= $value['bulan'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
-												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" oclass="red tooltip-infp" href="indexAdmin.php?p=transaksi&id_tahun=<?= $id_tahun ?>&id_bulan=<?= $value['id'] ?>">
+												<a data-rel="tooltip" data-placement="top" title="Data Transaksi" class="blue tooltip-info" href="indexAdmin.php?p=transaksi&id_tahun=<?= $id_tahun ?>&id_bulan=<?= $value['id'] ?>">
 													<i class="ace-icon fa fa-info-circle bigger-130"></i>
 												</a>
 											</div>

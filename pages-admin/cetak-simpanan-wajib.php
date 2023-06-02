@@ -159,5 +159,5 @@ while ($d = mysqli_fetch_array($data)) {
 }
 
 $writer = new Xlsx($spreadsheet);
-$writer->save('../excel/Data Simpanan.xlsx');
-echo "<script>window.location = '../excel/Data Simpanan.xlsx'</script>";
+$writer->save('../excel/Data Simpanan Wajib.xlsx');
+echo "<script>window.location = '../excel/Data Simpanan Wajib.xlsx'</script>";

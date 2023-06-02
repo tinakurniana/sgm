@@ -21,7 +21,7 @@ if (isset($_POST['btn-hapus'])) {
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Data Tahun
+			<i class="ace-icon fa fa-list-alt"></i> Data Tahun
 			<a data-toggle="modal" href="#tambah-tahun">
 				<button class="btn btn-primary pull-right">
 					<i class="ace-icon fa fa-plus"></i> Tambah Tahun

@@ -9,7 +9,7 @@ $tahun = tampilData($query_tampil);
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Data Tahun
+			<i class="ace-icon fa fa-list"></i> Data Transaksi
 		</h1>
 	</div><!-- /.page-header -->
 
@@ -44,7 +44,7 @@ $tahun = tampilData($query_tampil);
 										<td class="center"><?= $value['tahun'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
-												<a data-rel="tooltip" data-placement="top" title="Detail Bulan" href="indexAdmin.php?p=transaksi-bulan&id_tahun=<?=$value['id']?>">
+												<a data-rel="tooltip" data-placement="top" title="Data Bulan" class="blue tooltip-info" href="indexAdmin.php?p=transaksi-bulan&id_tahun=<?=$value['id']?>">
 													<i class="ace-icon fa fa-info-circle bigger-130"></i>
 												</a>
 											</div>

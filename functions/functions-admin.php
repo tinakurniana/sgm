@@ -414,7 +414,6 @@ function tambahDataTransaksi($data)
     $id_anggota = htmlspecialchars($data['id_anggota']);
     $id_tahun = htmlspecialchars($data['id_tahun']);
     $id_bulan = htmlspecialchars($data['id_bulan']);
-    $tanggal = htmlspecialchars($data['tanggal']);
     $sumber_dana = htmlspecialchars($data['sumber_dana']);
     $nama_produk = htmlspecialchars($data['nama_produk']);
     $bank_penerima = htmlspecialchars($data['bank_penerima']);
@@ -424,7 +423,7 @@ function tambahDataTransaksi($data)
     $jumlah = htmlspecialchars($data['jumlah']);
     $reference_number = htmlspecialchars($data['reference_number']);
 
-    $query = "INSERT INTO transaksi VALUES ('', '$id_anggota', '$tanggal','$sumber_dana','$nama_produk','$bank_penerima','$no_rek','$nama_rek','$mata_uang','$jumlah','$reference_number', '$id_tahun', '$id_bulan')";
+    $query = "INSERT INTO transaksi VALUES ('', '$id_anggota','$sumber_dana','$nama_produk','$bank_penerima','$no_rek','$nama_rek','$mata_uang','$jumlah','$reference_number', '$id_tahun', '$id_bulan')";
     if (mysqli_query($conn, $query)) {
         echo "<script>
                 alert('Data Berhasil Ditambahkan'); 
@@ -446,7 +445,6 @@ function editDataTransaksi($data)
     $id_anggota = htmlspecialchars($data['id_anggota']);
     $id_tahun = htmlspecialchars($data['id_tahun']);
     $id_bulan = htmlspecialchars($data['id_bulan']);
-    $tanggal = htmlspecialchars($data['tanggal']);
     $sumber_dana = htmlspecialchars($data['sumber_dana']);
     $nama_produk = htmlspecialchars($data['nama_produk']);
     $bank_penerima = htmlspecialchars($data['bank_penerima']);
@@ -458,7 +456,6 @@ function editDataTransaksi($data)
 
     $query = "UPDATE transaksi SET 
                 id_anggota = '$id_anggota', 
-                tanggal = '$tanggal', 
                 sumber_dana = '$sumber_dana', 
                 nama_produk = '$nama_produk', 
                 bank_penerima = '$bank_penerima', 

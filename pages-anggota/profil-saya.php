@@ -1,7 +1,18 @@
 <?php
 // include 'functions/functions-admin.php';
 $id = $_SESSION['id'];
-$query_tampil = "SELECT * FROM anggota WHERE id_anggota = $id";
+// $query_tampil = "SELECT * FROM anggota WHERE id_anggota = $id";
+// $anggota = tampilData($query_tampil);
+
+$query_tampil = "select
+					*,
+					tahun.tahun,
+					bulan.bulan
+				from
+					anggota
+				inner join tahun on tahun.id = anggota.id_tahun
+				INNER JOIN bulan ON bulan.id = anggota.id_bulan
+                WHERE id_anggota = $id;";
 $anggota = tampilData($query_tampil);
 
 if (isset($_POST['btn-edit'])) {
@@ -72,7 +83,7 @@ if (isset($_POST['btn-edit'])) {
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Bergabung :</div>
                                 <div class="profile-info-value">
-                                    <span class="editable" id="no_registrasi"><?= $anggota[0]['mulai_bergabung'] ?></span>
+                                    <span class="editable" id="no_registrasi"><?= $anggota[0]['bulan'] ?> (<?= $anggota[0]['tahun'] ?>)</span>
                                 </div>
                             </div>
 
@@ -149,26 +160,18 @@ if (isset($_POST['btn-edit'])) {
 									<input type="text" id="no_registrasi" name="no_registrasi" value="<?= $anggota[0]['no_registrasi']; ?>" class="col-xs-12 col-sm-12" required />
 								</div>
 								<div class="row-sm-4">
-									<label class="control-label" for="mulai_bergabung">Mulai Bergabung</label>
-									<input type="month" id="mulai_bergabung" name="mulai_bergabung" value="<?= $anggota[0]['mulai_bergabung']; ?>" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
 									<label class="control-label" for="nama">Nama Lengkap</label>
 									<input type="text" id="nama" name="nama" value="<?= $anggota[0]['nama']; ?>" class="col-xs-12 col-sm-12" required />
 								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="username">Username Akun</label>
-									<input type="text" id="username" name="username" value="<?= $anggota[0]['username']; ?>" class="col-xs-12 col-sm-12" required />
+                                <div class="row-sm-4">
+									<label class="control-label" for="ktp">KTP</label>
+									<input type="text" id="ktp" name="ktp" value="<?= $anggota[0]['ktp']; ?>" class="col-xs-12 col-sm-12" required />
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="row-sm-4">
 									<label class="control-label" for="alamat">Alamat</label>
 									<textarea name="alamat" id="alamat" cols="10" row-sm-4s="5" class="col-xs-12 col-sm-12" required><?= $anggota[0]['alamat']; ?></textarea>
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="ktp">KTP</label>
-									<input type="text" id="ktp" name="ktp" value="<?= $anggota[0]['ktp']; ?>" class="col-xs-12 col-sm-12" required />
 								</div>
 								<div class="row-sm-4">
 									<label class="control-label" for="foto">Pas Foto</label>

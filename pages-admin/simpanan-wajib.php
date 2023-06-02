@@ -24,6 +24,11 @@ $query_simpanan_wajib = "SELECT
 
 $simpanan_wajib = tampilData($query_simpanan_wajib);
 
+$query_tahun_now = "SELECT * FROM tahun WHERE id = '$id_tahun'";
+$tahun_now = tampilData($query_tahun_now);
+$query_bulan_now = "SELECT * FROM bulan WHERE id = '$id_bulan'";
+$bulan_now = tampilData($query_bulan_now);
+
 if (isset($_POST['btn-tambah'])) {
 	tambahDataSimpananWajib($_POST);
 }
@@ -41,7 +46,7 @@ if (isset($_POST['btn-hapus'])) {
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Data Simpanan Wajib
+			<i class="ace-icon fa fa-file-o"></i> Simpanan Wajib Bulan <?= $bulan_now[0]['bulan']; ?> Tahun <?= $tahun_now[0]['tahun']; ?> 
 			<a data-toggle="modal" href="#tambah-simpanan-wajib">
 				<button class="btn btn-primary pull-right">
 					<i class="ace-icon fa fa-plus"></i> Tambah Simpanan Wajib

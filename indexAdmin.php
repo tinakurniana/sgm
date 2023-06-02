@@ -243,7 +243,7 @@ if (isset($_POST['reset'])) {
                             <li>
                                 <a data-toggle="modal" href="#ubah-password">
                                     <i class="ace-icon fa fa-lock"></i>
-                                    Ubah Password
+                                    Setting Account
                                 </a>
                             </li>
 
@@ -275,10 +275,10 @@ if (isset($_POST['reset'])) {
                     <b class="arrow"></b>
                 </li>
 
-                <li class="hover <?= $p === 'settings' || $p === 'kelola-tahun' || $p === 'kelola-bulan' ? 'active' : '' ?>">
+                <li class="hover <?= $p === 'periode' || $p === 'kelola-tahun' || $p === 'kelola-bulan' ? 'active' : '' ?>">
                     <a class="dropdown-toggle" href="#">
-                        <i class="menu-icon fa fa-grafik"></i>
-                        <span class="menu-text"> Settings </span>
+                        <i class="menu-icon fa fa-list-alt"></i>
+                        <span class="menu-text"> Kelola Periode </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
@@ -354,7 +354,7 @@ if (isset($_POST['reset'])) {
                     </ul>
                 </li>
 
-                <li class="hover <?= $p === 'transaksi' ? 'active' : '' ?>">
+                <li class="hover <?= $p === 'transaksi-tahun' || $p == 'transaksi-bulan' || $p == 'transaksi' ? 'active' : '' ?>">
                     <a href="indexAdmin.php?p=transaksi-tahun">
                         <i class="menu-icon fa fa-list"></i>
                         <span class="menu-text"> Data Transaksi </span>
@@ -362,6 +362,45 @@ if (isset($_POST['reset'])) {
 
                     <b class="arrow"></b>
                 </li>
+
+                <li class="hover <?= $p === 'grafik' || $p === 'grafik-anggota-per-tahun' || $p === 'grafik-hektar-per-tahun' || $p === 'grafik-simpanan-per-tahun' ? 'active' : '' ?>">
+                    <a class="dropdown-toggle" href="#">
+                        <i class="menu-icon fa fa-bar-chart"></i>
+                        <span class="menu-text">Monitoring Grafik </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="hover <?= $p === 'grafik-anggota-per-tahun' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=grafik-anggota-per-tahun">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Grafik Anggota Pertahun
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover <?= $p === 'grafik-hektar-per-tahun' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=grafik-hektar-per-tahun">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Grafik Hektar Pertahun
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="hover <?= $p === 'grafik-simpanan-per-tahun' ? 'active' : '' ?>">
+                            <a href="indexAdmin.php?p=grafik-simpanan-per-tahun">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Grafik Simpanan Pertahun
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+
 
                 <li class="hover <?= $p === 'profil' || $p === 'galeri' || $p === 'kontak' ? 'active' : '' ?>">
                     <a class="dropdown-toggle" href="#">
@@ -403,45 +442,6 @@ if (isset($_POST['reset'])) {
                     </ul>
                 </li>
 
-                <li class="hover <?= $p === 'grafik' || $p === 'total-anggota-per-tahun' || $p === 'total-hektar-per-tahun' || $p === 'total-simpanan-per-tahun' ? 'active' : '' ?>">
-                    <a class="dropdown-toggle" href="#">
-                        <i class="menu-icon fa fa-grafik"></i>
-                        <span class="menu-text"> Grafik </span>
-
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-
-                    <b class="arrow"></b>
-
-                    <ul class="submenu">
-                        <li class="hover <?= $p === 'total-anggota-per-tahun' ? 'active' : '' ?>">
-                            <a href="indexAdmin.php?p=total-anggota-per-tahun">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Total Anggota Per Tahun
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="hover <?= $p === 'total-hektar-per-tahun' ? 'active' : '' ?>">
-                            <a href="indexAdmin.php?p=total-hektar-per-tahun">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Total Hektar Per Tahun
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="hover <?= $p === 'total-simpanan-per-tahun' ? 'active' : '' ?>">
-                            <a href="indexAdmin.php?p=total-simpanan-per-tahun">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Total Simpanan Per Tahun
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
-
-
             </ul><!-- /.nav-list -->
 
         </div>
@@ -473,13 +473,12 @@ if (isset($_POST['reset'])) {
                             <form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Form Ubah Password</i></h4>
+                                    <h4 class="modal-title">Form Setting Account</i></h4>
                                 </div>
                                 <div class="modal-body">
                                     <div id="login-box" class="login-box visible widget-box no-border">
                                         <div class="widget-body">
                                             <div class="widget-main">
-                                                <div class="space-6"></div>
                                                 <form action="" method="POST">
                                                     <fieldset>
                                                         <label class="block clearfix">
@@ -502,7 +501,7 @@ if (isset($_POST['reset'])) {
                                                             <input type="hidden" name="role" value="admin">
                                                             <button style="font-size:15px" name="reset" value="<?= $id ?>" type="submit" class="btn btn-primary btn-block">
                                                                 <i class="ace-icon fa fa-key"></i>
-                                                                <span class="bigger-110">Reset Password</span>
+                                                                <span class="bigger-110">Reset Account</span>
                                                             </button>
                                                         </div>
 
@@ -775,7 +774,7 @@ if (isset($_POST['reset'])) {
             data: {
                 labels: <?php echo (json_encode($data_arr_tahun)); ?>,
                 datasets: [{
-                    label: 'Jumlah Hektar',
+                    label: 'Jumlah Hektar(Ha)',
                     data: <?php echo (json_encode($data_arr_hektar)); ?>,
                     borderWidth: 1
                 }]
@@ -799,11 +798,11 @@ if (isset($_POST['reset'])) {
             data: {
                 labels: <?php echo (json_encode($data_arr_tahun)); ?>,
                 datasets: [{
-                    label: 'Jumlah Simpanan Wajib',
+                    label: 'Jumlah Simpanan Wajib (Rp)',
                     data: <?php echo (json_encode($data_arr_sw)); ?>,
                     borderWidth: 1
                 }, {
-                    label: 'Jumlah Simpanan Pokok',
+                    label: 'Jumlah Simpanan Pokok (Rp)',
                     data: <?php echo (json_encode($data_arr_sp)); ?>,
                     borderWidth: 1
                 }]

@@ -166,7 +166,7 @@ if (!isset($_SESSION['loginAnggota'])) {
                             <li>
                                 <a data-toggle="modal" href="#ubah-password">
                                     <i class="ace-icon fa fa-lock"></i>
-                                    Ubah Password
+                                    Setting Account
                                 </a>
                             </li>
 
@@ -248,18 +248,17 @@ if (!isset($_SESSION['loginAnggota'])) {
 
                 <!-- Modal Ubah Password -->
                 <div class="modal fade" id="ubah-password">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Form Ubah Password</i></h4>
+                                    <h4 class="modal-title">Form Setting Account</i></h4>
                                 </div>
                                 <div class="modal-body">
                                     <div id="login-box" class="login-box visible widget-box no-border">
                                         <div class="widget-body">
                                             <div class="widget-main">
-                                                <div class="space-6"></div>
                                                 <form action="" method="POST">
                                                     <fieldset>
                                                         <label class="block clearfix">
@@ -282,7 +281,7 @@ if (!isset($_SESSION['loginAnggota'])) {
                                                             <input type="hidden" name="role" value="anggota">
                                                             <button style="font-size:15px" name="reset" value="<?= $id ?>" type="submit" class="btn btn-primary btn-block">
                                                                 <i class="ace-icon fa fa-key"></i>
-                                                                <span class="bigger-110">Reset Password</span>
+                                                                <span class="bigger-110">Reset Account</span>
                                                             </button>
                                                         </div>
 

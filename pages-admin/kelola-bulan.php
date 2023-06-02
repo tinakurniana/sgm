@@ -36,7 +36,7 @@ if (isset($_POST['btn-hapus'])) {
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Data Bulan
+			<i class="ace-icon fa fa-list-alt"></i> Data Bulan
 			<a data-toggle="modal" href="#tambah-bulan">
 				<button class="btn btn-primary pull-right">
 					<i class="ace-icon fa fa-plus"></i> Tambah Bulan
