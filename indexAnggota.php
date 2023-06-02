@@ -5,11 +5,11 @@ error_reporting(0);
 // memulai eksekusi session (mengaktifkan session)
 session_start();
 
-// mengkonekkan ke file functions-admin.php
-include 'functions/functions-admin.php';
+// mengkonekkan ke file functions-anggota.php
+include 'functions/functions-anggota.php';
 
 // untuk mengambil sekarang ada di page mana
-$pages_dir = 'pages-admin';
+$pages_dir = 'pages-anggota';
 $pages = scandir($pages_dir, 0);
 unset($pages[0], $pages[1]);
 $p = isset($_GET['p']) ? $_GET['p'] : 'beranda';

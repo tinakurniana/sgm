@@ -4,6 +4,10 @@ $id = $_SESSION['id'];
 $query_tampil = "SELECT * FROM anggota WHERE id_anggota = $id";
 $anggota = tampilData($query_tampil);
 
+if (isset($_POST['btn-edit'])) {
+	editProfil($_POST);
+}
+
 ?>
 
 <div class="page-content">
@@ -17,66 +21,12 @@ $anggota = tampilData($query_tampil);
     <div class="row">
         <div class="col-xs-12">
             <!--PAGE CONTENT BEGINS-->
-            <!-- <form class="form-horizontal" role="form" action="" method="POST">
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">No.Kartu :</label>
-						<div class="col-sm-9">
-                        <input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="001" />
-						</div>
-					</div>
-
-                    <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">No.Registrasi :</label>
-						<div class="col-sm-9">
-                        <input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="T.II/WH/0001" />
-						</div>
-					</div>
-
-                    <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Nama Lengkap :</label>
-						<div class="col-sm-9">
-                        <input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="Pirda" />
-						</div>
-					</div>
-
-                    <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Alamat :</label>
-						<div class="col-sm-9">
-                        <input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="Jalan Badak" />
-						</div>
-					</div>
-
-                    <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">KTP :</label>
-						<div class="col-sm-9">
-                        <input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="123456789" />
-						</div>
-					</div>
-
-                    <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Luas Plasma :</label>
-						<div class="col-sm-9">
-                        <input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="0.66 Ha" />
-						</div>
-					</div>
-					
-                    <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Foto</label>
-						<div class="col-sm-9">
-                        <img src="assets-admin/img/bg.jpg" alt="foto-user" width="100px">
-					</div>
-
-				</form> -->
-
-            <!-- <div class="hr dotted"></div> -->
-
             <div>
                 <div id="user-profile-1" class="user-profile row">
                     <div class="col-xs-12 col-sm-3 center">
                         <div>
                             <span class="profile-picture">
-                                <img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets-admin/images/<?= $anggota[0]['foto'] ?>" />
+                                <img id="avatar" class="editable img-responsive" alt="img" src="assets-admin/images/<?= $anggota[0]['foto'] ?>" />
                             </span>
 
                             <div class="space-4"></div>
@@ -158,6 +108,15 @@ $anggota = tampilData($query_tampil);
                                     <img src="assets-admin/images/<?= $anggota[0]['foto_bukti'] ?>" alt="foto-user" width="300px">
                                 </div>
                             </div>
+                            <br>
+                            <div>
+                                <a data-toggle="modal" href="#edit-profil">
+                                    <button type="button" class="btn btn-primary btn-round">
+                                        <span class="bigger-110">Edit Profil</span>
+                                    </button>
+                                </a>
+                            </div>
+                            <br>
                         </div>
 
                         <div class="space-20"></div>
@@ -167,4 +126,69 @@ $anggota = tampilData($query_tampil);
             <!--PAGE CONTENT ENDS-->
         </div><!--/.span-->
     </div><!--/.row-fluid-->
+
+
+	<!-- Modal Edit Profil -->
+	<div class="modal fade" id="edit-profil">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<form class="form-horizontal" method="POST" role="form" enctype="multipart/form-data">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"><i class="ace-icon fa fa-edit"> Form Edit Profil</i></h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="col-sm-6">
+								<div class="row-sm-4">
+									<label class="control-label" for="no_kartu">No.Kartu</label>
+									<input type="text" id="no_kartu" name="no_kartu" value="<?= $anggota[0]['no_kartu']; ?>" class="col-xs-12 col-sm-12" required />
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="no_registrasi">No.Registrasi</label>
+									<input type="text" id="no_registrasi" name="no_registrasi" value="<?= $anggota[0]['no_registrasi']; ?>" class="col-xs-12 col-sm-12" required />
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="mulai_bergabung">Mulai Bergabung</label>
+									<input type="month" id="mulai_bergabung" name="mulai_bergabung" value="<?= $anggota[0]['mulai_bergabung']; ?>" class="col-xs-12 col-sm-12" required />
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="nama">Nama Lengkap</label>
+									<input type="text" id="nama" name="nama" value="<?= $anggota[0]['nama']; ?>" class="col-xs-12 col-sm-12" required />
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="username">Username Akun</label>
+									<input type="text" id="username" name="username" value="<?= $anggota[0]['username']; ?>" class="col-xs-12 col-sm-12" required />
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row-sm-4">
+									<label class="control-label" for="alamat">Alamat</label>
+									<textarea name="alamat" id="alamat" cols="10" row-sm-4s="5" class="col-xs-12 col-sm-12" required><?= $anggota[0]['alamat']; ?></textarea>
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="ktp">KTP</label>
+									<input type="text" id="ktp" name="ktp" value="<?= $anggota[0]['ktp']; ?>" class="col-xs-12 col-sm-12" required />
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="foto">Pas Foto</label>
+									<input type="file" id="id-input-file-2" name="foto" class="col-xs-12 col-sm-12" required />
+								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="foto_bukti">Foto Bukti</label>
+									<input type="file" id="id-input-file-2" name="foto_bukti" class="col-xs-12 col-sm-12" required />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" name="btn-edit">Edit</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+	<!-- End Edit Profil -->
+
 </div><!--/.page-content-->
