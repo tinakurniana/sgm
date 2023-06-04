@@ -177,7 +177,6 @@ function editDataAnggota($data)
     $bulan_bergabung = htmlspecialchars($data['bulan_bergabung']);
     $nama = htmlspecialchars($data['nama']);
     $username = htmlspecialchars($data['username']);
-    $password = htmlspecialchars(md5($data['password']));
     $alamat = htmlspecialchars($data['alamat']);
     $ktp = htmlspecialchars($data['ktp']);
     $luas_plasma = htmlspecialchars($data['luas_plasma']);
@@ -190,7 +189,7 @@ function editDataAnggota($data)
         return false;
     }
 
-    $query = "UPDATE anggota SET username = '$username', password = '$password', nama = '$nama', no_kartu = '$no_kartu', no_registrasi = '$no_registrasi', alamat = '$alamat', ktp = '$ktp', luas_plasma = '$luas_plasma', foto = '$foto', foto_bukti = '$foto_bukti', id_tahun = '$tahun_bergabung',id_bulan = '$bulan_bergabung' WHERE id_anggota = '$id_anggota'";
+    $query = "UPDATE anggota SET username = '$username', nama = '$nama', no_kartu = '$no_kartu', no_registrasi = '$no_registrasi', alamat = '$alamat', ktp = '$ktp', luas_plasma = '$luas_plasma', foto = '$foto', foto_bukti = '$foto_bukti', id_tahun = '$tahun_bergabung',id_bulan = '$bulan_bergabung' WHERE id_anggota = '$id_anggota'";
 
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=anggota";</script>';

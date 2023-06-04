@@ -267,10 +267,6 @@ if (isset($_POST['btn-hapus'])) {
 										<label class="control-label" for="username">Username Akun</label>
 										<input type="text" id="username" name="username" value="<?= $row['username']; ?>" class="col-xs-12 col-sm-12" required />
 									</div>
-									<div class="row-sm-4">
-										<label class="control-label" for="password">Password Akun</label>
-										<input type="text" id="password" name="password" value="<?= $row['password']; ?>" class="col-xs-12 col-sm-12" required />
-									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="row-sm-4">
