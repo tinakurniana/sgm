@@ -21,8 +21,6 @@ function editProfil($data)
 {
     global $conn;
     $id_anggota = $_SESSION['id'];
-    $no_kartu = htmlspecialchars($data['no_kartu']);
-    $no_registrasi = htmlspecialchars($data['no_registrasi']);
     $nama = htmlspecialchars($data['nama']);
     $alamat = htmlspecialchars($data['alamat']);
     $ktp = htmlspecialchars($data['ktp']);
@@ -30,12 +28,8 @@ function editProfil($data)
     if (!$foto) {
         return false;
     }
-    $foto_bukti = uploadFotoBukti();
-    if (!$foto_bukti) {
-        return false;
-    }
 
-    $query = "UPDATE anggota SET nama = '$nama', no_kartu = '$no_kartu', no_registrasi = '$no_registrasi', alamat = '$alamat', ktp = '$ktp', foto = '$foto', foto_bukti = '$foto_bukti' WHERE id_anggota = '$id_anggota'";
+    $query = "UPDATE anggota SET nama = '$nama', alamat = '$alamat', ktp = '$ktp', foto = '$foto' WHERE id_anggota = '$id_anggota'";
 
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAnggota.php?p=profil-saya";</script>';
