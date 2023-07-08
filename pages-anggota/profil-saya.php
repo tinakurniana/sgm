@@ -111,14 +111,6 @@ if (isset($_POST['btn-edit'])) {
                                     <span class="editable" id="luas_plasma"><?= $anggota[0]['luas_plasma'] ?> Ha</span>
                                 </div>
                             </div>
-
-                            <div class="profile-info-row">
-                                <div class="profile-info-name"> Foto Bukti :</div>
-
-                                <div class="profile-info-value">
-                                    <img src="assets-admin/images/<?= $anggota[0]['foto_bukti'] ?>" alt="foto-user" width="300px">
-                                </div>
-                            </div>
                             <br>
                             <div>
                                 <a data-toggle="modal" href="#edit-profil">
@@ -154,10 +146,6 @@ if (isset($_POST['btn-edit'])) {
                                 <div class="row-sm-4">
                                     <label class="control-label" for="nama">Nama Lengkap</label>
                                     <input type="text" id="nama" name="nama" value="<?= $anggota[0]['nama']; ?>" class="col-xs-12 col-sm-12" required />
-                                </div>
-                                <div class="row-sm-4">
-                                    <label class="control-label" for="ktp">KTP</label>
-                                    <input type="text" id="ktp" name="ktp" value="<?= $anggota[0]['ktp']; ?>" class="col-xs-12 col-sm-12" required />
                                 </div>
                                 <div class="row-sm-4">
                                     <label class="control-label" for="alamat">Alamat</label>
