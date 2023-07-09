@@ -37,7 +37,6 @@ $transaksi = tampilData($query_tampil);
 							<thead>
 								<tr>
 									<th>No.</th>
-									<th>Tanggal</th>
 									<th>Sumber Dana</th>
 									<th>Nama Produk</th>
 									<th>Bank Penerima</th>
@@ -57,7 +56,6 @@ $transaksi = tampilData($query_tampil);
 								?>
 									<tr>
 										<td class="center"><?= $i;?></td>
-										<td><?= $value['tanggal']?></td>
 										<td><?= $value['sumber_dana']?></td>
 										<td><?= $value['nama_produk']?></td>
 										<td><?= $value['bank_penerima']?></td>
