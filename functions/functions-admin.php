@@ -127,14 +127,8 @@ function tambahDataAnggota($data) // Function untuk menambah data anggota
         return false;
     }
 
-     // memanggil function uploadFotoBukti
-    $foto_bukti = uploadFotoBukti();
-    if (!$foto_bukti) {
-        return false;
-    }
-
     // query untuk insert data anggota
-    $query = "INSERT INTO anggota VALUES ('', '$username', '$password', '$nama', '$no_kartu', '$no_registrasi', '$alamat', '$ktp', '$luas_plasma', '$foto', '$foto_bukti', '$tahun_bergabung','$bulan_bergabung')";
+    $query = "INSERT INTO anggota VALUES ('', '$username', '$password', '$nama', '$no_kartu', '$no_registrasi', '$alamat', '$ktp', '$luas_plasma', '$foto', '$tahun_bergabung','$bulan_bergabung')";
     // jika query berhasil dieksekusi maka akan menambahkan data lagi ke tabel simpanan pokok
     if (mysqli_query($conn, $query)) {
         // mengembalikan id dari query terakhir
@@ -184,12 +178,8 @@ function editDataAnggota($data)
     if (!$foto) {
         return false;
     }
-    $foto_bukti = uploadFotoBukti();
-    if (!$foto_bukti) {
-        return false;
-    }
 
-    $query = "UPDATE anggota SET username = '$username', nama = '$nama', no_kartu = '$no_kartu', no_registrasi = '$no_registrasi', alamat = '$alamat', ktp = '$ktp', luas_plasma = '$luas_plasma', foto = '$foto', foto_bukti = '$foto_bukti', id_tahun = '$tahun_bergabung',id_bulan = '$bulan_bergabung' WHERE id_anggota = '$id_anggota'";
+    $query = "UPDATE anggota SET username = '$username', nama = '$nama', no_kartu = '$no_kartu', no_registrasi = '$no_registrasi', alamat = '$alamat', ktp = '$ktp', luas_plasma = '$luas_plasma', foto = '$foto', id_tahun = '$tahun_bergabung',id_bulan = '$bulan_bergabung' WHERE id_anggota = '$id_anggota'";
 
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=anggota";</script>';
@@ -613,53 +603,6 @@ function uploadFoto()
     $ukuranFile = $_FILES['foto']['size'];
     $error = $_FILES['foto']['error'];
     $tmpName = $_FILES['foto']['tmp_name'];
-
-    // cek apakah tidak ada gambar yang diupload
-    if (
-        $error === 4
-    ) {
-        echo "<script>
-                alert('Pilih gambar terlebih dahulu!');
-              </script>";
-        return false;
-    }
-
-    // cek apakah yang diupload adalah gambar
-    $eksetensiGambarValid = ['jpg', 'jpeg', 'png'];
-    $ekstensiGambar = explode('.', $namaFile);
-    $ekstensiGambar = strtolower(end($ekstensiGambar));
-    if (!in_array($ekstensiGambar, $eksetensiGambarValid)) {
-        echo "<script>
-                alert('Yang anda upload bukan gambar!');
-              </script>";
-        return false;
-    }
-
-    // cek jika ukuran terlalu besar
-    if (
-        $ukuranFile > 10000000
-    ) {
-        echo "<script>
-                alert('Ukuran gambar terlalu besar! (Max. 10MB)');
-              </script>";
-        return false;
-    }
-
-    // lolos pengecekan, gambar siap diupload
-    // generate nama gambar baru
-    $namaFileBaru = uniqid();
-    $namaFileBaru .= '.';
-    $namaFileBaru .= $ekstensiGambar;
-    move_uploaded_file($tmpName, 'assets-admin/images/' . $namaFileBaru);
-    return $namaFileBaru;
-}
-
-function uploadFotoBukti()
-{
-    $namaFile = $_FILES['foto_bukti']['name'];
-    $ukuranFile = $_FILES['foto_bukti']['size'];
-    $error = $_FILES['foto_bukti']['error'];
-    $tmpName = $_FILES['foto_bukti']['tmp_name'];
 
     // cek apakah tidak ada gambar yang diupload
     if (

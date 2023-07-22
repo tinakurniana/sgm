@@ -73,7 +73,6 @@ if (isset($_POST['btn-hapus'])) {
 										<th>KTP</th>
 										<th>Luas Plasma</th>
 										<th>Foto Anggota</th>
-										<th>Foto Bukti</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
@@ -96,9 +95,6 @@ if (isset($_POST['btn-hapus'])) {
 											<td><?= $row['luas_plasma']; ?> Ha</td>
 											<td class="center">
 												<img src="assets-admin/images/<?= $row["foto"]; ?>" alt="foto-user" width="100px">
-											</td>
-											<td class="center">
-												<img src="assets-admin/images/<?= $row["foto_bukti"]; ?>" width="100px">
 											</td>
 											<td class="center">
 												<div class="action-buttons">
@@ -173,12 +169,12 @@ if (isset($_POST['btn-hapus'])) {
 									<label class="control-label" for="username">Username Akun</label>
 									<input type="text" id="username" name="username" placeholder="Username Akun" class="col-xs-12 col-sm-12" required />
 								</div>
+							</div>
+							<div class="col-sm-6">
 								<div class="row-sm-4">
 									<label class="control-label" for="password">Password Akun</label>
 									<input type="text" id="password" name="password" placeholder="Password Akun" class="col-xs-12 col-sm-12" required />
 								</div>
-							</div>
-							<div class="col-sm-6">
 								<div class="row-sm-4">
 									<label class="control-label" for="alamat">Alamat</label>
 									<textarea name="alamat" id="alamat" cols="10" row-sm-4s="5" class="col-xs-12 col-sm-12" required></textarea>
@@ -194,10 +190,6 @@ if (isset($_POST['btn-hapus'])) {
 								<div class="row-sm-4">
 									<label class="control-label" for="foto">Pas Foto</label>
 									<input type="file" id="id-input-file-2" name="foto" class="col-xs-12 col-sm-12" required />
-								</div>
-								<div class="row-sm-4">
-									<label class="control-label" for="foto_bukti">Foto Bukti</label>
-									<input type="file" id="id-input-file-2" name="foto_bukti" class="col-xs-12 col-sm-12" required />
 								</div>
 							</div>
 						</div>
@@ -270,6 +262,10 @@ if (isset($_POST['btn-hapus'])) {
 								</div>
 								<div class="col-sm-6">
 									<div class="row-sm-4">
+										<label class="control-label" for="password">Password Akun</label>
+										<input type="text" id="password" name="password" placeholder="Password Akun" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
 										<label class="control-label" for="alamat">Alamat</label>
 										<textarea name="alamat" id="alamat" cols="10" row-sm-4s="5" class="col-xs-12 col-sm-12" required><?= $row['alamat']; ?></textarea>
 									</div>
@@ -284,10 +280,6 @@ if (isset($_POST['btn-hapus'])) {
 									<div class="row-sm-4">
 										<label class="control-label" for="foto">Pas Foto</label>
 										<input type="file" id="id-input-file-2" name="foto" class="col-xs-12 col-sm-12" required />
-									</div>
-									<div class="row-sm-4">
-										<label class="control-label" for="foto_bukti">Foto Bukti</label>
-										<input type="file" id="id-input-file-2" name="foto_bukti" class="col-xs-12 col-sm-12" required />
 									</div>
 								</div>
 							</div>
