@@ -3,7 +3,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'sgmbartim';
+$dbname = 'skripsi-pirda';
 
 $conn = mysqli_connect($host, $username, $password, $dbname);
 

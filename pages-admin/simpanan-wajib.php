@@ -46,7 +46,7 @@ if (isset($_POST['btn-hapus'])) {
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-file-o"></i> Simpanan Wajib Bulan <?= $bulan_now[0]['bulan']; ?> Tahun <?= $tahun_now[0]['tahun']; ?> 
+			<i class="ace-icon fa fa-file-o"></i> Simpanan Wajib Bulan <?= $bulan_now[0]['bulan']; ?> Tahun <?= $tahun_now[0]['tahun']; ?>
 			<a data-toggle="modal" href="#tambah-simpanan-wajib">
 				<button class="btn btn-primary pull-right">
 					<i class="ace-icon fa fa-plus"></i> Tambah Simpanan Wajib
@@ -85,6 +85,10 @@ if (isset($_POST['btn-hapus'])) {
 								<label class="control-label" for="simpanan_wajib">Simpanan Wajib</label>
 								<input type="number" min="0" id="simpanan_wajib" name="simpanan_wajib" placeholder="Simpanan Wajib" class="col-xs-12 col-sm-12" required />
 							</div>
+							<div class="col-sm-12">
+								<label class="control-label" for="tanggal">Tanggal</label>
+								<input type="date" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" placeholder="Tanggal" class="col-xs-12 col-sm-12" required />
+							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -119,6 +123,7 @@ if (isset($_POST['btn-hapus'])) {
 									<th>No.Registrasi</th>
 									<th>Nama</th>
 									<th>Simpanan Wajib</th>
+									<th>Tanggal</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -134,6 +139,7 @@ if (isset($_POST['btn-hapus'])) {
 										<td><?= $sw['no_registrasi'] ?></td>
 										<td><?= $sw['nama'] ?></td>
 										<td>Rp. <?= number_format($sw['simpanan_wajib'], 2, ",", "."); ?></td>
+										<td><?= $sw['tanggal'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
 												<a data-rel="tooltip" data-placement="top" title="Ubah" style="margin-right:5px" class="blue tooltip-info" data-toggle="modal" href="#edit-simpanan-wajib-<?= $sw['id']; ?>">
@@ -190,6 +196,10 @@ if (isset($_POST['btn-hapus'])) {
 									<label class="control-label" for="simpanan_wajib">Simpanan Wajib</label>
 									<input type="number" min="0" id="simpanan_wajib" value="<?= $row['simpanan_wajib'] ?>" name="simpanan_wajib" placeholder="Simpanan Wajib" class="col-xs-12 col-sm-12" required />
 								</div>
+								<div class="col-sm-12">
+								<label class="control-label" for="tanggal">Tanggal</label>
+								<input type="date" value="<?=$row['tanggal']?>" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" placeholder="Tanggal" class="col-xs-12 col-sm-12" required />
+							</div>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -225,6 +235,7 @@ if (isset($_POST['btn-hapus'])) {
 							</div>
 						</div>
 						<div class="modal-footer">
+							<input type="hidden" name="id_tahun" value="<?= $id_tahun ?>">
 							<input type="hidden" name="id_bulan" value="<?= $id_bulan ?>">
 							<button type="submit" class="btn btn-primary" name="btn-hapus" value="<?= $row['id'] ?>">Ya</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>

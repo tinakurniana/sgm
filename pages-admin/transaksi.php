@@ -29,7 +29,7 @@ if (isset($_POST['btn-hapus'])) {
 <div class="page-content">
 	<div class="page-header">
 		<h1 style="color:#585858">
-			<i class="ace-icon fa fa-list"></i> Transaksi Bulan <?= $bulan_now[0]['bulan']; ?> Tahun <?= $tahun_now[0]['tahun']; ?>  
+			<i class="ace-icon fa fa-list"></i> Transaksi Bulan <?= $bulan_now[0]['bulan']; ?> Tahun <?= $tahun_now[0]['tahun']; ?>
 			<a href="pages-admin/cetak-transaksi.php?id_tahun=<?= $id_tahun ?>&id_bulan=<?= $id_bulan ?>" target="_blank">
 				<button class="btn btn-success pull-right">
 					<i class="ace-icon fa fa-print"></i> Cetak
@@ -67,6 +67,7 @@ if (isset($_POST['btn-hapus'])) {
 									<th>Mata Uang</th>
 									<th>Jumlah</th>
 									<th>Reference Number</th>
+									<th>Tanggal</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -86,6 +87,7 @@ if (isset($_POST['btn-hapus'])) {
 										<td><?= $value['mata_uang'] ?></td>
 										<td><?= $value['jumlah'] ?></td>
 										<td><?= $value['reference_number'] ?></td>
+										<td><?= $value['tanggal'] ?></td>
 										<td class="center">
 											<div class="action-buttons">
 												<a data-rel="tooltip" data-placement="top" title="Ubah" style="margin-right:5px" class="blue tooltip-info" data-toggle="modal" href="#edit-transaksi-<?= $value['id']; ?>">
@@ -167,6 +169,10 @@ if (isset($_POST['btn-hapus'])) {
 									<label class="control-label" for="reference_number">Reference Number</label>
 									<input type="number" id="reference_number" name="reference_number" placeholder="Reference Number" class="col-xs-12 col-sm-12" required />
 								</div>
+								<div class="row-sm-4">
+									<label class="control-label" for="tanggal">Tanggal</label>
+									<input type="date" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -243,6 +249,10 @@ if (isset($_POST['btn-hapus'])) {
 									<div class="row-sm-4">
 										<label class="control-label" for="reference_number">Reference Number</label>
 										<input type="number" id="reference_number" value="<?= $row['reference_number'] ?>" name="reference_number" placeholder="Reference Number" class="col-xs-12 col-sm-12" required />
+									</div>
+									<div class="row-sm-4">
+										<label class="control-label" for="tanggal">Tanggal</label>
+										<input type="date" value="<?= $row['tanggal'] ?>" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
 									</div>
 								</div>
 							</div>
