@@ -84,7 +84,7 @@ if (isset($_POST['btn-hapus'])) {
 										<td><?= $value['no_rek'] ?></td>
 										<td><?= $value['nama_rek'] ?></td>
 										<td><?= $value['mata_uang'] ?></td>
-										<td><?= $value['jumlah'] ?></td>
+										<td>Rp. <?= number_format($value['jumlah'], 2, ",", "."); ?></td>
 										<td><?= $value['reference_number'] ?></td>
 										<td class="center">
 											<div class="action-buttons">

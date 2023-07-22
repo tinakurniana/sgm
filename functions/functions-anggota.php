@@ -23,13 +23,12 @@ function editProfil($data)
     $id_anggota = $_SESSION['id'];
     $nama = htmlspecialchars($data['nama']);
     $alamat = htmlspecialchars($data['alamat']);
-    $ktp = htmlspecialchars($data['ktp']);
     $foto = uploadFoto();
     if (!$foto) {
         return false;
     }
 
-    $query = "UPDATE anggota SET nama = '$nama', alamat = '$alamat', ktp = '$ktp', foto = '$foto' WHERE id_anggota = '$id_anggota'";
+    $query = "UPDATE anggota SET nama = '$nama', alamat = '$alamat', foto = '$foto' WHERE id_anggota = '$id_anggota'";
 
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAnggota.php?p=profil-saya";</script>';
