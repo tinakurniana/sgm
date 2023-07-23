@@ -34,7 +34,7 @@ if (isset($_POST['btn-simpan'])) {
                             <div class="form-group">
                                 <label class="col-sm-2 control-label no-padding-right">Telp : </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="col-xs-12 col-sm-5" name="telp" maxlength="3" value="<?= $row['telp']; ?>" autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" required />
+                                    <input type="text" class="col-xs-12 col-sm-5" name="telp" maxlength="13" value="<?= $row['telp']; ?>" autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" required />
                                 </div>
                             </div>
                             <div class="form-group">

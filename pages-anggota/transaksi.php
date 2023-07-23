@@ -43,6 +43,7 @@ $transaksi = tampilData($query_tampil);
 									<th>No.Rek Kredit</th>
 									<th>Nama Rek Kredit</th>
 									<th>Mata Uang</th>
+									<th>Tanggal</th>
 									<th>Jumlah</th>
 									<th>Reference Number</th>
 								</tr>
@@ -55,18 +56,19 @@ $transaksi = tampilData($query_tampil);
 								foreach ($transaksi as $value) {
 								?>
 									<tr>
-										<td class="center"><?= $i;?></td>
-										<td><?= $value['sumber_dana']?></td>
-										<td><?= $value['nama_produk']?></td>
-										<td><?= $value['bank_penerima']?></td>
-										<td><?= $value['no_rek']?></td>
-										<td><?= $value['nama_rek']?></td>
-										<td><?= $value['mata_uang']?></td>
-										<td>Rp <?= $value['jumlah']?></td>
-										<td>Rp <?= $value['reference_number']?></td>
+										<td class="center"><?= $i; ?></td>
+										<td><?= $value['sumber_dana'] ?></td>
+										<td><?= $value['nama_produk'] ?></td>
+										<td><?= $value['bank_penerima'] ?></td>
+										<td><?= $value['no_rek'] ?></td>
+										<td><?= $value['nama_rek'] ?></td>
+										<td><?= $value['mata_uang'] ?></td>
+										<td><?= $value['tanggal'] ?></td>
+										<td>Rp. <?= number_format($value['jumlah'], 2, ",", "."); ?></td>
+										<td>Rp. <?= number_format($value['reference_number'], 2, ",", "."); ?></td>
 									</tr>
 								<?php
-								$i++;
+									$i++;
 								}
 								?>
 							</tbody>

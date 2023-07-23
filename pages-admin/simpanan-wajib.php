@@ -26,8 +26,10 @@ $simpanan_wajib = tampilData($query_simpanan_wajib);
 
 $query_tahun_now = "SELECT * FROM tahun WHERE id = '$id_tahun'";
 $tahun_now = tampilData($query_tahun_now);
+
 $query_bulan_now = "SELECT * FROM bulan WHERE id = '$id_bulan'";
 $bulan_now = tampilData($query_bulan_now);
+$bulan_now2 = convertBulan($bulan_now[0]['bulan']);
 
 if (isset($_POST['btn-tambah'])) {
 	tambahDataSimpananWajib($_POST);
@@ -87,7 +89,7 @@ if (isset($_POST['btn-hapus'])) {
 							</div>
 							<div class="col-sm-12">
 								<label class="control-label" for="tanggal">Tanggal</label>
-								<input type="date" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" placeholder="Tanggal" class="col-xs-12 col-sm-12" required />
+								<input type="date" min="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-31' ?>" id="tanggal" name="tanggal" placeholder="Tanggal" class="col-xs-12 col-sm-12" required />
 							</div>
 						</div>
 					</div>
@@ -197,9 +199,9 @@ if (isset($_POST['btn-hapus'])) {
 									<input type="number" min="0" id="simpanan_wajib" value="<?= $row['simpanan_wajib'] ?>" name="simpanan_wajib" placeholder="Simpanan Wajib" class="col-xs-12 col-sm-12" required />
 								</div>
 								<div class="col-sm-12">
-								<label class="control-label" for="tanggal">Tanggal</label>
-								<input type="date" value="<?=$row['tanggal']?>" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" placeholder="Tanggal" class="col-xs-12 col-sm-12" required />
-							</div>
+									<label class="control-label" for="tanggal">Tanggal</label>
+									<input type="date" value="<?= $row['tanggal'] ?>" min="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-31' ?>" id="tanggal" name="tanggal" placeholder="Tanggal" class="col-xs-12 col-sm-12" required />
+								</div>
 							</div>
 						</div>
 						<div class="modal-footer">

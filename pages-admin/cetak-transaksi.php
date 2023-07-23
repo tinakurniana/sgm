@@ -19,6 +19,7 @@ $sheet->setCellValue('F1', 'Nama Rek Kredit');
 $sheet->setCellValue('G1', 'Mata Uang');
 $sheet->setCellValue('H1', 'Jumlah');
 $sheet->setCellValue('I1', 'Reference Number');
+$sheet->setCellValue('J1', 'Tanggal');
 
 $id_tahun = $_GET['id_tahun'];
 $id_bulan = $_GET['id_bulan'];
@@ -36,6 +37,7 @@ while ($d = mysqli_fetch_array($data)) {
     $sheet->setCellValue('G' . $i, $d['mata_uang']);
     $sheet->setCellValue('H' . $i, $d['jumlah']);
     $sheet->setCellValue('I' . $i, $d['reference_number']);
+    $sheet->setCellValue('J' . $i, $d['tanggal']);
     $i++;
     $no++;
 }

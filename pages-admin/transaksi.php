@@ -12,8 +12,10 @@ $anggota = tampilData($query_tampil2);
 
 $query_tahun_now = "SELECT * FROM tahun WHERE id = '$id_tahun'";
 $tahun_now = tampilData($query_tahun_now);
+
 $query_bulan_now = "SELECT * FROM bulan WHERE id = '$id_bulan'";
 $bulan_now = tampilData($query_bulan_now);
+$bulan_now2 = convertBulan($bulan_now[0]['bulan']);
 
 if (isset($_POST['btn-tambah'])) {
 	tambahDataTransaksi($_POST);
@@ -171,7 +173,7 @@ if (isset($_POST['btn-hapus'])) {
 								</div>
 								<div class="row-sm-4">
 									<label class="control-label" for="tanggal">Tanggal</label>
-									<input type="date" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
+									<input type="date" min="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-31' ?>" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
 								</div>
 							</div>
 						</div>
@@ -252,7 +254,7 @@ if (isset($_POST['btn-hapus'])) {
 									</div>
 									<div class="row-sm-4">
 										<label class="control-label" for="tanggal">Tanggal</label>
-										<input type="date" value="<?= $row['tanggal'] ?>" min="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  date("m", strtotime($bulan_now[0]['bulan']))  . '-31' ?>" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
+										<input type="date" value="<?= $row['tanggal'] ?>" min="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-01' ?>" max="<?= $tahun_now[0]['tahun'] . '-' .  $bulan_now2  . '-31' ?>" id="tanggal" name="tanggal" class="col-xs-12 col-sm-12" required />
 									</div>
 								</div>
 							</div>

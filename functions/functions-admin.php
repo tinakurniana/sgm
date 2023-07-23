@@ -6,6 +6,50 @@ $password = '';
 $dbname = 'skripsi-pirda';
 $conn = mysqli_connect($host, $username, $password, $dbname);
 
+//convert bulan jadi angka
+function convertBulan($bulan)
+{
+    $bulanAngka = null;
+    switch ($bulan) {
+        case 'Januari':
+            $bulanAngka = '01';
+            break;
+        case 'Februari':
+            $bulanAngka = '02';
+            break;
+        case 'Maret':
+            $bulanAngka = '03';
+            break;
+        case 'April':
+            $bulanAngka = '04';
+            break;
+        case 'Mei':
+            $bulanAngka = '05';
+            break;
+        case 'Juni':
+            $bulanAngka = '06';
+            break;
+        case 'Juli':
+            $bulanAngka = '07';
+            break;
+        case 'Agustus':
+            $bulanAngka = '08';
+            break;
+        case 'September':
+            $bulanAngka = '09';
+            break;
+        case 'Oktober':
+            $bulanAngka = '10';
+            break;
+        case 'November':
+            $bulanAngka = '11';
+            break;
+        case 'Desember':
+            $bulanAngka = '12';
+            break;
+    }
+    return $bulanAngka;
+}
 function tampilData($query) // Function untuk menampilkan data
 {
     global $conn;
@@ -39,7 +83,7 @@ function tambahDataPengurus($data) // Function untuk menambahkan data pengurus
     // jika query berhasil dieksekusi maka menampilkan alert data berhasil dan reload ke halaman pengurus
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Ditambahkan"); location.href = "indexAdmin.php?p=pengurus";</script>';
-    } 
+    }
     // jika query tidak berhasil dieksekusi maka menampilkan alert data gagal dan reload ke halaman pengurus
     else {
         echo '<script>alert("Data Gagal Ditambahkan"); location.href = "indexAdmin.php?p=pengurus";</script>';
@@ -62,7 +106,7 @@ function hapusDataPengurus($data) // Function untuk menghapus data pengurus
     // jika query berhasil dieksekusi maka menampilkan alert data berhasil dan reload ke halaman pengurus
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=pengurus";</script>';
-    } 
+    }
     // jika query tidak berhasil dieksekusi maka menampilkan alert data gagal dan reload ke halaman pengurus
     else {
         echo '<script>alert("Data Berhasil Dihapus"); location.href = "indexAdmin.php?p=pengurus";</script>';
@@ -83,7 +127,7 @@ function editDataPengurus($data) // Function untuk mengedit data pengurus
     $no_hp = htmlspecialchars($data['no_hp']);
     $ktp = htmlspecialchars($data['ktp']);
 
-     // memanggil function uploadFoto
+    // memanggil function uploadFoto
     $foto = uploadFoto();
     if (!$foto) {
         return false;
@@ -95,7 +139,7 @@ function editDataPengurus($data) // Function untuk mengedit data pengurus
     // jika query berhasil dieksekusi maka menampilkan alert data berhasil dan reload ke halaman pengurus
     if (mysqli_query($conn, $query)) {
         echo '<script>alert("Data Berhasil Diedit"); location.href = "indexAdmin.php?p=pengurus";</script>';
-    } 
+    }
     // jika query gagal dieksekusi maka menampilkan alert data gagasl dan reload ke halaman pengurus
     else {
         echo '<script>alert("Data Gagal Diedit"); location.href = "indexAdmin.php?p=pengurus";</script>';
@@ -121,7 +165,7 @@ function tambahDataAnggota($data) // Function untuk menambah data anggota
     $ktp = htmlspecialchars($data['ktp']);
     $luas_plasma = htmlspecialchars($data['luas_plasma']);
 
-     // memanggil function uploadFoto
+    // memanggil function uploadFoto
     $foto = uploadFoto();
     if (!$foto) {
         return false;

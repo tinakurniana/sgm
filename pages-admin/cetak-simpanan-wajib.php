@@ -14,35 +14,38 @@ $sheet->mergeCells('A1:A2');
 $sheet->setCellValue('A1', 'No Kartu');
 
 $sheet->mergeCells('B1:B2');
-$sheet->setCellValue('B1', 'No Registrasi');
+$sheet->setCellValue('B1', 'Tanggal');
 
 $sheet->mergeCells('C1:C2');
-$sheet->setCellValue('C1', 'Nama Anggota');
+$sheet->setCellValue('C1', 'No Registrasi');
 
 $sheet->mergeCells('D1:D2');
-$sheet->setCellValue('D1', 'Alamat');
+$sheet->setCellValue('D1', 'Nama Anggota');
 
 $sheet->mergeCells('E1:E2');
-$sheet->setCellValue('E1', 'Simpanan Pokok');
+$sheet->setCellValue('E1', 'Alamat');
 
-$sheet->mergeCells('F1:Q1');
-$sheet->setCellValue('F1', 'Simpanan Wajib (Bulan)');
+$sheet->mergeCells('F1:F2');
+$sheet->setCellValue('F1', 'Simpanan Pokok');
 
-$sheet->setCellValue('F2', 'Januari');
-$sheet->setCellValue('G2', 'Februari');
-$sheet->setCellValue('H2', 'Maret');
-$sheet->setCellValue('I2', 'April');
-$sheet->setCellValue('J2', 'Mei');
-$sheet->setCellValue('K2', 'Juni');
-$sheet->setCellValue('L2', 'Juli');
-$sheet->setCellValue('M2', 'Agustus');
-$sheet->setCellValue('N2', 'September');
-$sheet->setCellValue('O2', 'Oktober');
-$sheet->setCellValue('P2', 'November');
-$sheet->setCellValue('Q2', 'Desember');
+$sheet->mergeCells('G1:R1');
+$sheet->setCellValue('G1', 'Simpanan Wajib (Bulan)');
 
-$sheet->mergeCells('R1:R2');
-$sheet->setCellValue('R1', 'Total');
+$sheet->setCellValue('G2', 'Januari');
+$sheet->setCellValue('H2', 'Februari');
+$sheet->setCellValue('I2', 'Maret');
+$sheet->setCellValue('J2', 'April');
+$sheet->setCellValue('K2', 'Mei');
+$sheet->setCellValue('L2', 'Juni');
+$sheet->setCellValue('M2', 'Juli');
+$sheet->setCellValue('N2', 'Agustus');
+$sheet->setCellValue('O2', 'September');
+$sheet->setCellValue('P2', 'Oktober');
+$sheet->setCellValue('Q2', 'November');
+$sheet->setCellValue('R2', 'Desember');
+
+$sheet->mergeCells('S1:S2');
+$sheet->setCellValue('S1', 'Total');
 
 
 //menangkap data tahun yang ingin dicetak
@@ -55,6 +58,7 @@ $tahun = $_GET['tahun'];
 $data = mysqli_query($conn, "SELECT
                                 anggota.*,
                                 tahun.tahun,
+                                simpanan_wajib.tanggal as tanggal,
                                 GROUP_CONCAT(
                                     CONCAT(
                                         bulan.bulan,
@@ -78,51 +82,51 @@ $data = mysqli_query($conn, "SELECT
 $bulan = [
     array(
         "bulan" => "Januari",
-        "cell" => "F"
-    ),
-    array(
-        "bulan" => "Februari",
         "cell" => "G"
     ),
     array(
-        "bulan" => "Maret",
+        "bulan" => "Februari",
         "cell" => "H"
     ),
     array(
-        "bulan" => "April",
+        "bulan" => "Maret",
         "cell" => "I"
     ),
     array(
-        "bulan" => "Mei",
+        "bulan" => "April",
         "cell" => "J"
     ),
     array(
-        "bulan" => "Juni",
+        "bulan" => "Mei",
         "cell" => "K"
     ),
     array(
-        "bulan" => "Juli",
+        "bulan" => "Juni",
         "cell" => "L"
     ),
     array(
-        "bulan" => "Agustus",
+        "bulan" => "Juli",
         "cell" => "M"
     ),
     array(
-        "bulan" => "September",
+        "bulan" => "Agustus",
         "cell" => "N"
     ),
     array(
-        "bulan" => "Oktober",
+        "bulan" => "September",
         "cell" => "O"
     ),
     array(
-        "bulan" => "November",
+        "bulan" => "Oktober",
         "cell" => "P"
     ),
     array(
-        "bulan" => "Desember",
+        "bulan" => "November",
         "cell" => "Q"
+    ),
+    array(
+        "bulan" => "Desember",
+        "cell" => "R"
     ),
 ];
 
@@ -130,10 +134,11 @@ $i = 3;
 while ($d = mysqli_fetch_array($data)) {
     $total = 0;
     $sheet->setCellValue('A' . $i, $d['no_kartu']);
-    $sheet->setCellValue('B' . $i, $d['no_registrasi']);
-    $sheet->setCellValue('C' . $i, $d['nama']);
-    $sheet->setCellValue('D' . $i, $d['alamat']);
-    $sheet->setCellValue('E' . $i, 50000);
+    $sheet->setCellValue('B' . $i, $d['tanggal']);
+    $sheet->setCellValue('C' . $i, $d['no_registrasi']);
+    $sheet->setCellValue('D' . $i, $d['nama']);
+    $sheet->setCellValue('E' . $i, $d['alamat']);
+    $sheet->setCellValue('F' . $i, 50000);
     for ($j = 0; $j < count($bulan); $j++) {
         $cek = strpos($d['bulan'], $bulan[$j]['bulan']);
         if ($cek !== false) {
@@ -154,7 +159,7 @@ while ($d = mysqli_fetch_array($data)) {
             $sheet->setCellValue($bulan[$j]['cell'] . $i, 0);
         }
     }
-    $sheet->setCellValue('R' . $i, $total + 50000);
+    $sheet->setCellValue('S' . $i, $total + 50000);
     $i++;
 }
 

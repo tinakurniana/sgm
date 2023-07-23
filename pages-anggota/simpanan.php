@@ -52,6 +52,7 @@ $anggota = tampilData($query_tampil);
                                     <th>No.Registrasi</th>
                                     <th>Nama</th>
                                     <th>Simpanan Wajib</th>
+                                    <th>Tanggal</th>
                                 </tr>
                             </thead>
 
@@ -62,14 +63,15 @@ $anggota = tampilData($query_tampil);
                                 foreach ($anggota as $value) {
                                 ?>
                                     <tr>
-                                        <td class="center"><?= $i;?></td>
-                                        <td><?= $value['no_kartu']?></td>
-                                        <td><?= $value['no_registrasi']?></td>
-                                        <td><?= $value['nama']?></td>
-                                        <td><?= $value['simpanan_wajib']?></td>
+                                        <td class="center"><?= $i; ?></td>
+                                        <td><?= $value['no_kartu'] ?></td>
+                                        <td><?= $value['no_registrasi'] ?></td>
+                                        <td><?= $value['nama'] ?></td>
+                                        <td>Rp. <?= number_format($value['simpanan_wajib'], 2, ",", "."); ?></td>
+                                        <td><?= $value['tanggal'] ?></td>
                                     </tr>
                                 <?php
-                                $i++;
+                                    $i++;
                                 }
                                 ?>
                             </tbody>
